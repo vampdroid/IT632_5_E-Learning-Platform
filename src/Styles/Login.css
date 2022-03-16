@@ -1,0 +1,49 @@
+.login100-form {
+    width: 100%;
+}
+.App-logo{
+    align-self: center;
+    height: 100px;
+    pointer-events: none;
+}
+.login100-form-title {
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif, "Helvetica Neue";
+    font-size: 30px;
+    color: #555555;
+    line-height: 1.2;
+    text-align: center;
+}
+.container-login100-form-btn {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.login100-form-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    width: 100%;
+    height: 50px;
+    background-color: #3EB489;
+
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif, "Helvetica Neue";
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+
+    transition: all 0.4s;
+}
+
+.login100-form-btn:hover {
+    background-color: #333333;
+}
+
+input.input100 {
+    height: 50px;
+    padding: 0 25px 0 25px;
+    margin: 12px 0 12px 0;
+}
