@@ -6,10 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
 import reportWebVitals from './reportWebVitals';
 import Login from "./Component/Login";
+import Register from "./Component/Register";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login />
+    {/* <Login /> */}
+    <Register />
   </React.StrictMode>,
   document.getElementById('root')
 );
