@@ -2,6 +2,7 @@ import Layout from './Layout';
 import logo from '../logo.svg';
 import '../Styles/Login.css'
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 function Login() {
 
@@ -77,13 +78,13 @@ function Login() {
                     <input className="login100-form-btn" type="submit" value="Log in"/>
                 </div>
                 <div className="text-center pt-3 pb-1">
-                    <span className="txt1">Forgot</span>
-                    <a href="#" className="txt2 hov1"> Password?</a>
+                    <span >Forgot</span>
+                    <Link to="/"> Password?</Link>
                 </div>
 
                 <div className="text-center">
-                    <span className="txt1">Create an account?</span>
-                    <a href="#" className="txt2 hov1">Sign up</a>
+                    <span>Create an account?</span>
+                    <Link to="register">Sign up</Link>
                 </div>
             </form>
         </Layout>
