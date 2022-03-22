@@ -1,4 +1,4 @@
-import Layout from './Layout';
+import LayoutGuest from './LayoutGuest';
 import logo from '../logo.svg';
 import '../Styles/Login.css'
 import {useState} from "react";
@@ -42,7 +42,7 @@ function Login() {
     }
 
     return (
-        <Layout>
+        <LayoutGuest>
             <form onSubmit={submitForm} className="login100-form validate-form">
                 <div className="text-center">
                     <img src={logo} className="App-logo" alt="logo"/>
@@ -84,10 +84,10 @@ function Login() {
 
                 <div className="text-center">
                     <span>Create an account?</span>
-                    <Link to="register">Sign up</Link>
+                    <Link to="/register">Sign up</Link>
                 </div>
             </form>
-        </Layout>
+        </LayoutGuest>
     );
 }
 
