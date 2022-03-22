@@ -1,11 +1,11 @@
 //import logo from './logo.svg';
 import '../Styles/Register.css';
-import Layout from "./Layout";
+import LayoutGuest from "./LayoutGuest";
 import {Link} from "react-router-dom";
 
 function Register() {
     return (
-        <Layout>
+        <LayoutGuest>
             <form className="row g-3 needs-validation" novalidate>
                 <center><h2>E-Learning Platform</h2></center>
                 <center><h2>Registration</h2></center>
@@ -37,7 +37,7 @@ function Register() {
                 </div>
                 <div className="col-md-12">
                     <center>
-                        <button className="btn btn1" type="submit">Submit</button>
+                        <button className="btn2 btn1" type="submit">Submit</button>
                     </center>
                 </div>
                 <div className="col-md-12">
@@ -48,7 +48,7 @@ function Register() {
 
                 </div>
             </form>
-        </Layout>
+        </LayoutGuest>
     );
 }
 

@@ -1,5 +1,5 @@
-import '../Styles/Layout.css'
-function Layout(props){
+import '../Styles/LayoutGuest.css'
+function LayoutGuest(props){
     return(
             <div className="container-layout">
                 <div className="wraplogin100 p-5">
@@ -9,4 +9,4 @@ function Layout(props){
     );
 }
 
-export default Layout;
+export default LayoutGuest;
