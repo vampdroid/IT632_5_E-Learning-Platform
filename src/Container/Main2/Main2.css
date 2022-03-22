@@ -1,0 +1,73 @@
+.Flexdes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 3em;
+    margin-bottom: 3em;
+}
+.Book{
+    margin-top: 2em;
+    width:15em;
+    height: 15em;
+    padding: 50px;
+    background-color:lightpink;
+    box-shadow: 0 0 20px grey;
+}
+
+.Book1{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    width:15em;
+    height: 15em;
+    padding: 50px;
+    background-color:lightpink;
+    box-shadow: 0 0 10px grey;
+}
+.Book1:hover{
+    box-shadow: 0 0 20px palevioletred;
+}
+.box-content{
+    padding: 20px;
+    box-shadow:  0 0 20px grey;
+}
+.box-content:hover{
+    background-color: palevioletred;
+}
+.Book-inside{
+    width: 3em;
+    height: 3em;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    background-color: blueviolet;
+    box-shadow: 0 0 10px grey;
+}
+.Book-inside2{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+@media screen and (max-width:800px) {
+    .Flexdes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3em;
+} 
+.booklist{
+    align-items: center;
+}
+}
+.booklist{
+    width: 90vw;
+    max-width: 1170px;
+    display: grid;
+    gap: 2rem;
+    margin: auto;
+}
+@media screen  and (min-width:800px) {
+   .booklist{
+       grid-template-columns: repeat(4,1fr) ;
+   } 
+}

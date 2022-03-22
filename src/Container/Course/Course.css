@@ -1,0 +1,19 @@
+h4>a{
+    text-decoration:none;
+    color:purple;
+}
+.btnn{
+    background-color: palevioletred;
+    border-radius: 20px;
+}
+.inp{
+    display: flex;
+    justify-content: center;
+}
+input{
+    width: 20rem;
+    border-radius:20px;
+}
+.img1{
+    height: 300px;
+}

@@ -1,0 +1,12 @@
+body{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif; 
+    overflow-x: hidden;
+     background-image: linear-gradient(to right,white,violet);
+}
+.app{
+    display:flex;
+    flex-direction: column;
+    background-color: #262a2b;
+}

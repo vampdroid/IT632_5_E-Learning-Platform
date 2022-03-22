@@ -1,0 +1,38 @@
+.logo{
+    width: 40px;
+}
+.logo1{
+    width: 30px;
+    border-radius: 50%;
+}
+.Ncontain{
+    display: flex;
+    height: 72px;
+    align-items: center;
+    background-color:purple;
+    justify-content: space-between;
+    z-index: 99;
+    box-shadow: 0 0 0 30 palevioletred;
+}
+.left{
+    display: flex;
+    align-items: center;
+}
+.flash-text{
+    font-size: 30px;
+    letter-spacing: 2px;
+    font-family: "Bangers",-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 1000;
+    color:violet;
+}
+.right{
+    margin-right: 40px;
+}
+.navlink{
+    text-decoration: none;
+    letter-spacing: 2px;
+    font-size: 20px;
+    font-family: "Bangers",-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: violet;
+    margin-right: 5px;
+}
