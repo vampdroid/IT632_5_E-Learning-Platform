@@ -1,12 +1,14 @@
 const router = require('express').Router();
 let Instructor = require('../models/instructor.model');
 let User = require('../models/user.model');
-
-router.route('/add').post((req,res) => {
+const multer = require("multer");
+//const upload = require("../middleware/upload");
+const upload = multer({desc:'photos/'});
+router.route('/add').post((upload.single("profile_picture")),(req,res) => {
     const fname = req.body.fname;
     const lname = req.body.lname;
     const email = req.body.email;
-    const profile_picture = req.body.profile_picture;
+    const profile_picture =req.body.profile_picture;
     const dob = req.body.dob;
     const bio = req.body.bio;
     const password = req.body.password;
@@ -30,5 +32,6 @@ router.route('/add').post((req,res) => {
         .catch(err => res.status(400).json("error:"+err));
     }
 });
+
 
 module.exports = router;
