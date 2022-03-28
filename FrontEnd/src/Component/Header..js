@@ -22,9 +22,9 @@ function Header(){
         <Navbar variant="dark" sticky="top" expand="md">
             <div className="container-fluid">
                 <NavbarBrand href='/'>
-                    <img src={logo} width="40" height="28"
+                   {/*<img src={logo} width="40" height="28"
                                    alt="Edulogy logo"
-                                   className="d-inline-block align-text-top"/>
+    className="d-inline-block align-text-top"/>*/}
                     Edulogy
                 </NavbarBrand>
                 <NavDropdown title={
