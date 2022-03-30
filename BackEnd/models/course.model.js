@@ -20,6 +20,10 @@ const courseSchema = new mongoose.Schema({
         required:true
     },
     thumbnail:{
+        type:Buffer,
+        required:true
+    },
+    contentType:{
         type:String,
         required:true
     }

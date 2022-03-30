@@ -4,3 +4,6 @@
 .dropdown-toggle::after {
     display: none !important;
 }
+.dropdown-item.active{
+    background-color: #3EB489!important;
+}
