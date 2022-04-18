@@ -9,7 +9,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 app.use(express.json());
 
@@ -26,7 +26,7 @@ mongoose
 });
 
 const userRouter = require('./app/routes/user');
-app.use('/users',userRouter);
+app.use('/user',userRouter);
 
 const categoryRouter = require('./app/routes/category');
 app.use('/category',categoryRouter);
