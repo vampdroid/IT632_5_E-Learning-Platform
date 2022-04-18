@@ -16,15 +16,39 @@ router.use(fileUpload({
 
 router
     .post("/:courseId/add",async (req,res,next)=>{
-        mongodb.MongoClient.connect("mongodb://localhost:27017")
+        await mongodb.MongoClient.connect(process.env.DB_URL_MONGO)
             .then(async client => {
                 console.log(req.files.thumbnail);
+                const name = req.files.thumbnail.name.slice(0,-4);
                 var db = client.db("videos");
+                console.log(name);
                 const bucket = new mongodb.GridFSBucket(db);
-                const videoUploadStream = bucket.openUploadStream(req.files.thumbnail.name.slice(0,-4));
-                const videoReadStram = fs.createReadStream(req.files.thumbnail.tempFilePath);
+                const videoUploadStream = await bucket.openUploadStream(name);
+                const videoReadStram = await fs.createReadStream(req.files.thumbnail.tempFilePath);
                 await videoReadStram.pipe(videoUploadStream);
-                res.status(200);
+                // console.log("create");
+                // res.status(200);
+                // await  Content.create({
+                //     course:req.params.courseId,
+                //     title:req.body.title,
+                //     description:req.body.description,
+                //     video:name,
+                //     contentType:req.files.thumbnail.mimetype
+                // })
+                //     .then((content)=>{
+                //         if(content){
+                //             res.status(200)
+                //                 .json(content);
+                //             return;
+                //         }
+                //         else{
+                //             res.status(422)
+                //                 .json({
+                //                     error:"content not added"
+                //                 });
+                //             return;
+                //         }
+                //     })
                 res.end("Done..");
             })
             .catch(err=>{

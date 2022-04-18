@@ -17,6 +17,10 @@ const contentSchema = new mongoose.Schema({
     video:{
         type:String,
         required:false
+    },
+    contentType:{
+        type:String,
+        required:true
     }
  });
 

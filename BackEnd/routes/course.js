@@ -125,22 +125,22 @@ router.route("/:courseId/image")
             })
             .catch(err=>next(err))
     })
-router
-    .post("/:courseId/add",(req,res,next)=>{
-        mongodb.MongoClient.connect("mongodb://localhost:27017")
-            .then(client=>{
-                console.log(req.files.thumbnail);
-                var db = client.db("videos");
-                const bucket = new mongodb.GridFSBucket(db);
-                const videoUploadStream = bucket.openUploadStream(req.files.thumbnail.filename);
-                videoReadStram.pipe(req.files.thumbnail.buffer);
-                res.status(200);
-                res.end("Done..");
-            })
-            .catch(err=>{
-                next(err);
-            })
-    })
+// router
+//     .post("/:courseId/add",(req,res,next)=>{
+//         mongodb.MongoClient.connect("mongodb://localhost:27017")
+//             .then(client=>{
+//                 console.log(req.files.thumbnail);
+//                 var db = client.db("videos");
+//                 const bucket = new mongodb.GridFSBucket(db);
+//                 const videoUploadStream = bucket.openUploadStream(req.files.thumbnail.filename);
+//                 videoReadStram.pipe(req.files.thumbnail.buffer);
+//                 res.status(200);
+//                 res.end("Done..");
+//             })
+//             .catch(err=>{
+//                 next(err);
+//             })
+//     })
 
 router.route('/add-content').post((req,res) => {
     const course = req.body.course;
