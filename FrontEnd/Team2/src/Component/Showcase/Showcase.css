@@ -1,0 +1,20 @@
+li>a{
+    text-decoration: none;
+    color: black;
+    background-color: white !important;
+}
+.list-group-item.active{
+    background-color: white !important;
+}
+li:hover{
+    box-shadow: 0 0 10px greenyellow;
+    background-color: #33cc99;
+}
+li>a:hover{
+     color:white;
+}
+.head
+{
+    background-color: #33cc99 !important;
+    padding: 20px;
+}

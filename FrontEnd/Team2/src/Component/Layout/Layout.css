@@ -1,0 +1,7 @@
+.navbar-dark{
+    background-color: #3EB489 !important;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color:white;
+    background-color: #3EB489 !important;
+}
