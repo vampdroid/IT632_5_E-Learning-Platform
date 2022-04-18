@@ -6,10 +6,52 @@ import {Link} from "react-router-dom";
 
 function Login() {
 
-    const [email, setEmail] = useState(null);
+    const [email, setEmail] = useState("");
     const [emailErr, setEmailErr] = useState(false);
-    const [passwd, setPasswd] = useState(null);
+    const [passwd, setPasswd] = useState("");
     const [passwdErr, setPasswdErr] = useState(false);
+
+    async function submitForm(event) {
+        event.preventDefault();
+        // if(emailErr || passwdErr || email== null || passwd == null  ){
+        //     alert("Invalid data");
+        // }
+        // else{
+            //let values = {email, passwd};
+        
+            const result = await fetch('http://localhost:4000/user/signIn', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    passwd,
+                }),
+            })
+
+            const data = await result.json();
+            if(data.email){
+                alert("Login sucessfull")
+                window.location.href = '/aboutus'
+            }
+            else{
+                alert("Login Failure")
+            }
+            console.log("result",data);
+        //}
+        
+
+        // const data = await result.json();
+        // if(data.email){
+        //     alert("Registration sucessfull")
+        //     window.location.href = '/login'
+        // }
+        // else{
+        //     alert("registration Failure")
+        // }
+        // console.log("result",data);
+    }
 
     function validateEmail(event) {
         let emailEvent = event.target.value;
@@ -33,17 +75,11 @@ function Login() {
         }
     }
 
-    function submitForm(event) {
-
-        if(emailErr || passwdErr || email== null || passwd == null  ){
-            alert("Invalid data");
-        }
-        event.preventDefault();
-    }
+    
 
     return (
         <LayoutGuest>
-            <form onSubmit={submitForm} className="login100-form validate-form">
+            <form className="login100-form validate-form">
                 <div className="text-center">
                     <img src={logo} className="App-logo" alt="logo"/>
                     <span className="login100-form-title pb-1"> E learning platform </span>
@@ -75,7 +111,7 @@ function Login() {
                 </div>
 
                 <div className="container-login100-form-btn mt-1">
-                    <input className="login100-form-btn" type="submit" value="Log in"/>
+                    <input className="login100-form-btn" onClick={submitForm} type="submit" value="Log in"/>
                 </div>
                 <div className="text-center pt-3 pb-1">
                     <span >Forgot</span>

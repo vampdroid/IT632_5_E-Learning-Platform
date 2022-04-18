@@ -1,0 +1,20 @@
+.head{
+    background-color: green;
+    color: white;
+    padding:20px;
+}
+.main{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 20px;
+}
+.left{
+    width:40rem;
+}
+.right{
+    width: 50rem;
+}
+.card-body{
+    width: 10rem;
+}

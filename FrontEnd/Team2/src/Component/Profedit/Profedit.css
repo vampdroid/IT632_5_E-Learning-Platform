@@ -1,0 +1,17 @@
+.main{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 20px;
+}
+.left{
+    width:40rem;
+}
+.right{
+    width: 50rem;
+}
+.head{
+    background-color: #33cc99 ;
+    color: white;
+    padding:20px;
+}

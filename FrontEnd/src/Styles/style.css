@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #33cc99;
+    font-family: "monserrat", sans-serif;
+    overflow-x: hidden;
+    color: #fff;
+}
+
+.comment-box-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.comment-box-item {
+    width: 40vw;
+}
+.doubts
+{
+    margin-left: 10rem;
+    display: flex;
+}
+.doubtsubmit
+{
+    margin-left: 4rem;
+    margin-top: 5px;
+    margin-right: 5px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-weight: 500;
+    border-style: none;
+    border-width: 2px;
+    border-color: #333;
+    background: #fff;
+    box-shadow: rgba(3, 8, 20, 0.3) 0px 0.15rem 0.5rem,
+            rgba(2, 8, 20, 0.3) 0px 0.075rem 0.175rem;
+}
+.df
+{
+    width:40vw;
+}

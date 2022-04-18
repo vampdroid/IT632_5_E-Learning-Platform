@@ -1,0 +1,113 @@
+.img{
+    width:100px !important;
+    height:100px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+.outer{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 200px;
+}
+.owl-theme{
+    margin-top: 20px;
+    padding: 10px;
+}
+.owl-item.active{
+    width: 200px !important;
+    margin-left:6rem ;
+    margin-right: 0px;
+}
+.owl-item{
+    width: 200px !important;
+    margin-left:6rem ;
+    margin-right: 0px;
+}
+.Flexdes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 3em;
+    margin-bottom: 3em;
+}
+.Book{
+    margin-top: 2em;
+    width:15em;
+    height: 15em;
+    padding: 50px;
+    background-color:lightpink;
+    box-shadow: 0 0 20px grey;
+}
+
+.Book1{
+    margin-left: -20px;
+    margin-top: 2em;
+    width:15em;
+    height: 15em;
+    padding: 50px;
+    background-color:white;
+    color: rgb(36, 174, 121);
+    box-shadow: 0 0 10px grey;
+}
+.Link{
+    text-decoration: none !important;
+    color: black !important;
+}
+.Link:hover{
+    color: blue !important;
+}
+.Book1:hover{
+    box-shadow: 0 0 20px palevioletred;
+}
+.box-content{
+    padding: 20px;
+    box-shadow:  0 0 20px grey;
+}
+.box-content:hover{
+    background-color: green;
+    color: white;
+}
+.Book-inside{
+    width: 3em;
+    height: 3em;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    background-color: blueviolet;
+    box-shadow: 0 0 10px grey;
+}
+.Book-inside2{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+@media screen and (max-width:800px) {
+    .Flexdes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3em;
+} 
+.booklist{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Book1{
+       margin-left: auto !important;
+       margin-right: auto !important;
+   }
+}
+.booklist{
+    width: 90vw;
+    max-width: 1170px;
+    display: grid;
+    gap: 2rem;
+    margin: auto;
+}
+@media screen  and (min-width:800px) {
+   .booklist{
+       grid-template-columns: repeat(4,1fr) ;
+   } 
+   
+}
