@@ -25,10 +25,10 @@ mongoose
     console.log(err);
 });
 
-const userRouter = require('./app/routes/user');
+const userRouter = require('./routes/user');
 app.use('/users',userRouter);
 
-const categoryRouter = require('./app/routes/category');
+const categoryRouter = require('./routes/category');
 app.use('/category',categoryRouter);
 
 app.listen(port,()=>{

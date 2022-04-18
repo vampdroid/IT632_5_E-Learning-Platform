@@ -42,9 +42,12 @@ app.use('/users',userRouter);
 const categoryRouter = require('./routes/category');
 app.use('/category',categoryRouter);
 
-const coursrRoutet = require('./routes/course')
-app.use('/courses',coursrRoutet)
 
+const courseRoutet = require('./routes/course')
+app.use('/courses',courseRoutet)
+
+const courseContentRouter = require('./routes/courseContent')
+app.use('/course',courseContentRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
