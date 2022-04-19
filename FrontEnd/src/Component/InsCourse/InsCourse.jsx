@@ -44,9 +44,9 @@ let InCour=()=>{
                   </a>
                 </h5>
 
-                 <FontAwesomeIcon width={"5em"} icon={faDumpster}/>
+                 <FontAwesomeIcon width={"5em"} /*icon={faDumpster}*//>
                  <Link to='/EditCourse' className="Link">
-                 <FontAwesomeIcon width={"5em"} icon={faEdit}/>
+                 <FontAwesomeIcon width={"5em"} /*icon={faEdit}*//>
                  </Link>
               </div>
             </div>
@@ -73,9 +73,9 @@ let InCour=()=>{
                   </a>
 
                 </h5>
-                <FontAwesomeIcon width={"5em"} icon={faDumpster}/>
+                <FontAwesomeIcon width={"5em"} /*icon={faDumpster}*//>
                 <Link to='/EditCourse' className="Link">
-                <FontAwesomeIcon width={"5em"} icon={faEdit}/>
+                <FontAwesomeIcon width={"5em"} /*icon={faEdit}*//>
                 </Link>
               </div>
             </div>
@@ -102,9 +102,9 @@ let InCour=()=>{
                   </a>
 
                 </h5>
-                 <FontAwesomeIcon width={"5em"} icon={faDumpster}/>
+                 <FontAwesomeIcon width={"5em"} /*icon={faDumpster}*//>
                  <Link to='/EditCourse' className="Link">
-                 <FontAwesomeIcon width={"5em"} icon={faEdit}/>
+                 <FontAwesomeIcon width={"5em"} /*icon={faEdit}*//>
                  </Link>
               </div>
             </div>
@@ -115,7 +115,7 @@ let InCour=()=>{
       <div className="mt-4 border button1">
       <button >
       <Link to='/Addnew' className="Link">
-      <h3>Add new <FontAwesomeIcon width={"1em"} icon={faPlus}/></h3>
+      <h3>Add new <FontAwesomeIcon width={"1em"} /*icon={faPlus}*//></h3>
     </Link>
     </button>
     </div>
