@@ -6,6 +6,7 @@ import Login from "./Component/Login";
 import Register from "./Component/Register";
 import Layout from "./Component/Layout";
 import AboutUs from "./Component/AboutUs";
+import Profile from "./Component/Profedit/Profedit";
 function App() {
   return (
 
@@ -16,6 +17,7 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
         <Rout />
         
