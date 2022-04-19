@@ -6,6 +6,7 @@ import { faDumpster } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
+import "./InsCourse.css";
 const InsCour=()=>{
     return(
         <div className="main">
@@ -20,9 +21,6 @@ let InCour=()=>{
         <>
   <div className="col-lg- col-12">
     <h5 className="mb-0 head">Courses instructed by you: </h5>
-    <Link to='/Addnew' className="Link">
-     <FontAwesomeIcon width={"5em"} icon={faPlus}/>
-    </Link>
     <div className="rounded shadow p-4">
       
       <div className="row">
@@ -113,8 +111,17 @@ let InCour=()=>{
           </div>
         </div>
         {/*end col*/}
+        <br />
+      <div className="mt-4 border button1">
+      <button >
+      <Link to='/Addnew' className="Link">
+      <h3>Add new <FontAwesomeIcon width={"1em"} icon={faPlus}/></h3>
+    </Link>
+    </button>
+    </div>
   </div>
   </div>
+   
   </div>
   {/*end col*/}
 </>

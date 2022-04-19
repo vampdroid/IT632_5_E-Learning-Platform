@@ -41,9 +41,35 @@ let Edit=()=>{
           />
         </div>
       </div>
-      <div className="col-sm-6">
+      <div className="col-sm-6 length">
         <div className="form-group">
-          <label className="pre-label pre-label-sm" htmlFor="account-email">
+          <label className="pre-label pre-label-sm " htmlFor="account-email">
+            Expertise
+          </label>
+          <input
+            className="form-control form-control-simple"
+            type="text"
+            id="account-email"
+            defaultValue=""
+          />
+        </div>
+      </div>
+      <div className="col-sm-6 length">
+        <div className="form-group">
+          <label className="pre-label pre-label-sm " htmlFor="account-email">
+            Works as:
+          </label>
+          <input
+            className="form-control form-control-simple"
+            type="text"
+            id="account-email"
+            defaultValue=""
+          />
+        </div>
+      </div>
+      <div className="col-sm-12 length">
+        <div className="form-group">
+          <label className="pre-label pre-label-sm " htmlFor="account-email">
             Email address
           </label>
           <input
@@ -54,48 +80,23 @@ let Edit=()=>{
           />
         </div>
       </div>
-      <div className="col-sm-6">
+      <div className="col-sm-12 length">
         <div className="form-group">
-          <label className="pre-label pre-label-sm" htmlFor="account-username">
-            Username
+          <label className="pre-label pre-label-sm " htmlFor="account-email">
+            Bio:
           </label>
-          <div className="input-group">
-            <input
-              className="form-control form-control-simple"
-              type="text"
-              id="account-username"
-              defaultValue="john_doe"
-            />
-          </div>
+          <textarea
+            className="form-control form-control-simple"
+            type="text"
+            id="account-email"
+            defaultValue=""
+          />
         </div>
       </div>
-      <div className="col-sm-6">
-        <div className="form-group">
-          <label className="pre-label pre-label-sm mt-3 me-1" htmlFor="account-country">
-            Country
-          </label>
-          <select
-            className="custom-select form-control-simple"
-            id="account-country"
-          >
-            <option value="">Select country</option>
-            <option value="Brazil">Brazil</option>
-            <option value="Belgium">Belgium</option>
-            <option value="France">France</option>
-            <option value="Germany">Germany</option>
-            <option value="India">India</option>
-            <option value="Spain">Spain</option>
-            <option value="UK">United Kingdom</option>
-            <option value="Russia" selected="">
-              Russia
-            </option>
-          </select>
-        </div>
-      </div>
-      <div className="col-sm-6">
+      <div className="col-sm-12">
         <div className="form-group">
           <label className="pre-label pre-label-sm" htmlFor="account-city">
-            City
+            Address Line
           </label>
           <input
             className="form-control form-control-simple"
@@ -121,7 +122,7 @@ let Edit=()=>{
       <div className="col-sm-6">
         <div className="form-group">
           <label className="pre-label pre-label-sm" htmlFor="account-zip">
-            ZIP Code
+            PIN/ZIP Code
           </label>
           <input
             className="form-control form-control-simple"
@@ -131,19 +132,25 @@ let Edit=()=>{
           />
         </div>
       </div>
+      <div className="centring">
+        
+        <div className="form-group">
+          
+
+          <label className="pre-label pre-label-sm" htmlFor="account-fn">
+            Upload Image
+          </label>
+          <input
+            className="form-control form-control-simple"
+            type="file"
+            id="account-fn"
+            defaultValue=""
+          />
+        </div>
+      </div>
       <div className="col-12">
         <div className="d-flex flex-wrap justify-content-between align-items-center">
-          {/* <div className="custom-control custom-checkbox d-block">
-            <input
-              className="custom-control-input"
-              type="checkbox"
-              id="show-email"
-              defaultChecked=""
-            />
-            <label className="custom-control-label" htmlFor="show-email">
-              Show my email to registered users
-            </label>
-          </div> */}
+          
           <button
             className="btn btn-rounded btn-outline-primary btn-sm px-3 mt-3  "
             type="button"
