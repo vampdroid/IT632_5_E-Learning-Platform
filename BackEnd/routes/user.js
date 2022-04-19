@@ -1,36 +1,104 @@
 const router = require('express').Router();
-let Instructor = require('../models/instructor.model');
+//let Instructor = require('../models/instructor.model');
+
+//user model
 let User = require('../models/user.model');
-const multer = require("multer");
+
+//user verification model
+let UserVerify = require('../models/userVerify.model');
+
+//email handler
+const nodemailer = require('nodemailer');
+
+//generate unique strings
+const {v4: uuidv4} = require('uuid');
+
+//env variables
+require('dotenv').config();
+
+//password handler
+const bcrypt = require('bcrypt');
+
+//nodemailer stuff
+let transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth:{
+    user: process.env.AUTH_EMAIL,
+    pass: process.env.AUTH_PASS,
+  }
+})
+
+//testing sucess
+transporter.verify((error, sucess) => {
+  if(error){
+    console.log(error);
+  }
+  else{
+    console.log("Ready for messages");
+    console.log(sucess);
+  }
+})
+
+//const multer = require("multer");
+const express = require('express');
+const app = express();
+
+app.use(express.json())
 //const upload = require("../middleware/upload");
-const upload = multer({desc:'photos/'});
-router.route('/add').post((upload.single("profile_picture")),(req,res) => {
-    const fname = req.body.fname;
-    const lname = req.body.lname;
-    const email = req.body.email;
-    const profile_picture =req.body.profile_picture;
-    const dob = req.body.dob;
-    const bio = req.body.bio;
-    const password = req.body.password;
-    const role = req.body.role;
+//const upload = multer({desc:'photos/'});
 
-    const newUser = new User({fname,lname,email,profile_picture,dob,bio,password,role});
-    newUser.save()
-        .then(() => res.json("User added"))
-        .catch(err => res.status(400).json("error:"+err));
+//adding user to database on registration
+router.route('/add').post(async (req, res) => {
+  console.log(req.body)
+  const salt = 10;
+  const passwordHash = await bcrypt.hash(req.body.password, salt);
 
-    if(role == "ins"){
-        const user = newUser;
-        const expertise = req.body.expertise;
-        const works_as = req.body.works_as;
-        const qualification = req.body.qualification;
-        const status = req.body.status;
+  try {
+    await User.create({
+      fname: req.body.fname,
+      lname: req.body.lname,
+      email: req.body.email,
+      password: passwordHash,
+      role: "stu",
+    })
+    res.json({ status: 'ok', email: req.body.email })
+  } catch (err) {
+    res.json({ status: 'error', error: 'email exists' })
+  }
+});
 
-        const newInstructor = new Instructor({user,expertise,works_as,qualification,status});
-        newInstructor.save()
-        .then(() => res.json("Instructor added"))
-        .catch(err => res.status(400).json("error:"+err));
+
+//verifying user on login
+router.route('/signIn').post(async (req, res) => {
+  try {
+
+    const userLogin = await User.findOne({
+      email: req.body.email,
+    });
+    console.log(userLogin.email);
+
+    if (userLogin) {
+      console.log(userLogin.email);
+
+      const validPassword = await bcrypt.compare(req.body.passwd, userLogin.password);
+
+      console.log(validPassword);
+
+
+      if (!validPassword) {
+        res.status(400).json({ error: "password Invalid Credential" });
+      } else {
+        res.status(200).json({ messgae: "Login Success", email: req.body.email });
+      }
+     }
+     else {
+      res.status(400).json({ error: "email Invalid Credential" });
     }
+  }
+  catch (err) {
+    console.log(err);
+    res.status(400).json({ Error: "Login Failed!!!" });
+  }
 });
 
 

@@ -27,9 +27,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  role: {     //"ins" for instructor and "stu" for student
+      role: {     //"ins" for instructor and "stu" for student
     type: String,
     required: true,
+  },
+  verified: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
  }, {
     timestamps: true,
