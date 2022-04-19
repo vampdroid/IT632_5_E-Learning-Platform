@@ -1,6 +1,7 @@
 const router = require('express').Router();
 //let Instructor = require('../models/instructor.model');
 
+const jwt = require('jsonwebtoken')
 //user model
 let User = require('../models/user.model');
 
@@ -48,7 +49,7 @@ app.use(express.json())
 //const upload = multer({desc:'photos/'});
 
 //adding user to database on registration
-router.route('/add').post(async (req, res) => {
+router.route('/').post(async (req, res) => {
   console.log(req.body)
   const salt = 10;
   const passwordHash = await bcrypt.hash(req.body.password, salt);
@@ -69,7 +70,7 @@ router.route('/add').post(async (req, res) => {
 
 
 //verifying user on login
-router.route('/signIn').post(async (req, res) => {
+router.route('/login').post(async (req, res) => {
   try {
 
     const userLogin = await User.findOne({
@@ -80,7 +81,7 @@ router.route('/signIn').post(async (req, res) => {
     if (userLogin) {
       console.log(userLogin.email);
 
-      const validPassword = await bcrypt.compare(req.body.passwd, userLogin.password);
+      const validPassword = await bcrypt.compare(req.body.password, userLogin.password);
 
       console.log(validPassword);
 
@@ -88,7 +89,8 @@ router.route('/signIn').post(async (req, res) => {
       if (!validPassword) {
         res.status(400).json({ error: "password Invalid Credential" });
       } else {
-        res.status(200).json({ messgae: "Login Success", email: req.body.email });
+        const token = jwt.sign({user:userLogin},process.env.SECRET);
+        res.status(200).json({ messgae: "Login Success", token: token });
       }
      }
      else {
@@ -97,7 +99,7 @@ router.route('/signIn').post(async (req, res) => {
   }
   catch (err) {
     console.log(err);
-    res.status(400).json({ Error: "Login Failed!!!" });
+      res.status(400).json({ Error: "Login Failed!!!" });
   }
 });
 
