@@ -6,21 +6,24 @@ import Login from "./Component/Login";
 import Register from "./Component/Register";
 import Layout from "./Component/Layout";
 import AboutUs from "./Component/AboutUs";
+import Profile from "./Component/Profedit/Profedit";
 import AddCourse from "./Component/add-course";
 function App() {
   return (
 
-     <div className="App">
+    <div className="App">
       <BrowserRouter>
         <Routes>
           <Route path="/" exact element={<Layout />} />
           <Route path="/login" element={<Login />}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/add-course" element={ <AddCourse/>} />
         </Routes>
         <Rout />
-        
+
       </BrowserRouter>
     </div>
   );

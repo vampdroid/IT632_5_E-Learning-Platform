@@ -115,13 +115,13 @@ let InCour=()=>{
       <div className="mt-4 border button1">
       <button >
       <Link to='/Addnew' className="Link">
-      <h3>Add new <FontAwesomeIcon width={"1em"} icon={faPlus}/></h3>
+      <h3>Add new <FontAwesomeIcon width={"1em"} /*icon={faPlus}*//></h3>
     </Link>
     </button>
     </div>
   </div>
   </div>
-   
+
   </div>
   {/*end col*/}
 </>
