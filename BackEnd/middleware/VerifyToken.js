@@ -3,7 +3,7 @@ const User = require('../models/user.model')
 
 module.exports = (req,res,next)=>{
 
-    console.log(req.headers.authorization)
+    // console.log(req.headers.authorization)
     const header = req.headers.authorization.split(' ')[1];
     jwt.verify(header,process.env.SECRET,(error,result)=>{
 
@@ -25,7 +25,6 @@ module.exports = (req,res,next)=>{
                     return;
                 }
                 req.user = user;
-                console.log(req.user)
                 next()
             })
             .catch(err=>next(err))
