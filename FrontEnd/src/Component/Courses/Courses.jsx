@@ -65,30 +65,7 @@ let Cour=()=>{
           </Link>
         </div>
         {/*end col*/}
-        <div className="col-md-4 col-12 mt-4 pt-2">
-          <div className="card border-0 work-container work-classic">
-            <div className="card-body p-0">
-              <a href="portfolio-detail-one.html">
-                <img
-                  src={js}
-                  className="img-fluid rounded work-image"
-                  alt=""
-                />
-              </a>
-              <div className="content pt-3">
-                <h5 className="mb-0">
-                  <a
-                    href="portfolio-detail-one.html"
-                    className="text-dark title"
-                  >
-                    Course 3
-                  </a>
-                </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/*end col*/}
+        
   </div>
   </div>
   </div>
