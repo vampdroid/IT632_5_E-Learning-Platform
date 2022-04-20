@@ -13,10 +13,11 @@ import CoursePage from "./Component/CoursesPage/CoursePage";
 import InsCour from "./Component/InsCourse/InsCourse";
 
 import Passedit from "./Component/Passedit/Passedit";
+import AddCourse from "./Component/add-course";
 function App() {
   return (
 
-     <div className="App">
+    <div className="App">
       <BrowserRouter>
         <Routes>
           <Route path="/" exact element={<Layout />} />
@@ -28,9 +29,11 @@ function App() {
           <Route path='/Profcour' element={<Profcour/>}/>
           <Route path='/change-password'  element={<Passedit/>}/>
           <Route path='/courses' element={<CoursePage />}/>
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/add-course" element={ <AddCourse/>} />
         </Routes>
         <Rout />
-        
+
       </BrowserRouter>
     </div>
   );

@@ -44,9 +44,9 @@ let InCour=()=>{
                   </a>
                 </h5>
 
-                 <FontAwesomeIcon width={"5em"} /*icon={faDumpster}*//>
+                 <FontAwesomeIcon width={"5em"} icon={faDumpster}/>
                  <Link to='/EditCourse' className="Link">
-                 <FontAwesomeIcon width={"5em"} /*icon={faEdit}*//>
+                 <FontAwesomeIcon width={"5em"} icon={faEdit}/>
                  </Link>
               </div>
             </div>
@@ -73,9 +73,9 @@ let InCour=()=>{
                   </a>
 
                 </h5>
-                <FontAwesomeIcon width={"5em"} /*icon={faDumpster}*//>
+                <FontAwesomeIcon width={"5em"} icon={faDumpster}/>
                 <Link to='/EditCourse' className="Link">
-                <FontAwesomeIcon width={"5em"} /*icon={faEdit}*//>
+                <FontAwesomeIcon width={"5em"} icon={faEdit}/>
                 </Link>
               </div>
             </div>
@@ -102,9 +102,9 @@ let InCour=()=>{
                   </a>
 
                 </h5>
-                 <FontAwesomeIcon width={"5em"} /*icon={faDumpster}*//>
+                 <FontAwesomeIcon width={"5em"} icon={faDumpster}/>
                  <Link to='/EditCourse' className="Link">
-                 <FontAwesomeIcon width={"5em"} /*icon={faEdit}*//>
+                 <FontAwesomeIcon width={"5em"} icon={faEdit}/>
                  </Link>
               </div>
             </div>
@@ -121,7 +121,7 @@ let InCour=()=>{
     </div>
   </div>
   </div>
-   
+
   </div>
   {/*end col*/}
 </>
