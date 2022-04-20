@@ -7,6 +7,12 @@ import Register from "./Component/Register";
 import Layout from "./Component/Layout";
 import AboutUs from "./Component/AboutUs";
 import Profile from "./Component/Profedit/Profedit";
+import Profcour from "./Component/Courses/Courses";
+import CoursePage from "./Component/CoursesPage/CoursePage";
+
+import InsCour from "./Component/InsCourse/InsCourse";
+
+import Passedit from "./Component/Passedit/Passedit";
 function App() {
   return (
 
@@ -18,6 +24,10 @@ function App() {
           <Route path="/register" element={<Register />}/>
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path='/instructor-course' element={<InsCour />}/>
+          <Route path='/Profcour' element={<Profcour/>}/>
+          <Route path='/change-password'  element={<Passedit/>}/>
+          <Route path='/courses' element={<CoursePage />}/>
         </Routes>
         <Rout />
         
