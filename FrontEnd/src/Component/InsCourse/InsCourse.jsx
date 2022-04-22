@@ -21,41 +21,37 @@ let InCour=()=>{
         <>
   <div className="col-lg- col-12">
     <h5 className="mb-0 head">Courses instructed by you: </h5>
-    <div className="rounded shadow p-4">
+    <div className="rounded shadow p-4 booklist">
+      {idisp()}
+        <br />
       
-      <div className="row">
-        <div className="col-md-4 col-12 mt-4 pt-2">
-          <div className="card border-0 work-container work-classic">
-            <div className="card-body p-0">
-              <a href="portfolio-detail-one.html">
-                <img
-                  src={js}
-                  className="img-fluid rounded work-image"
-                  alt=""
-                />
-              </a>
-              <div className="content pt-3">
-                <h5 className="mb-0">
-                  <a
-                    href="portfolio-detail-one.html"
-                    className="text-dark title"
-                  >
-                    Course1
-                  </a>
-                </h5>
+  </div>
+  <div className="mt-4 border button1">
+      <button >
+      <Link to='/Addnew' className="Link">
+      <h3>Add new <FontAwesomeIcon width={"1em"} icon={faPlus}/></h3>
+    </Link>
+    </button>
+    </div>
+  </div>
+   
+  
 
-                 <FontAwesomeIcon width={"5em"} icon={faDumpster}/>
-                 <Link to='/EditCourse' className="Link">
-                 <FontAwesomeIcon width={"5em"} icon={faEdit}/>
-                 </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/*end col*/}
-        <div className="col-md-4 col-12 mt-4 pt-2">
-          <div className="card border-0 work-container work-classic">
-            <div className="card-body p-0">
+</>
+
+    )
+}
+
+export default InsCour;
+
+const idisp=()=>{
+    let arr=[];
+    for(let i=0;i<9;i++)
+    {
+        arr.push( 
+         <div className="col-md-4 col-12 mt-4 pt-2">
+          <div className="card border-0 work-container work-classic inscourse">
+            <div className="card-body p-0 ">
               <a href="portfolio-detail-one.html">
                 <img
                   src={js}
@@ -63,7 +59,7 @@ let InCour=()=>{
                   alt=""
                 />
               </a>
-              <div className="content pt-3">
+              <div className="content pt-3 incourse">
                 <h5 className="mb-0">
                   <a
                     href="portfolio-detail-one.html"
@@ -81,52 +77,9 @@ let InCour=()=>{
             </div>
           </div>
         </div>
-        {/*end col*/}
-        <div className="col-md-4 col-12 mt-4 pt-2">
-          <div className="card border-0 work-container work-classic">
-            <div className="card-body p-0">
-              <a href="portfolio-detail-one.html">
-                <img
-                  src={js}
-                  className="img-fluid rounded work-image"
-                  alt=""
-                />
-              </a>
-              <div className="content pt-3">
-                <h5 className="mb-0">
-                  <a
-                    href="portfolio-detail-one.html"
-                    className="text-dark title"
-                  >
-                    Course 3
-                  </a>
-
-                </h5>
-                 <FontAwesomeIcon width={"5em"} icon={faDumpster}/>
-                 <Link to='/EditCourse' className="Link">
-                 <FontAwesomeIcon width={"5em"} icon={faEdit}/>
-                 </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/*end col*/}
-        <br />
-      <div className="mt-4 border button1">
-      <button >
-      <Link to='/Addnew' className="Link">
-      <h3>Add new <FontAwesomeIcon width={"1em"} /*icon={faPlus}*//></h3>
-    </Link>
-    </button>
-    </div>
-  </div>
-  </div>
-
-  </div>
-  {/*end col*/}
-</>
-
-    )
+        )
+    }
+    return arr;
 }
 
-export default InsCour;
+

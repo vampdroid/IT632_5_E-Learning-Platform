@@ -6,6 +6,8 @@ import Login from "./Component/Login";
 import Register from "./Component/Register";
 import Layout from "./Component/Layout";
 import AboutUs from "./Component/AboutUs";
+import Home from './Component/Home/Home';
+
 import Profile from "./Component/Profedit/Profedit";
 import Profcour from "./Component/Courses/Courses";
 import CoursePage from "./Component/CoursesPage/CoursePage";
