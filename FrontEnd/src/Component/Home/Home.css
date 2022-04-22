@@ -31,7 +31,10 @@
     height: 25rem !important;
     background-image: linear-gradient(to right, violet, blueviolet);
 }
-
+.container1{
+    background: none !important;
+    margin-top: 0 !important;
+}
 .shadow1 {
     box-shadow: 0xpx 0px 20px gray;
 }

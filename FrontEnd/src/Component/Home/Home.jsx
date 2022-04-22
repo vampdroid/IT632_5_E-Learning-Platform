@@ -103,7 +103,7 @@ const Owldemo1 = () => {
   return (
     <>
       <div className="bg-primary">
-        <div className="container">
+        <div className="container container1">
           <div className="align-items-center g-0 row">
             <div className="col-xl-5 col-lg-6 col-md-12">
               <div className="py-5 py-lg-0">
