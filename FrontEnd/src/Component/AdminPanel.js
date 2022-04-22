@@ -1,59 +1,69 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import js from '../Assets/js.png'
-import './Showcase.css';
-import Header from "../Header.";
-const Show=()=>{
+import logo from '../logo.svg';
+import './Showcase/Showcase.css';
+
+const AdminPanel=()=>{
+
+
+
     return(
-      <>
-      <div>
-        <Header/>
-        </div>
+
 <div className="mb-4 px-4 p-lg-0">
-   <h5 className="mb-0 head">Account </h5>
-   <img src={js} width="60rem" className="mt-1 mb-1 border" alt="profile pic" />
+   <h5 className="mb-0 head">Edulogy Admin </h5>
+   <img src={logo} width="60rem" className="mt-1 mb-1 border" alt="profile pic" />
   <ul className="list-group list-group-clean">
     <li className="list-group-item ">
-      <Link to='/Profile-edit'>
+      <Link to='/admin-table'>
         <div className="d-flex justify-content-between align-items-center">
-            <span>Profile account/edit</span>
+            <span>Students</span>
 
         </div>
       </Link>
     </li>
     <li className="list-group-item ">
-      <Link to='/Profcour'>
+    <Link to='/admin-table'>
         <div className="d-flex justify-content-between align-items-center">
           <span>
             <i className="icon icon-cart mr-2" />
+            <span>Instructors</span>
+          </span>
+        </div>
+      </Link>
+    </li>
+    <li className="list-group-item ">
+    <Link to='/admin-table'>
+        <div className="d-flex justify-content-between align-items-center">
+          <span>
+            <i className="icon icon-alarm mr-2" />
             <span>Courses</span>
           </span>
         </div>
       </Link>
     </li>
     <li className="list-group-item ">
-      <Link to='/InsCourse'>
+    <Link to='/admin-table'>
         <div className="d-flex justify-content-between align-items-center">
           <span>
             <i className="icon icon-alarm mr-2" />
-            <span>Instructing Courses</span>
+            <span>Enrollments</span>
           </span>
         </div>
       </Link>
     </li>
     <li className="list-group-item ">
-      <Link to='/Password-edit'>
+    <Link to='/admin-table'>
         <div className="d-flex justify-content-between align-items-center">
           <span>
             <i className="icon icon-alarm mr-2" />
-            <span>Change Password</span>
+            <span>Logout</span>
           </span>
         </div>
       </Link>
     </li>
   </ul>
 </div>
-</>
+
     )
 }
-export default Show;
+export default AdminPanel;

@@ -1,13 +1,15 @@
 import React from "react";
-import "./editCourse.css";
+import "../Styles/editCourse.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import {faUpload} from '@fortawesome/free-solid-svg-icons';
 import {getfname} from "./uploadfile";
+import Header from "./Header.";
 const editCourse=()=>{
     
     return(
         
         <div>
+                <Header/>
             <div class="main1">
                 <div className="col1">
                 <center><h2 className="text-light mt-2">List Of Content</h2></center><hr/>

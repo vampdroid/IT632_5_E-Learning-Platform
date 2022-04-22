@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 const cors = require('cors');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/user');
 
 var app = express();
 
@@ -42,7 +42,7 @@ app.use('/', indexRouter);
 // app.use('/users',userssRouter);
 
 const userRouter = require('./routes/user');
-app.use('/users',userRouter);
+app.use('/user',userRouter);
 
 const categoryRouter = require('./routes/category');
 app.use('/category',categoryRouter);

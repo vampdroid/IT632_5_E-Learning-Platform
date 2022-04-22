@@ -1,6 +1,8 @@
 //import logo from './logo.svg';
 // import './App.css';
 import '../Styles/add-course.css';
+import {Link} from "react-router-dom";
+import Header from './Header.';
 import {useState} from "react";
 
 function Add_course() {
@@ -10,7 +12,7 @@ function Add_course() {
     title:"",
     description:"",
     thumbnail:"",
-    category:"625db360dbd2c7fb3200a112"
+    category:"62624057a95105869d739ae0"
   }
 
   const handleChange = (ev) => {
@@ -67,7 +69,9 @@ function Add_course() {
 
   return (
     <>
+    <Header/>
       <body className="main">
+        
       <div className="container">
         <div className="signup">
           <form id="addCourseForm" className="row g-3 needs-validation" enctype="multipart/form-data" noValidate>
@@ -112,13 +116,13 @@ function Add_course() {
                      id="validationCustom03" required/>
 
             </div>
-
+            <Link to="/edit-course">
             <div className="col-md-12">
               <center>
                 <button className="btn1 btn2" type="submit" onClick={Add_course}>Add Course</button>
               </center>
             </div>
-
+            </Link>
           </form>
         </div>
       </div>

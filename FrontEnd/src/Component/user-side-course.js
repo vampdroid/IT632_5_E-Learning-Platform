@@ -1,13 +1,15 @@
 import React from "react";
-import "./user-side-course.css";
+import "../Styles/user-side-course.css";
+import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 import {faUpload} from '@fortawesome/free-solid-svg-icons';
-
+import Header from "./Header.";
 const usersidecourse=()=>{
     
     return(
         
         <div>
+                <Header/>
             <div class="mainu1">
                 <div className="colu1">
                 <center><h2 className="text-light mt-2">List Of Content</h2></center><hr/>
@@ -20,7 +22,9 @@ const usersidecourse=()=>{
                     <div class="editContentu">
                         <p><h1 className="save display-5 mt-3 text-success">Our Title</h1></p>
                         {/* <input  className="form-control  control save" type="text" placeholder="Enter Title Of Course"/> */}
+                       <Link to='/discuss-course'>
                         <button className="savebtnu mt-2">Course Discussion</button>
+                        </Link>
                     </div>
                     <div className="descArea">
                         

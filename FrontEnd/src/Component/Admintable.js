@@ -1,7 +1,19 @@
 //import logo from './logo.svg';
-import './App.css';
+import '../App.css';
+import './AdminPanel'
+import AdminPanel from './AdminPanel';
 
-function App() {
+const AdminTable=()=>{
+  return(
+  <div className="main">
+          <div className="left"><AdminPanel/></div>
+          <div className="right"><Table/></div>
+      </div>
+  );
+}
+
+
+function Table() {
   return (
     <>
 
@@ -67,4 +79,4 @@ function App() {
   );
 }
 
-export default App;
+export default AdminTable;
