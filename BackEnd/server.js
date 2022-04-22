@@ -25,11 +25,23 @@ mongoose
     console.log(err);
 });
 
-const userRouter = require('./app/routes/user');
-app.use('/user',userRouter);
+const userRouter = require('./routes/user');
+app.use('/users',userRouter);
 
-const categoryRouter = require('./app/routes/category');
+const categoryRouter = require('./routes/category');
 app.use('/category',categoryRouter);
+
+const addressRouter = require('./app/routes/address');
+app.use('/address',addressRouter);
+
+const enrollRouter = require('./app/routes/enrollment');
+app.use('/enroll',enrollRouter);
+
+const courseRouter = require('./app/routes/course');
+app.use('/course',courseRouter);
+
+const discussionRouter = require('./app/routes/discussion');
+app.use('/discuss',discussionRouter);
 
 app.listen(port,()=>{
     console.log(`Server is running on port:${port}`);

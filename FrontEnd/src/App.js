@@ -21,6 +21,7 @@ import AdminPanel  from './Component/AdminPanel';
 import AdminTable from './Component/Admintable';
 import AdminLogin from './Component/Alogin';
 
+import Sidebar from './Component/Sidebar';
 function App() {
   return (
 
@@ -47,6 +48,8 @@ function App() {
           <Route path="/admin-login" element={ <AdminLogin/>} />
           <Route path="/admin-panel" element={ <AdminTable/>} />
           <Route path="/admin-table" element={ <AdminTable/>} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/dashboard" element={<adminDashboard />} />
         </Routes>
         <Rout />
 
