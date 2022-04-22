@@ -6,6 +6,8 @@ import Login from "./Component/Login";
 import Register from "./Component/Register";
 import Layout from "./Component/Layout";
 import AboutUs from "./Component/AboutUs";
+import Home from './Component/Home/Home';
+
 function App() {
   return (
 
@@ -17,7 +19,7 @@ function App() {
           <Route path="/register" element={<Register />}/>
           <Route path="/aboutus" element={<AboutUs />} />
         </Routes>
-        <Rout />
+      <Rout />  
         
       </BrowserRouter>
     </div>

@@ -1,0 +1,179 @@
+.img {
+    width: 20rem !important;
+    height: 100px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.h {
+    background-image: linear-gradient(to right, rgb(255, 255, 255), rgb(36, 174, 121));
+}
+
+.outer {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 200px;
+    height: 20rem !important;
+}
+
+.owl-stage {
+    width: 400rem !important;
+}
+
+.owl-dots {
+    background-image: linear-gradient(to right, violet, blueviolet);
+    border-radius: 15%;
+}
+
+.owl-theme {
+    margin-top: 2rem;
+    padding: 2rem;
+    height: 25rem !important;
+    background-image: linear-gradient(to right, violet, blueviolet);
+}
+
+.shadow1 {
+    box-shadow: 0xpx 0px 20px gray;
+}
+
+.pop:hover {
+    transition: 1s;
+    ;
+    transform: scale(0.9);
+}
+
+.owl-item.active {
+    width: 10rem !important;
+    /* height: 100rem !important; */
+    margin-left: 6rem;
+    margin-right: 0px;
+}
+
+.owl-item {
+    width: 20rem !important;
+    margin-left: 6rem;
+    margin-right: 0px;
+}
+
+.Flexdes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 3em;
+    margin-bottom: 3em;
+}
+
+.Book {
+    margin-top: 2em;
+    width: 15em;
+    height: 15em;
+    padding: 50px;
+    background-color: lightpink;
+    box-shadow: 0 0 20px grey;
+}
+
+.Book1 {
+    margin-left: -20px;
+    margin-top: 2em;
+    width: 15em;
+    height: 15em;
+    padding: 50px;
+    background-color: white;
+    color: rgb(36, 174, 121);
+    box-shadow: 0 0 10px grey;
+}
+
+.Link {
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.Link:hover {
+    color: blue !important;
+}
+
+.Book1:hover {
+    box-shadow: 0 0 20px green;
+}
+
+.box-content {
+    padding: 20px;
+    box-shadow: 0 0 20px grey;
+}
+
+.box-content:hover {
+    background-color: green;
+    color: white;
+}
+
+.Book-inside {
+    width: 3em;
+    height: 3em;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    background-color: blueviolet;
+    box-shadow: 0 0 10px grey;
+}
+
+.Book-inside2 {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+@media screen and (max-width:800px) {
+    .Flexdes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 3em;
+    }
+
+    .booklist {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .Book1 {
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+.booklist {
+    width: 90vw;
+    max-width: 1170px;
+    display: grid;
+    gap: 2rem;
+    margin: auto;
+}
+
+@media screen and (min-width:800px) {
+    .booklist {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+}
+
+.bg-primary {
+    padding: 2rem !important;
+}
+
+.slick-next {
+    /* font-size: 15rem !important; */
+    margin-right: 5rem !important;
+    z-index: 1;
+}
+
+.slick-prev {
+    /* font-size: 15rem !important; */
+    margin-left: 5rem !important;
+    z-index: 1;
+}
+
+.slick-arrow {
+    /* background: white; */
+    background: black !important;
+}

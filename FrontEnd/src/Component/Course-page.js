@@ -27,7 +27,7 @@ const Course=()=>{
                    <strong>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam quae aspernatur illum cupiditate ipsam, velit provident corporis fugiat magni maiores aperiam officiis eius architecto, expedita eveniet. Est qui sint doloribus.</strong>
                    </p><br></br></div> 
                    
-                   <button class="btn btn-light btn-lg text-success enroll">Enroll Now</button><br/>
+                   <button className="btn btn-light btn-lg text-success enroll">Enroll Now</button><br/>
                </div>
                </div>
            </div>

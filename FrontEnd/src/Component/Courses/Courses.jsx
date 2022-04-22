@@ -18,20 +18,31 @@ let Cour=()=>{
         <>
   <div className="col-lg- col-12">
     <h5 className="mb-0 head">Courses: </h5>
-    <div className="rounded shadow p-4">
-      
-      <div className="row">
-        
-        <div className="col-md-4 col-12 mt-4 pt-2">
+    <div className="rounded shadow  booklist">
+      {cdisp()}
+  </div>
+  </div>
+ 
+</>
+
+    )
+}
+export default Profcour;
+const cdisp=()=>{
+    let arr=[];
+    for(let i=0;i<9;i++)
+    {
+        arr.push( 
+          <div className=" col-md-4 col-12 mt-4 ms-2 mb-3">
           <Link to='/CourseDetail' className='Link'>
-          <div className="card border-0 work-container work-classic">
+          <div className="card border-0 work-container work-classic inscourse">
             <div className="card-body p-0">
                 <img
                   src={js}
                   className="img-fluid rounded work-image"
                   alt=""
                 />
-              <div className="content pt-3">
+              <div className="content pt-3 incourse">
                 <h5 className="mb-0">
               
                     Course 1
@@ -42,36 +53,9 @@ let Cour=()=>{
           </div>
            </Link>
         </div>
-        {/*end col*/}
-        <div className="col-md-4 col-12 mt-4 pt-2">
-           <Link to='/CourseDetail' className='Link'>
-          <div className="card border-0 work-container work-classic">
-            <div className="card-body p-0">
-                <img
-                  src={js}
-                  className="img-fluid rounded work-image"
-                  alt=""
-                />
-             
-              <div className="content pt-3">
-                <h5 className="mb-0">
-                  
-                    Course 2
-                 
-                </h5>
-              </div>
-            </div>
-          </div>
-          </Link>
-        </div>
-        {/*end col*/}
-        
-  </div>
-  </div>
-  </div>
-  {/*end col*/}
-</>
-
-    )
+        )
+    }
+    return arr;
 }
-export default Profcour;
+
+ 
