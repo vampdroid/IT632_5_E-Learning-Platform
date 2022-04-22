@@ -8,12 +8,13 @@ var bodyparser = require("body-parser");
 var fileUpload = require("express-fileupload")
 const mongodb = require("mongodb");
 
+const verifyJWt = require('../middleware/VerifyToken')
 router.use(bodyparser.json());
 router.use(bodyparser.urlencoded({ extended: true }));
 router.use(fileUpload())
 
-router.route('/')
-    .get((req,res,next)=>{
+router
+    .get('/',(req,res,next)=>{
         Course.find({})
             .then(course=>{
                 res.statusCode=200;
@@ -23,34 +24,22 @@ router.route('/')
             .catch(err=>next(err));
     })
 
-    .post(async (req,res,next) => {
-
+    .post('/',verifyJWt,async (req,res,next) => {
+        // console.log(req.files.thumbnail);
     const errors={};
     const userData = {
-        user:req.body.user,
+        user:req.user._id,
         category:req.body.category,
         title:req.body.title,
         description:req.body.description,
         thumbnail: req.files.thumbnail.data,
         contentType:req.files.thumbnail.mimetype
     }
-
-    await User.findById(userData.user)
-        .then((user)=>{
-            console.log(user)
-            if(!user){
-                errors.user="User not found"
-            }
-            else if(user.role!=="ins")
-                errors.user="This user can not create course"
-        })
-        .catch(error=>{
-            console.log(errors)
-            errors.user="User not found"
-        })
-
+    if(req.user.role!=="ins")
+        errors.user="This user can not create course"
    await Category.findById(userData.category)
         .then((category)=>{
+            // console.log(category)
             if(!category){
                 errors.category="category not found"
             }
@@ -59,13 +48,13 @@ router.route('/')
             errors.category="category not found"
         })
 
-    if(userData.title.length>100 || userData.title.length != undefined){
+    if(userData.title.length>100 || userData.title === undefined){
         errors.title = "course title should be less then 100 character"
     }
-    if(userData.title.description>256 || userData.title.length != undefined){
+    if(userData.description.length>256 || userData.description === undefined){
         errors.description = "course description should be less then 256 character"
     }
-    if(!userData.contentType.match(/\.(jpg|jpeg|png|gif)$/))
+    if(!userData.contentType.match(/.(jpg|jpeg|png|gif)$/))
         errors.thumbnail='you can upload only image file';
 
     if(Object.keys(errors).length >0 ) {
@@ -78,7 +67,7 @@ router.route('/')
         newCourse.save()
             .then((course) => {
                 // console.log(course);
-                res.json("Course added")
+                res.json(course)
             })
             .catch(err => res.status(400).json("error:" + err));
     }

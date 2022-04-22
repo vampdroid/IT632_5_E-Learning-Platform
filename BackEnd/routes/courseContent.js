@@ -1,102 +1,106 @@
 const router = require('express').Router();
 let Course = require('../models/course.model');
 let Content = require('../models/content.model');
-const mongodb = require('mongodb')
 const fs = require('fs')
 var bodyparser = require("body-parser");
 var fileUpload = require("express-fileupload")
-
+const mongoose = require("mongoose");
+const mongodb = require('mongodb')
 router.use(bodyparser.json());
-router.use(bodyparser.urlencoded({ extended: true }));
+router.use(bodyparser.urlencoded({extended: true}));
 router.use(fileUpload({
-    useTempFiles : true,
-    tempFileDir : '/tmp/'
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
 }))
 
-
 router
-    .post("/:courseId/add",async (req,res,next)=>{
-        await mongodb.MongoClient.connect(process.env.DB_URL_MONGO)
-            .then(async client => {
+    .post("/:courseId/add", (req, res, next) => {
+        mongodb.MongoClient.connect(process.env.DB_URL_MONGO)
+            .then(client => {
                 console.log(req.files.thumbnail);
-                const name = req.files.thumbnail.name.slice(0,-4);
-                var db = client.db("videos");
+                const name = req.files.thumbnail.name.slice(0, -4) + req.params.courseId;
                 console.log(name);
+                var db = client.db("videos");
                 const bucket = new mongodb.GridFSBucket(db);
-                const videoUploadStream = await bucket.openUploadStream(name);
-                const videoReadStram = await fs.createReadStream(req.files.thumbnail.tempFilePath);
-                await videoReadStram.pipe(videoUploadStream);
-                // console.log("create");
-                // res.status(200);
-                // await  Content.create({
-                //     course:req.params.courseId,
-                //     title:req.body.title,
-                //     description:req.body.description,
-                //     video:name,
-                //     contentType:req.files.thumbnail.mimetype
-                // })
-                //     .then((content)=>{
-                //         if(content){
-                //             res.status(200)
-                //                 .json(content);
-                //             return;
-                //         }
-                //         else{
-                //             res.status(422)
-                //                 .json({
-                //                     error:"content not added"
-                //                 });
-                //             return;
-                //         }
-                //     })
-                res.end("Done..");
+                const videoUploadStream = bucket.openUploadStream(name);
+                const videoReadStram = fs.createReadStream(req.files.thumbnail.tempFilePath);
+                videoReadStram.pipe(videoUploadStream);
+
+                videoUploadStream.on('close', () => {
+                    console.log("create");
+                    res.status(200);
+                    Content.create({
+                        course: req.params.courseId,
+                        title: req.body.title,
+                        description: req.body.description,
+                        video: name,
+                        contentType: req.files.thumbnail.mimetype
+                    })
+                        .then((content) => {
+                            if (content) {
+                                res.status(200)
+                                    .json(content);
+                                return;
+                            } else {
+                                res.status(422)
+                                    .json({
+                                        error: "content not added"
+                                    });
+                                return;
+                            }
+                        })
+                })
+
             })
-            .catch(err=>{
+            .catch(err => {
                 next(err);
             })
     })
-    .get("/:courseId/:nameId/video",async(req,res,next)=>{
+    .get("/:courseId/:nameId/video", async (req, res, next) => {
         const range = req.headers.range;
-        if(!range){
+        if (!range) {
             res.status(400).send("Requied Range Header");
         }
-       await mongodb.MongoClient.connect("mongodb://localhost:27017")
-        .then(client=>{
-            const db = client.db("videos");
-           
-            db.collection('fs.files').findOne({filename:req.params.nameId})
-            .then(video=>{
-                
-                const videoSize = video.length;
-                const start = Number(range.replace(/\D/g,""));
-                
-                console.log("1"+ " "+ start);
-            
-                const CHUNK_SIZE = 10**6;
-                console.log("3");
-                const end = Math.min(start+CHUNK_SIZE,videoSize-1);
-                const contentLength = end - start +1 ;
-                console.log("4");
-                const headers={
-                    'Content-range':`bytes ${start}-${end}/${videoSize}`,
-                    "Accept-range":"bytes",
-                    "Content-Length":contentLength,
-                    'Content-Type':"video/mp4",
-                }
-                console.log(video);
-                res.writeHead(206,headers);
-
-                const bucket = new mongodb.GridFSBucket(db);
-                console.log(req.params.nameId);
-                const downloadStream = bucket.openDownloadStreamByName(req.params.nameId,{
-                    start,end
+        const content = await Content.findOne({course: req.params.courseId, _id: req.params.nameId})
+        if (!content) {
+            res.status(404)
+                .json({
+                    error: "content not found"
                 })
+            return;
+        }
 
-                downloadStream.pipe(res);
+        await mongodb.MongoClient.connect(process.env.DB_URL_MONGO)
+            .then(client => {
+                const db = client.db("videos");
+                db.collection('fs.files').findOne({filename: content.video})
+                    .then(async video => {
+                        console.log(video)
+                        const videoSize = video.length;
+                        const start = Number(range.replace(/\D/g, ""));
+                        const CHUNK_SIZE = 10 ** 6;
+                        const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
+                        const contentLength = end - start + 1;
+                        const headers = {
+                            'Content-range': `bytes ${start}-${end}/${videoSize}`,
+                            "Accept-range": "bytes",
+                            "Content-Length": contentLength,
+                            'Content-Type': "video/mp4",
+                        }
+                        res.writeHead(206, headers);
+                        const bucket = new mongodb.GridFSBucket(db,{bucketName:"fs"});
+
+                        const downloadStream = bucket.openDownloadStreamByName(video.filename, {
+                            start, end
+                        })
+                        console.log(" start ",start," end ",end)
+                        // streamCounter++;
+                        downloadStream.pipe(res);
+
+                    })
+                    .catch(err => next(err));
             })
-            .catch(err=>next(err));
-        })
-        .catch(err=>next(err));
+            .catch(err => next(err));
 
     })
 module.exports = router;

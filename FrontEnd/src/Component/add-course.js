@@ -1,44 +1,130 @@
 //import logo from './logo.svg';
 // import './App.css';
-import './add-course.css';
-function addCourse() {
+import '../Styles/add-course.css';
+import {useState} from "react";
+
+function Add_course() {
+
+  const [thumbnail,setthumbnail] = useState(null);
+  const initialState ={
+    title:"",
+    description:"",
+    thumbnail:"",
+    category:"625db360dbd2c7fb3200a112"
+  }
+
+  const handleChange = (ev) => {
+    let { name, value } = ev.target;
+    if(name === "thumbnail"){
+      const files = Array.from(ev.target.files)
+      console.log(files)
+      setthumbnail(files)
+      console.log(thumbnail)
+
+    }
+    setCourse({
+      ...course,
+      [name]: value,
+    });
+  };
+  const[course,setCourse] = useState(initialState);
+
+  async function Add_course(event)
+  {
+
+    const token = localStorage.getItem('token')
+    if(!token){
+      window.location.href = '/login'
+    }
+    event.preventDefault()
+    let formData = new FormData();
+    const thub = document.getElementById("validationCustom03");
+    formData.append("thumbnail",thub.files[0]);
+    formData.append("title",course.title);
+    formData.append("description",course.description);
+    formData.append("category",course.category);
+    const result = await fetch('http://localhost:4000/courses', {
+      method: 'POST',
+      headers:
+          {
+            'accept': 'application/json',
+            'authorization':`Bearer ${token}`
+          },
+      body: formData,
+    })
+    alert(result)
+    const data = await result.json();
+    if(data.email){
+      alert("Course Added Successfully")
+      window.location.href = '/editCourse'
+    }
+    else{
+      alert("Course Not Added")
+    }
+    console.log("result",data);
+  }
+
+
   return (
     <>
-    <body className="main">
-    <div className="container" >
-      <div className="signup" >
-    <form className="row g-3 needs-validation" novalidate>
-      
-   <center> <h2>Add Your Course Here</h2></center>
-  <div className="col-md-12">
-    {/* <label for="validationCustom01" className="form-label">First name</label> */}
+      <body className="main">
+      <div className="container">
+        <div className="signup">
+          <form id="addCourseForm" className="row g-3 needs-validation" enctype="multipart/form-data" noValidate>
 
-    <input placeholder='Enter Course Title' type="text" className="form-control" id="validationCustom01"  required/>
-  </div>
-  
-  <div className="col-md-12">
-    {/* <label for="validationCustomUsername" className="form-label">Email</label> */}
-    <div className="input-group has-validation"> 
-      <input placeholder='Enter Course Description' type="text-area" className="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required/><br/>
-      
-    </div>
-  </div>
-  <div className="col-md-12">
-    {/* <label for="validationCustom03" className="form-label">City</label> */}
-    <input placeholder='Enter Course Thumbnail' type="file" className="form-control" id="validationCustom03" required/>
-    
-  </div>
-  
-  <div className="col-md-12">
-    <center><button className="btn1 btn2" type="submit" >Add Course</button></center>
-  </div>
-  
-</form>
-</div>
-</div>
-</body>
+            <center><h2>Add Your Course Here</h2></center>
+            <div className="col-md-12">
+              {/* <label for="validationCustom01" className="form-label">First name</label> */}
+
+              <input name='title' placeholder='Enter Course Title' value={course.title}
+                      type="text" className="form-control" onChange={handleChange}
+                     id="validationCustom01" required/>
+            </div>
+            {/*<div className="col-md-12">*/}
+            {/*  /!* <label for="validationCustomUsername" className="form-label">Email</label> *!/*/}
+            {/*  <div className="input-group has-validation">*/}
+            {/*    <input name='user' placeholder='Enter Course Description' value="6239616b41c54b81336c1963"*/}
+            {/*           type="text-area" className="form-control" id="validationCustomUsername"*/}
+            {/*           aria-describedby="inputGroupPrepend" required/><br/>*/}
+            {/*  </div>*/}
+            {/*</div>*/}
+            <div className="col-md-12">
+              {/* <label for="validationCustomUsername" className="form-label">Email</label> */}
+              <div className="input-group has-validation">
+                <input name='category' placeholder='Enter Course Description' value={course.category}
+                       onChange={handleChange}
+                       type="text-area" className="form-control" id="validationCustomUsername"
+                       aria-describedby="inputGroupPrepend" required/><br/>
+              </div>
+            </div>
+            <div className="col-md-12">
+              {/* <label for="validationCustomUsername" className="form-label">Email</label> */}
+              <div className="input-group has-validation">
+                <input name='description' placeholder='Enter Course Description' value={course.description}
+                       onChange={handleChange}  type="text-area" className="form-control"
+                       id="validationCustomUsername" aria-describedby="inputGroupPrepend" required/><br/>
+              </div>
+            </div>
+            <div className="col-md-12">
+              {/* <label for="validationCustom03" className="form-label">City</label> */}
+              <input name='thumbnail' placeholder='Enter Course Thumbnail' value={course.thumbnail}
+                     onChange={handleChange}  type="file" className="form-control"
+                     id="validationCustom03" required/>
+
+            </div>
+
+            <div className="col-md-12">
+              <center>
+                <button className="btn1 btn2" type="submit" onClick={Add_course}>Add Course</button>
+              </center>
+            </div>
+
+          </form>
+        </div>
+      </div>
+      </body>
     </>
   );
 }
 
-export default addCourse;
+export default Add_course;

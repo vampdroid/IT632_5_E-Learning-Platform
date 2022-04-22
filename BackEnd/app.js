@@ -15,8 +15,6 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 app.use(cors())
-const port = process.env.PORT || 4000;
-
 mongoose
     .connect(process.env.DB_URL, {
       useNewUrlParser: true,
@@ -75,7 +73,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(port,()=>{
-  console.log(`Server is running on port:${port}`);
-});
 module.exports = app;
