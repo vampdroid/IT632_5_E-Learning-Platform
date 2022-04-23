@@ -17,13 +17,13 @@ router
     .post("/:courseId/add", (req, res, next) => {
         mongodb.MongoClient.connect(process.env.DB_URL_MONGO)
             .then(client => {
-                console.log(req.files.thumbnail);
-                const name = req.files.thumbnail.name.slice(0, -4) + req.params.courseId;
+                console.log(req.files.content);
+                const name = req.files.content.name.slice(0, -4) + req.params.courseId;
                 console.log(name);
                 var db = client.db("videos");
                 const bucket = new mongodb.GridFSBucket(db);
                 const videoUploadStream = bucket.openUploadStream(name);
-                const videoReadStram = fs.createReadStream(req.files.thumbnail.tempFilePath);
+                const videoReadStram = fs.createReadStream(req.files.content.tempFilePath);
                 videoReadStram.pipe(videoUploadStream);
 
                 videoUploadStream.on('close', () => {
@@ -34,7 +34,7 @@ router
                         title: req.body.title,
                         description: req.body.description,
                         video: name,
-                        contentType: req.files.thumbnail.mimetype
+                        contentType: req.files.content.mimetype
                     })
                         .then((content) => {
                             if (content) {

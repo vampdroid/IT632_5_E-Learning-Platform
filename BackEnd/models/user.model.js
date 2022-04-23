@@ -36,6 +36,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
+  city: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref:'cities'
+  }
  }, {
     timestamps: true,
 });

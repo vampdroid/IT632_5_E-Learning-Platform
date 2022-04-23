@@ -15,7 +15,7 @@ router.use(fileUpload())
 
 router
     .get('/',(req,res,next)=>{
-        Course.find({})
+        Course.find(req.body,"-thumbnail -contentType")
             .then(course=>{
                 res.statusCode=200;
                 res.setHeader('content-type','application/json');
@@ -67,7 +67,13 @@ router
         newCourse.save()
             .then((course) => {
                 // console.log(course);
-                res.json(course)
+                res.json({
+                    _id:course._id,
+                    user: course.user,
+                    category: course.category,
+                    title: course.title,
+                    description: course.description,
+                })
             })
             .catch(err => res.status(400).json("error:" + err));
     }

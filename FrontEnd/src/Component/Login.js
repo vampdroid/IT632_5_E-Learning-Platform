@@ -31,7 +31,8 @@ function Login() {
             })
 
             const data = await result.json();
-            if(data.email){
+            if(data.token){
+                localStorage.setItem("token",data.token);
                 alert("Login sucessfull")
                 window.location.href = '/aboutus'
             }
