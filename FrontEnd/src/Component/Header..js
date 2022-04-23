@@ -35,7 +35,7 @@ function Header(){
                              className="d-inline-block align-text-top"/>
                     </Link>
                 } className=" d-flex order-md-last ms-auto" id="dropdown-menu-align-end" align="end">
-                    <NavLink className="dropdown-item" to="/">Name</NavLink>
+                    <NavLink className="dropdown-item" to="/">Your Profile</NavLink>
                     <NavDropdown.Divider />
                     <NavLink className="dropdown-item" to="/login">Login</NavLink>
                     <NavLink className="dropdown-item" to="/register">Register</NavLink>

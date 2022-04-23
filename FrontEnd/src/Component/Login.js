@@ -8,7 +8,7 @@ function Login() {
 
     const [email, setEmail] = useState("");
     const [emailErr, setEmailErr] = useState(false);
-    const [passwd, setPasswd] = useState("");
+    const [password, setPasswd] = useState("");
     const [passwdErr, setPasswdErr] = useState(false);
 
     async function submitForm(event) {
@@ -19,14 +19,14 @@ function Login() {
         // else{
             //let values = {email, passwd};
         
-            const result = await fetch('http://localhost:4000/user/signIn', {
+            const result = await fetch('http://localhost:4000/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     email,
-                    passwd,
+                    password,
                 }),
             })
 

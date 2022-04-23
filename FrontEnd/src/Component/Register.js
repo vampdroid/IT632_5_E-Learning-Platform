@@ -14,7 +14,7 @@ const Register = () => {
         event.preventDefault()
         //let values = {fname, lname, email, password};
         
-        const result = await fetch('http://localhost:4000/user/add', {
+        const result = await fetch('http://localhost:4000/user/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
