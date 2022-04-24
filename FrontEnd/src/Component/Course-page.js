@@ -1,14 +1,18 @@
 import React from "react";
-import tech from "../Assets/icon-profile.jpg";
+import tech from "./Assets/icon-profile.jpg";
 import 'bootstrap/dist/css/bootstrap.css';
-import "./Coursepage.css"
+import "../Styles/Coursepage.css"
+import { Link } from "react-router-dom";
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarChart } from '@fortawesome/free-solid-svg-icons';
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import Header from "./Header.";
 const Course=()=>{
    return(
        <div>
+           <Header/>
+           
            <div className=" bg-primary" >
     
                <div className="intro">
@@ -26,8 +30,9 @@ const Course=()=>{
                    <p className="text-white desc">
                    <strong>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam quae aspernatur illum cupiditate ipsam, velit provident corporis fugiat magni maiores aperiam officiis eius architecto, expedita eveniet. Est qui sint doloribus.</strong>
                    </p><br></br></div> 
-                   
+                   <Link to="/course-content">
                    <button className="btn btn-light btn-lg text-success enroll">Enroll Now</button><br/>
+                    </Link>
                </div>
                </div>
            </div>

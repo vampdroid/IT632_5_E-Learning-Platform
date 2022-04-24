@@ -10,6 +10,8 @@ import { faPersonChalkboard } from "@fortawesome/free-solid-svg-icons";
 import { faPlane } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Categories from "../Categories/Categories";
+import Header from "../Header.";
+//import Footer from "../Footer."
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -77,7 +79,7 @@ let Inside = () => {
   let arr = [];
   for (let i = 0; i < 5; i++) {
     arr.push(
-      <Link className="Link" to="/CourseDetail">
+      <Link className="Link" to="/course-detail">
         <div className="outer card shadow pop">
           <img className="img img-fluid" src={js} alt="" />
           <h4 className="">Introduction to js</h4>
@@ -102,6 +104,8 @@ const Owldemo1 = () => {
 
   return (
     <>
+
+    <Header/>
       <div className="bg-primary">
         <div className="container container1">
           <div className="align-items-center g-0 row">

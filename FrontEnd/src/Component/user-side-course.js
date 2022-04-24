@@ -7,9 +7,10 @@ import Header from "./Header.";
 const usersidecourse=()=>{
     
     return(
-        
+        <>
+        <Header/>
         <div>
-                <Header/>
+             
             <div class="mainu1">
                 <div className="colu1">
                 <center><h2 className="text-light mt-2">List Of Content</h2></center><hr/>
@@ -36,6 +37,7 @@ const usersidecourse=()=>{
                 </div>
             </div>
         </div>
+        </>
     )
 }
 export default usersidecourse;
