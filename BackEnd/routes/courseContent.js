@@ -13,47 +13,75 @@ router.use(fileUpload({
     tempFileDir: '/tmp/'
 }))
 
+const UploadContet = require('../middleware/UploadContent')
 router
-    .post("/:courseId/add", (req, res, next) => {
-        mongodb.MongoClient.connect(process.env.DB_URL_MONGO)
-            .then(client => {
-                console.log(req.files.content);
-                const name = req.files.content.name.slice(0, -4) + req.params.courseId;
-                console.log(name);
-                var db = client.db("videos");
-                const bucket = new mongodb.GridFSBucket(db);
-                const videoUploadStream = bucket.openUploadStream(name);
-                const videoReadStram = fs.createReadStream(req.files.content.tempFilePath);
-                videoReadStram.pipe(videoUploadStream);
+    .post("/:courseId", UploadContet,(req, res, next) => {
 
-                videoUploadStream.on('close', () => {
-                    console.log("create");
-                    res.status(200);
-                    Content.create({
-                        course: req.params.courseId,
-                        title: req.body.title,
-                        description: req.body.description,
-                        video: name,
-                        contentType: req.files.content.mimetype
-                    })
-                        .then((content) => {
-                            if (content) {
-                                res.status(200)
-                                    .json(content);
-                                return;
-                            } else {
-                                res.status(422)
-                                    .json({
-                                        error: "content not added"
-                                    });
-                                return;
-                            }
-                        })
+        if(!req.body.name && !req.files){
+            res.status(400)
+                .json({
+                    error:"content not uploaded"
                 })
-
+            return;
+        }
+       console.log(req.body);
+        res.status(200);
+        Content.create({
+            course: req.params.courseId,
+            title: req.body.title,
+            description: req.body.description,
+            video: req.body.video,
+            contentType: req.body.contentType
+        })
+            .then((content) => {
+                if (content) {
+                    res.status(200)
+                        .json(content);
+                    return;
+                } else {
+                    res.status(422)
+                        .json({
+                            error: "content not added"
+                        });
+                    return;
+                }
             })
-            .catch(err => {
-                next(err);
+    })
+    .put("/:courseId/:contentId",(req,res,next)=>{
+        Content.findById(req.params.contentId)
+            .then(content=>{
+                if(!content){
+                    res.status(400)
+                        .json({
+                            error:"content not found"
+                        })
+                }
+                next()
+            })
+    },UploadContet,(req,res,next)=>{
+        console.log(req.params.contentId)
+        console.log(req.body);
+        res.status(200);
+        Content.updateOne({_id:req.params.contentId},req.body)
+            .then((response) => {
+                if(response.modifiedCount==0 && response.matchedCount ==0) {
+                    res.status(200)
+                        .json({
+                            error:"content not found"
+                        })
+                    return;
+                }
+
+                if(response.modifiedCount==0 && response.matchedCount !=0) {
+                    res.status(200)
+                        .json({
+                            error:"content not updated"
+                        })
+                    return;
+                }
+                response.success="content updated";
+                res.status(200)
+                    .json(response);
             })
     })
     .get("/:courseId/:nameId/video", async (req, res, next) => {

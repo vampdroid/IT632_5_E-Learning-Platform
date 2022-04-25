@@ -3,7 +3,7 @@ import "../Styles/user-side-course.css";
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 import {faUpload} from '@fortawesome/free-solid-svg-icons';
-import Header from "./Header.";
+import Header from "./Header";
 const usersidecourse=()=>{
     
     return(

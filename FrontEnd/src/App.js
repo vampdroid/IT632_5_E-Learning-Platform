@@ -46,10 +46,10 @@ function App() {
           <Route path="/course-content" element={ <CourseContent/>} />
           {/* Admin */}
           <Route path="/admin-login" element={ <AdminLogin/>} />
-          <Route path="/admin-panel" element={ <AdminTable/>} />
+          <Route path="/admin-panel" element={ <AdminPanel/>} />
           <Route path="/admin-table" element={ <AdminTable/>} />
-            <Route path="/aboutus" element={<AboutUs />} />
-            <Route path="/dashboard" element={<adminDashboard />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/dashboard" element={<adminDashboard />} />
         </Routes>
         <Rout />
 

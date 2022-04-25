@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import js from '../Assets/js.png'
 import './Showcase.css';
-import Header from "../Header.";
+import Header from "../Header";
 const Show=()=>{
     return(
       <>

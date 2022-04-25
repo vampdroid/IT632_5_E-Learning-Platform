@@ -3,7 +3,7 @@ import "../Styles/editCourse.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import {faUpload} from '@fortawesome/free-solid-svg-icons';
 import {getfname} from "./uploadfile";
-import Header from "./Header.";
+import Header from "./Header";
 const editCourse=()=>{
     
     return(

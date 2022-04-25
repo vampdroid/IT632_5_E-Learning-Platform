@@ -2,7 +2,7 @@
 // import './App.css';
 import '../Styles/add-course.css';
 import {Link} from "react-router-dom";
-import Header from './Header.';
+import Header from './Header';
 import {useState} from "react";
 
 function Add_course() {

@@ -10,7 +10,7 @@ import { faPersonChalkboard } from "@fortawesome/free-solid-svg-icons";
 import { faPlane } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Categories from "../Categories/Categories";
-import Header from "../Header.";
+import Header from "../Header";
 //import Footer from "../Footer."
 
 function SampleNextArrow(props) {

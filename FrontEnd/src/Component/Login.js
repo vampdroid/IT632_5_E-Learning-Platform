@@ -6,6 +6,11 @@ import {Link} from "react-router-dom";
 
 function Login() {
 
+    const token = localStorage.getItem('token');
+    
+    if(token){
+        window.location.href = '/'
+    }
     const [email, setEmail] = useState("");
     const [emailErr, setEmailErr] = useState(false);
     const [password, setPasswd] = useState("");
@@ -82,7 +87,7 @@ function Login() {
         <LayoutGuest>
             <form className="login100-form validate-form">
                 <div className="text-center">
-                    <img src={logo} className="App-logo" alt="logo"/>
+                    <img src={logo}  style={{width:"100px",height:"100px"}}  alt="logo"/>
                     <span className="login100-form-title pb-1"> E learning platform </span>
                     <span className="login100-form-title pb-1"> Account Login </span>
                 </div>

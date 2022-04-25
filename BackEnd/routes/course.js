@@ -99,6 +99,74 @@ router.route("/:courseId")
                 })
             .catch(err=>next(err))
     })
+    .put( verifyJWt,(req, res, next) => {
+        Course.findById(req.params.courseId)
+            .then((course)=>{
+                if(!course) {
+                    res.statusCode = 200;
+                    res.setHeader('content-type', "application/json");
+                    res.json({
+                        error: "Course not Found"
+                    });
+                }
+                return course;
+            })
+            .then(async course=>{
+                const errors = {};
+
+                    course.category=req.body.category?req.body.category:course.category,
+                    course.title= req.body.title?req.body.title:course.title,
+                    course.description= req.body.description?req.body.description:course.description,
+                    course.thumbnail=req.files?.thumbnail!=undefined?req.files.thumbnail.data:course.thumbnail,
+                    course.contentType= req.files?.thumbnai!=undefined?req.files.thumbnail.mimetype:course.contentType
+console.log(req.user)
+                if (req.user.role !== "ins" && req.user._id !== course.user)
+                    errors.user = "This user can update create course"
+                if(course.category ) {
+                    await Category.findById(course.category)
+                        .then((category) => {
+                            // console.log(category)
+                            if (!category) {
+                                errors.category = "category not found"
+                            }
+                        })
+                        .catch(error => {
+                            errors.category = "category not found"
+                        })
+                }
+
+                if (course.title.length > 100) {
+                    errors.title = "course title should be less then 100 character"
+                }
+                if (course.description.length > 256) {
+                    errors.description = "course description should be less then 256 character"
+                }
+                if (!course.contentType.match(/.(jpg|jpeg|png|gif)$/))
+                    errors.thumbnail = 'you can upload only image file';
+
+                if (Object.keys(errors).length > 0) {
+                    res.status(403);
+                    res.setHeader("content-type", 'application/json');
+                    res.json(errors);
+                }
+                else{
+                    course.save()
+                        .then(course=>{
+                            res.status(200);
+                            res.json({
+                                _id:course._id,
+                                user: course.user,
+                                category: course.category,
+                                title: course.title,
+                                description: course.description,
+                            })
+                        })
+                        .catch(err=>next(err));
+                }
+            })
+
+
+    })
 
 
 router.route("/:courseId/image")

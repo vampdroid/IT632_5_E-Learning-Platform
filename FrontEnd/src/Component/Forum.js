@@ -2,7 +2,7 @@ import React from "react";
 import script from "./script.js";
 //import fscript from "./commentBox.js";
 //import "./commentBoxStyle.css";
-import Header from "./Header..js";
+import Header from "./Header";
 import "../Styles/style.css";
 const Forum=()=>{
     return(

@@ -16,7 +16,8 @@ router.route('/').post((req,res) => {
 });
 
 router.route("/:categoryId").delete((req,res,next)=>{
-    Category.deleteOne({_id:req.params.categoryId}).then((response)=>{
+    Category.deleteOne({_id:req.params.categoryId})
+        .then((response)=>{
         if(response.deletedCount == 0){
             res.status(404)
                 .json({error: "Category not Found"});

@@ -7,7 +7,7 @@ import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarChart } from '@fortawesome/free-solid-svg-icons';
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
-import Header from "./Header.";
+import Header from "./Header";
 const Course=()=>{
    return(
        <div>

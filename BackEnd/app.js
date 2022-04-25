@@ -52,6 +52,11 @@ app.use('/courses',coursrRoutet)
 
 const courseContentRouter = require('./routes/courseContent')
 app.use('/course',courseContentRouter);
+
+const enrollmentRouter = require('./routes/enrollment')
+app.use('/enroll',enrollmentRouter);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

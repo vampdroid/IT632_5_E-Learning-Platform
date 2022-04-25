@@ -6,7 +6,7 @@ const enrollmentSchema = new mongoose.Schema({
         required: true,
         ref:'users'
       },
-      course: {
+    course: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref:'courses'
