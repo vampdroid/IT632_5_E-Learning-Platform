@@ -4,8 +4,25 @@ import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 import {faUpload} from '@fortawesome/free-solid-svg-icons';
 import Header from "./Header";
-const usersidecourse=()=>{
-    
+import {useParams} from "react-router-dom";
+import {useState} from "react";
+import {useEffect} from "react";
+
+const CourseContent=()=>{
+    const params = useParams();
+    const [courseDetail,setCourseDetail] = useState("")
+
+    useEffect(()=>{ 
+      fetch(`http://localhost:4000/courses/${params.id}`)
+     .then((result)=>
+     {
+       result.json()
+       .then((resp)=>{
+         console.log("result",resp) 
+         setCourseDetail(resp) 
+       })
+     })  
+   })
     return(
         <>
         <Header/>
@@ -13,7 +30,7 @@ const usersidecourse=()=>{
              
             <div class="mainu1">
                 <div className="colu1">
-                <center><h2 className="text-light mt-2">List Of Content</h2></center><hr/>
+                <center><h2 className="text-light mt-2">{courseDetail.title}</h2></center><hr/>
                 <ul>
                     <li className="text-light">Introduction</li>
                 </ul>
@@ -40,4 +57,4 @@ const usersidecourse=()=>{
         </>
     )
 }
-export default usersidecourse;
+export default CourseContent

@@ -15,7 +15,33 @@ router.use(fileUpload())
 
 router
     .get('/',(req,res,next)=>{
-        Course.find(req.body,"-thumbnail -contentType")
+        Course
+            .aggregate([{
+                $match:req.body
+            },
+                {
+                    $project: {
+                        "thumbnail": 0, "contentType": 0
+                    }
+                },
+                {
+                    $lookup:{
+                           from: 'users',
+                           localField: 'user',
+                           foreignField: '_id',
+                           as: 'userData'
+                       }
+                },
+                {
+                    $lookup:{
+                        from: 'contents',
+                        localField: '_id',
+                        foreignField: 'course',
+                        as: 'Contents'
+                    }
+                }
+            ])
+        //Course.find(req.body,"-thumbnail -contentType")
             .then(course=>{
                 res.statusCode=200;
                 res.setHeader('content-type','application/json');
@@ -188,6 +214,7 @@ router.route("/:courseId/image")
             })
             .catch(err=>next(err))
     })
+
 // router
 //     .post("/:courseId/add",(req,res,next)=>{
 //         mongodb.MongoClient.connect("mongodb://localhost:27017")

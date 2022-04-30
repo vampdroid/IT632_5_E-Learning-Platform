@@ -152,6 +152,30 @@ router
             })
             .catch(err=>next(err))
     })
+    .get('/instructor', (req, res, next) => {
+
+        console.log(req.body)
+        Instructor
+            .aggregate([{
+            $match:req.body
+            }]).lookup({
+                from: 'users',
+                localField: 'user',
+                foreignField: '_id',
+                as: 'userData'
+            })
+            .then(instructors => {
+                if (!instructors) {
+                    res.status(404).json({
+                        error: "request not created"
+                    })
+                } else {
+                    res.status(200)
+                        .json(instructors);
+                }
+            })
+            .catch(err => next(err));
+    })
     .put('/instructor/:instructorId', (req, res, next) => {
         Instructor.findById(req.params.instructorId)
             .then(async (instructor) => {
@@ -187,6 +211,7 @@ router
                 }
             })
             .catch(err => next(err));
+            
     })
 
 module.exports = router;
