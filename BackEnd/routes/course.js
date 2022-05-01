@@ -6,7 +6,7 @@ const User = require('../models/user.model')
 const Category = require('../models/category.model')
 var bodyparser = require("body-parser");
 var fileUpload = require("express-fileupload")
-const mongoose = require("mongoose");
+const mongodb = require("mongodb");
 
 const verifyJWt = require('../middleware/VerifyToken')
 router.use(bodyparser.json());
@@ -236,60 +236,61 @@ router
             })
             .catch(err=>next(err));
     })
+
     .post('/',verifyJWt,async (req,res,next) => {
         // console.log(req.files.thumbnail);
-        const errors={};
-        const userData = {
-            user:req.user._id,
-            category:req.body.category,
-            title:req.body.title,
-            description:req.body.description,
-            thumbnail: req.files.thumbnail.data,
-            contentType:req.files.thumbnail.mimetype
-        }
-        if(req.user.role!=="ins")
-            errors.user="This user can not create course"
-        await Category.findById(userData.category)
-            .then((category)=>{
-                // console.log(category)
-                if(!category){
-                    errors.category="category not found"
-                }
-            })
-            .catch(error=>{
+    const errors={};
+    const userData = {
+        user:req.user._id,
+        category:req.body.category,
+        title:req.body.title,
+        description:req.body.description,
+        thumbnail: req.files.thumbnail.data,
+        contentType:req.files.thumbnail.mimetype
+    }
+    if(req.user.role!=="ins")
+        errors.user="This user can not create course"
+   await Category.findById(userData.category)
+        .then((category)=>{
+            // console.log(category)
+            if(!category){
                 errors.category="category not found"
-            })
+            }
+        })
+        .catch(error=>{
+            errors.category="category not found"
+        })
 
-        if(userData.title.length>100 || userData.title === undefined){
-            errors.title = "course title should be less then 100 character"
-        }
-        if(userData.description.length>256 || userData.description === undefined){
-            errors.description = "course description should be less then 256 character"
-        }
-        if(!userData.contentType.match(/.(jpg|jpeg|png|gif)$/))
-            errors.thumbnail='you can upload only image file';
+    if(userData.title.length>100 || userData.title === undefined){
+        errors.title = "course title should be less then 100 character"
+    }
+    if(userData.description.length>256 || userData.description === undefined){
+        errors.description = "course description should be less then 256 character"
+    }
+    if(!userData.contentType.match(/.(jpg|jpeg|png|gif)$/))
+        errors.thumbnail='you can upload only image file';
 
-        if(Object.keys(errors).length >0 ) {
-            res.status(403);
-            res.setHeader("content-type",'application/json');
-            res.json(errors);
-        }
-        else {
-            const newCourse = new Course(userData);
-            newCourse.save()
-                .then((course) => {
-                    // console.log(course);
-                    res.json({
-                        _id:course._id,
-                        user: course.user,
-                        category: course.category,
-                        title: course.title,
-                        description: course.description,
-                    })
+    if(Object.keys(errors).length >0 ) {
+        res.status(403);
+        res.setHeader("content-type",'application/json');
+        res.json(errors);
+    }
+    else {
+        const newCourse = new Course(userData);
+        newCourse.save()
+            .then((course) => {
+                // console.log(course);
+                res.json({
+                    _id:course._id,
+                    user: course.user,
+                    category: course.category,
+                    title: course.title,
+                    description: course.description,
                 })
-                .catch(err => res.status(400).json("error:" + err));
-        }
-    });
+            })
+            .catch(err => res.status(400).json("error:" + err));
+    }
+});
 
 router.route("/:courseId")
     .get((req,res,next)=>{
@@ -400,6 +401,7 @@ router.route("/:courseId/image")
             })
             .catch(err=>next(err))
     })
+
 // router
 //     .post("/:courseId/add",(req,res,next)=>{
 //         mongodb.MongoClient.connect("mongodb://localhost:27017")

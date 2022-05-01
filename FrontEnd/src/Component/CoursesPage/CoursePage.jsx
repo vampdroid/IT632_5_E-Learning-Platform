@@ -5,10 +5,28 @@ import js from "../Assets/js.png";
 // import 'owl.carousel/dist/assets/owl.carousel.css';  
 // import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { Link } from "react-router-dom";
+import Header from "../Header";
+import {useState} from "react";
+import {useEffect} from "react";
 
 const CoursePage=()=>{
+  const [courseList,setCourse] = useState([])
+
+  useEffect(()=>{ 
+    fetch('http://localhost:4000/courses')
+   .then((result)=>
+   {
+     result.json()
+     .then((resp)=>{
+       console.log("result",resp) 
+       setCourse(resp) 
+     })
+   })  
+ })
     return(
+
        <div className="content-fluid">
+         <Header/>
          <br/>
         <section className="section-two bg-light mb-5" id="bookroom">
   <div className="container">
@@ -73,7 +91,27 @@ const CoursePage=()=>{
   {/*end container*/}
 </section>
 
-      <div className="booklist">{disp()}</div>
+      <div className="booklist">{/*disp()*/}
+      {courseList.map((course) =>
+      <Link to='/CourseDetail' className="Link">
+            <div class="card courses-desc overflow-hidden rounded shadow border-0">
+                            <div class="position-relative d-block overflow-hidden">
+                                <img src={js} class="img-fluid rounded-top mx-auto" alt=""/>
+                                <div class="overlay-work bg-dark"></div>
+                                <a href="javascript:void(0)" class="text-white h6 preview">Preview Now <i class="uil uil-angle-right-b align-middle"></i></a>
+                            </div>
+
+                            <div class="card-body">
+                                <h5>{course.title}</h5>
+                                <div class="fees d-flex justify-content-between">   
+                                <h6>{course.userData[0]?.fname} {course.userData[0]?.lname}</h6>
+                                {/* <h7>Date</h7> */}
+                                </div>
+                            </div>
+                        </div>
+          </Link>
+      )}
+      </div>
         
        
        </div>

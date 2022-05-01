@@ -3,12 +3,29 @@ import tech from "./Assets/icon-profile.jpg";
 import 'bootstrap/dist/css/bootstrap.css';
 import "../Styles/Coursepage.css"
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarChart } from '@fortawesome/free-solid-svg-icons';
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import Header from "./Header";
+import {useState} from "react";
+import {useEffect} from "react";
 const Course=()=>{
+    const params = useParams();
+    const [courseDetail,setCourseDetail] = useState("")
+
+    useEffect(()=>{ 
+      fetch(`http://localhost:4000/courses/${params.id}`)
+     .then((result)=>
+     {
+       result.json()
+       .then((resp)=>{
+         console.log("result",resp) 
+         setCourseDetail(resp) 
+       })
+     })  
+   })
    return(
        <div>
            <Header/>
@@ -22,13 +39,14 @@ const Course=()=>{
                    <div className="flex-main">
                    <img src="https://static.javatpoint.com/images/javascript/javascript_logo.png" className="thumbnail"/>
                    
-                   <h1 className="text-white display-2 title learn">Learn Javascript!</h1>
+                   <h4 className="text-white display-2 title learn">{courseDetail.title}
+                    </h4>
                    </div>
                    
                    {/* </h1> */}
                    <div className="para">
                    <p className="text-white desc">
-                   <strong>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam quae aspernatur illum cupiditate ipsam, velit provident corporis fugiat magni maiores aperiam officiis eius architecto, expedita eveniet. Est qui sint doloribus.</strong>
+                   <strong>{courseDetail.description}</strong>
                    </p><br></br></div> 
                    <Link to="/course-content">
                    <button className="btn btn-light btn-lg text-success enroll">Enroll Now</button><br/>
@@ -69,6 +87,10 @@ const Course=()=>{
                                    </tr>
                                </thead>
                                <tbody>
+                                   <td className="text-center">1</td>
+                                   <td className="text-center ">Introduction</td>
+                               </tbody>
+                                   <tbody>
                                    <td className="text-center">1</td>
                                    <td className="text-center ">Introduction</td>
                                </tbody>

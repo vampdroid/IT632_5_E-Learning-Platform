@@ -11,6 +11,9 @@ import { faPlane } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Categories from "../Categories/Categories";
 import Header from "../Header";
+import {useState} from "react";
+import {useEffect} from "react";
+
 //import Footer from "../Footer."
 
 function SampleNextArrow(props) {
@@ -90,6 +93,24 @@ let Inside = () => {
   }
   return arr;
 };
+//I changed and added the code where this method was called
+
+let GetInstructorName = (props) => {
+  const [instructor,setInstructor] = useState([])
+  useEffect(()=>{ 
+    fetch(`http://localhost:4000/user/instructor/:${props.id}`)
+   .then((result)=>
+   {
+     result.json()
+     .then((resp)=>{
+      console.log("In GetInstructorName") 
+       console.log("result",resp) 
+       setInstructor(resp) 
+     })
+   })  
+  })
+  return instructor.userData.fname
+}
 
 const Owldemo1 = () => {
   var settings = {
@@ -102,6 +123,30 @@ const Owldemo1 = () => {
     prevArrow: <SamplePrevArrow />,
   };
 
+  const [courseList,setCourse] = useState([])
+
+  useEffect(()=>{ 
+    fetch('http://localhost:4000/courses')
+   .then((result)=>
+   {
+     result.json()
+     .then((resp)=>{
+       console.log("result",resp) 
+       setCourse(resp) 
+     })
+   })  
+ })
+//  useEffect((id)=>{ 
+//   fetch('http://localhost:4000/instructor/:id')
+//  .then((result)=>
+//  {
+//    result.json()
+//    .then((resp)=>{
+//      console.log("result",resp) 
+//      setInstructor(resp) 
+//    })
+//  })  
+// })
   return (
     <>
 
@@ -112,11 +157,10 @@ const Owldemo1 = () => {
             <div className="col-xl-5 col-lg-6 col-md-12">
               <div className="py-5 py-lg-0">
                 <h1 className="text-white display-4 fw-bold">
-                  Welcome to <br /> E Learning Application
+                  Welcome to <br /> Edulogy
                 </h1>
                 <p class="text-white-50 mb-4 lead">
-                  Hand-picked Instructor and expertly crafted courses, designed
-                  for the modern students and entrepreneur.
+                  New Analogy For Education
                 </p>
               </div>
             </div>
@@ -131,7 +175,21 @@ const Owldemo1 = () => {
       <h3>Our 'Featured ' Courses:</h3>
       <br />
       <div data-aos="fade-up">
-        <Slider {...settings}>{Inside()}</Slider>
+        <Slider {...settings}>
+        {/*<Inside/>*/}
+        {courseList.map((course) => 
+        <Link className="Link" to={`/course-detail/${course._id}`}>
+        <div className="outer card shadow pop">
+        <img className="img img-fluid" src={js} alt="" />
+        <h4 className="">{course.title}</h4>
+        {/* <h5 className="mt-3"><GetInstructorName id={course.user}/></h5> */}
+        {/*I have made one method for the above code. We have to modify that*/}
+        <h5 className="mt-3">{course.userData[0]?.fname} {course.userData[0]?.lname}</h5>
+        </div>
+        </Link>
+        )}
+
+        </Slider>
       </div>
       <br />
       <br />
@@ -141,7 +199,21 @@ const Owldemo1 = () => {
       <h3>Other courses you can look upto :</h3>
       <br />
       <div data-aos="fade-right">
-        <Slider {...settings}>{Inside()}</Slider>
+        <Slider {...settings}>
+
+        {courseList.map((course) => 
+        <Link className="Link" to="/course-detail">
+        <div className="outer card shadow pop">
+        <img className="img img-fluid" src={js} alt="" />
+        <h4 className="">{course.title}</h4>
+        {/* <h5 className="mt-3"><GetInstructorName id={course.user}/></h5> */}
+        {/*I have made one method for the above code. We have to modify that*/}
+        <h5 className="mt-3">{course.userData[0]?.fname} {course.userData[0]?.lname}</h5>
+        </div>
+        </Link>
+        )}
+
+        </Slider>
       </div>
       <div className="Flexdes" data-aos="fade-up">
         <Book />
