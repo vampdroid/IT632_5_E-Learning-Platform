@@ -15,7 +15,9 @@ router.use(fileUpload({
 
 const UploadContet = require('../middleware/UploadContent')
 router
-    .post("/:courseId", UploadContet,(req, res, next) => {
+    .post("/:courseId",
+        UploadContet,
+        (req, res, next) => {
 
         if(!req.body.name && !req.files){
             res.status(400)
@@ -58,7 +60,9 @@ router
                 }
                 next()
             })
-    },UploadContet,(req,res,next)=>{
+    },
+        UploadContet,
+        (req,res,next)=>{
         console.log(req.params.contentId)
         console.log(req.body);
         res.status(200);
@@ -86,6 +90,7 @@ router
     })
     .get("/:courseId/:nameId/video", async (req, res, next) => {
         const range = req.headers.range;
+        console.log(range);
         if (!range) {
             res.status(400).send("Requied Range Header");
         }
@@ -104,26 +109,56 @@ router
                 db.collection('fs.files').findOne({filename: content.video})
                     .then(async video => {
                         console.log(video)
+                        if (!video) {
+                            res.status(404).send("No video uploaded!");
+                            return;
+                        }
+
+                        // Create response headers
                         const videoSize = video.length;
                         const start = Number(range.replace(/\D/g, ""));
-                        const CHUNK_SIZE = 10 ** 6;
-                        const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
+                        const end = videoSize - 1;
+
                         const contentLength = end - start + 1;
                         const headers = {
-                            'Content-range': `bytes ${start}-${end}/${videoSize}`,
-                            "Accept-range": "bytes",
+                            "Content-Range": `bytes ${start}-${end}/${videoSize}`,
+                            "Accept-Ranges": "bytes",
                             "Content-Length": contentLength,
-                            'Content-Type': "video/mp4",
-                        }
-                        res.writeHead(206, headers);
-                        const bucket = new mongodb.GridFSBucket(db,{bucketName:"fs"});
+                            "Content-Type": "video/mp4",
+                        };
 
+                        // HTTP Status 206 for Partial Content
+                        res.writeHead(206, headers);
+
+                        // Get the bucket and download stream from GridFS
+                        const bucket = new mongodb.GridFSBucket(db);
                         const downloadStream = bucket.openDownloadStreamByName(video.filename, {
-                            start, end
-                        })
-                        console.log(" start ",start," end ",end)
-                        // streamCounter++;
+                            start
+                        });
                         downloadStream.pipe(res);
+
+                        // const videoSize = video.length;
+                        // const start = Number(range.replace(/\D/g, ""));
+                        // const CHUNK_SIZE = 10 ** 6;
+                        // const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
+                        // const contentLength = end - start + 1;
+                        // const headers = {
+                        //     'Content-range': `bytes ${start}-${end}/${videoSize}`,
+                        //     "Accept-range": "bytes",
+                        //     "Content-Length": contentLength,
+                        //     'Content-Type': "video/mp4",
+                        // }
+                        // res.writeHead(206, headers);
+                        // const bucket = new mongodb.GridFSBucket(db,{bucketName:"fs"});
+                        //
+                        // if(start<end) {
+                        //     const downloadStream = bucket.openDownloadStreamByName(video.filename, {
+                        //         start
+                        //     })
+                        //     downloadStream.pipe(res);
+                        // }
+                        // console.log(" start ",start," end ",end)
+                        // streamCounter++;
 
                     })
                     .catch(err => next(err));

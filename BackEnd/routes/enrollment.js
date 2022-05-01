@@ -6,6 +6,23 @@ router.use(express.json());
 const VerifyJwt = require('../middleware/VerifyToken')
 
 router
+    .get('/filter',(req,res,next)=>{
+        Enrollment.find(req.body)
+            .populate('user')
+            .populate('course')
+            .then(enrollments => {
+                if(!enrollments){
+                    res.status(400)
+                        .json({
+                            error:"Enrolled course not found"
+                        })
+                }
+                res.status(200)
+                    .json(enrollments)
+
+            })
+            .catch(err=>next(err))
+    })
     .get('/',VerifyJwt,(req,res,next)=>{
         Enrollment.find({
             user: req.user._id,
@@ -24,7 +41,6 @@ router
             .catch(err=>next(err))
     })
     .post('/:courseId', VerifyJwt, (req, res, next) => {
-
         Enrollment.find({
             user: req.user._id,
             course: req.params.courseId,
@@ -43,7 +59,8 @@ router
             })
             .catch(err=>next(err))
 
-    },(req,res,next)=>{
+    },
+        (req,res,next)=>{
         Enrollment.create({
             user: req.user._id,
             course: req.params.courseId,
@@ -81,7 +98,8 @@ router
             })
             .catch(err=>next(err))
 
-    },(req,res,next)=>{
+    },
+        (req,res,next)=>{
         Enrollment.updateOne(
             { user: req.user._id,
                 course: req.params.courseId,},
@@ -126,18 +144,5 @@ router
         });
     })
 
-
-router.route('/add').post((req, res) => {
-    const user = req.body.user;
-    const course = req.body.course;
-    const status = req.body.status;
-    const progress = req.body.progress;
-    const content = req.body.content;
-    const duration = req.body.duration;
-    const newEnroll = new Enrollment({user, course, status, progress, content, duration});
-    newEnroll.save()
-        .then(() => res.json("Enroll added"))
-        .catch(err => res.status(400).json("error:" + err));
-});
 
 module.exports = router;
