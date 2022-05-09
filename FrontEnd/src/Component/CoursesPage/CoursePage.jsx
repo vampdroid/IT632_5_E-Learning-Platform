@@ -22,7 +22,7 @@ const CoursePage=()=>{
        setCourse(resp) 
      })
    })  
- })
+ },[])
     return(
 
        <div className="content-fluid">

@@ -108,7 +108,7 @@ let GetInstructorName = (props) => {
        setInstructor(resp) 
      })
    })  
-  })
+  },[])
   return instructor.userData.fname
 }
 
@@ -135,7 +135,7 @@ const Owldemo1 = () => {
        setCourse(resp) 
      })
    })  
- })
+ },[])
 //  useEffect((id)=>{ 
 //   fetch('http://localhost:4000/instructor/:id')
 //  .then((result)=>

@@ -25,7 +25,7 @@ const Course=()=>{
          setCourseDetail(resp) 
        })
      })  
-   })
+   },[])
    return(
        <div>
            <Header/>

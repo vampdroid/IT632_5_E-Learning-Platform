@@ -22,7 +22,7 @@ const CourseContent=()=>{
          setCourseDetail(resp) 
        })
      })  
-   })
+   },[])
     return(
         <>
         <Header/>

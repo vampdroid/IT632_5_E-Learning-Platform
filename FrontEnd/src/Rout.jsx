@@ -21,7 +21,7 @@ const Rout = () => {
       <Route path="/Profcour" element={<Profcour />} />
       <Route path="/Profile-edit" element={<Profedit />} />
       <Route path="/Password-edit" element={<Passedit />} />
-      <Route path="/Courses" element={<CoursePage />} />
+      {/* <Route path="/Courses" element={<CoursePage />} /> */}
       {/* <Route path="/Categories" element={<Categories />} /> */}
     </Routes>
   );
