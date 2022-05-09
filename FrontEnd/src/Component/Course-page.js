@@ -13,19 +13,40 @@ import {useState} from "react";
 import {useEffect} from "react";
 const Course=()=>{
     const params = useParams();
-    const [courseDetail,setCourseDetail] = useState("")
-
+    const [courseDetail,setCourseDetail] = useState({})
+    // console.log(courseDetail,courseDetail.Contents);
     useEffect(()=>{ 
       fetch(`http://localhost:4000/courses/${params.id}`)
      .then((result)=>
      {
        result.json()
        .then((resp)=>{
-         console.log("result",resp) 
-         setCourseDetail(resp) 
+        //  console.log("result",resp) 
+         setCourseDetail(resp[0]) 
        })
      })  
    },[])
+
+   
+ const enrollCourse = (event) =>{
+    event.preventDefault();
+    fetch(`http://localhost:4000/enroll/${courseDetail?._id}`,{
+        method:"POST",
+        headers:{
+            Accept: "application/json",
+            "Content-Type":"application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+       },
+    })
+    .then((result)=>
+    {
+      result.json()
+      .then((resp)=>{
+        console.log("enroll",resp)
+      })
+    })
+  }
+ 
    return(
        <div>
            <Header/>
@@ -49,7 +70,7 @@ const Course=()=>{
                    <strong>{courseDetail.description}</strong>
                    </p><br></br></div> 
                    <Link to="/course-content">
-                   <button className="btn btn-light btn-lg text-success enroll">Enroll Now</button><br/>
+                   <button onClick={(e)=>enrollCourse(e)} className="btn btn-light btn-lg text-success enroll">Enroll Now</button><br/>
                     </Link>
                </div>
                </div>
@@ -86,14 +107,13 @@ const Course=()=>{
                                        <th className="text-center">Topics</th>
                                    </tr>
                                </thead>
-                               <tbody>
-                                   <td className="text-center">1</td>
-                                   <td className="text-center ">Introduction</td>
-                               </tbody>
-                                   <tbody>
-                                   <td className="text-center">1</td>
-                                   <td className="text-center ">Introduction</td>
-                               </tbody>
+                               {courseDetail.Contents && courseDetail.Contents.length>0 && courseDetail.Contents.map((course,id)=>{
+                                   return <tbody key={id}>
+                                    <td className="text-center">{id}</td>
+                                    <td className="text-center ">{course.title}</td>
+                                   </tbody>
+                               })}
+                               
                            </table>
                            {/* &nbsp;&nbsp;&nbsp;&nbsp;<b>Introduction</b> */}
                            {/* </p> */}
@@ -120,8 +140,9 @@ const Course=()=>{
                    <div className="list card mt-5 ">
                        <div className="ms-3 mt-2">
                            <h3>Instructor</h3>
-                           <img width="250rem"src={tech} alt="" />
-                           <h4 className="ms-5">Username</h4>
+                           {/* <img width="250rem"src={tech} alt="" /> */}
+                           <img width="250rem"src={courseDetail?.userData?.profile_picture} alt="" />
+                           <h4 className="ms-5">{courseDetail?.userData?.fname}</h4>
                        </div>
                        <div className="">
                            
