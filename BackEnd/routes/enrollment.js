@@ -24,6 +24,7 @@ router
             .catch(err=>next(err))
     })
     .get('/',VerifyJwt,(req,res,next)=>{
+        console.log(req.user);
         Enrollment.find({
             user: req.user._id,
         })

@@ -12,9 +12,10 @@ const CourseContent=()=>{
     const params = useParams();
     
 
-    const [courseContent,setCourseContent] = useState("")
+    const [courseContent,setCourseContent] = useState({})
     const [youtubeLink,setYoutubeLink] = useState("")
     const [ourTitle,setOurTitle] = useState("")
+    const [flag,setFlag] = useState(false);
     useEffect(async ()=>{ 
       await fetch(`http://localhost:4000/courses/${params.id}`)
      .then((result)=>
@@ -23,7 +24,8 @@ const CourseContent=()=>{
        .then((resp)=>{
          setCourseContent(resp[0]) 
          setYoutubeLink(courseContent.Contents?.[0].video)
-         setOurTitle(courseContent.Contents?.[0].title)
+         !flag && setOurTitle(courseContent.Contents?.[0].title)
+         setFlag(true);
         })
      })  
    },[courseContent])

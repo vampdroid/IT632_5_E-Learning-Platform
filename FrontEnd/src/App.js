@@ -7,6 +7,7 @@ import Register from "./Component/Register";
 import Layout from "./Component/Layout";
 import AboutUs from "./Component/AboutUs";
 import Home from './Component/Home/Home';
+import { useEffect,useState } from 'react';
 
 import Profile from "./Component/Profedit/Profedit";
 import Profcour from "./Component/Courses/Courses";
@@ -23,6 +24,19 @@ import AdminTable from './Component/Admintable';
 import AdminLogin from './Component/Alogin';
 
 function App() {
+  const [enrolledCourses,setEnrolledCourses] = useState([]);
+    // console.log(courseDetail,courseDetail.Contents);
+
+    useEffect(async()=>{
+      console.log(localStorage.getItem("token"))
+         fetch(`http://localhost:4000/enroll`,{
+            method:"GET",
+            "Content-Type":"application/json",
+            "authorization": `Bearer ${localStorage.getItem("token")}`
+        }).then(data=>{
+            console.log(data);
+        })
+    },[])
   return (
 
     <div className="App">
