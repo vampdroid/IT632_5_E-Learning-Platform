@@ -20,7 +20,7 @@ const Categories=(props)=>{
         setCategory(resp) 
       })
     })  
-  })
+  },[])
   // .catch(error => console.error(error));
   //console.log(categoryList)
   // const [category,setCategory] = useState("");

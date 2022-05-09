@@ -1,7 +1,7 @@
 const router = require('express').Router();
 let Course = require('../models/course.model');
 let Content = require('../models/content.model');
-
+const mongoose = require('mongoose')
 const User = require('../models/user.model')
 const Category = require('../models/category.model')
 var bodyparser = require("body-parser");
