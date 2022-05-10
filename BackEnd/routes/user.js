@@ -4,17 +4,22 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken')
 //user model
 let User = require('../models/user.model');
-const fileUploader= require('express-fileupload')
+
+//const authorization = require('../middleware/authorization')
+
 const verifyJWT = require('../middleware/VerifyToken')
 const Instructor = require('../models/instructor.model')
+
 //user verification model
 let UserVerify = require('../models/userVerify.model');
+const crypto = require("crypto");
+
 
 //email handler
 const nodemailer = require('nodemailer');
 
 //generate unique strings
-const {v4: uuidv4} = require('uuid');
+//const {v4: uuidv4} = require('uuid');
 
 //env variables
 require('dotenv').config();
@@ -47,19 +52,22 @@ const mongoose = require("mongoose");
 const app = express();
 
 app.use(express.json())
-router.use(fileUploader())
 //const upload = require("../middleware/upload");
 //const upload = multer({desc:'photos/'});
 
+
+// router.route('/auth').get(authorization(),(req, res,next) => {
+//     console.log("information");
+// });
+
+
 //adding user to database on registration
-router.
-    post('/',async (req, res) => {
+router.route('/').post(async (req, res) => {
     console.log(req.body)
     const salt = 10;
     const passwordHash = await bcrypt.hash(req.body.password, salt);
 
-    try {
-        await User.create({
+        let newUser = await User.create({
             fname: req.body.fname,
             lname: req.body.lname,
             email: req.body.email,
@@ -67,28 +75,56 @@ router.
             role: "stu",
             city: req.body.city
         })
-        res.json({status: 'ok', email: req.body.email})
-    } catch (err) {
-        res.json({status: 'error', error: 'email exists', trace: err})
-    }
-})
-    .put('/:userid',(req,res,next)=>{
-
-        console.log(req.files)
-        if(req.files?.profile_picture!=undefined) {
-            req.body.profile_picture = req.files.profile_picture.data;
-            req.body.contenType = req.files.profile_picture.mimetype
+        if(!newUser){
+            return res.json({status: 'error', error: 'email exists', trace: err})
         }
 
-        if(req.body.email!=undefined){
-            delete req.body["email"];
-        }
+        const token = await UserVerify.findOne({ userid: newUser._id });
+        if (token) {
+              await UserVerify.deleteOne()
+        };
+        const userid = newUser._id;
+        let resetToken = crypto.randomBytes(32).toString("hex");
 
-        if(req.body.role!=undefined)
-            delete req.body['role']
+        await new UserVerify({
+            userid: userid,
+            token: resetToken,
+            createdAt: Date.now(),
+          }).save();
+          const link = `https://localhost:4000/user/verify-account/${resetToken}/${userid}`;
+          console.log(link);
 
-        if(req.body.password!=undefined)
-            delete req.body['password']
+
+          const mailOptions = {
+            from: process.env.AUTH_EMAIL,
+            to: newUser.email,
+            subject: "Verification Email",
+            html: `
+            <body>
+            <h1>Verify Your Email </h1>
+            <hr>
+            <h3>Important: This link will be valid for only 1 Hour! </h3>
+            <p> Click <a href=${link}>here</a> to verify your account. </p>
+            <hr>
+            </body> `
+          }
+
+          transporter.sendMail(mailOptions)
+          .then(() => {
+              console.log("Mail Sent!")
+          })
+          .catch((err) => {
+              console.log(err);
+          });
+
+        return res.json({status: 'ok', email: req.body.email})
+
+
+    //    res.json({status: 'ok', email: req.body.email})
+    // .catch (err) {
+    //     res.json({status: 'error', error: 'email exists', trace: err})
+    // }
+});
 
         console.log(req.body);
 
@@ -135,10 +171,22 @@ router.route('/login').post(async (req, res) => {
 
 
             if (!validPassword) {
-                res.status(400).json({error: "password Invalid Credential"});
-            } else {
-                const token = jwt.sign({user: userLogin}, process.env.SECRET);
-                res.status(200).json({messgae: "Login Success", token: token,user:userLogin});
+                return res.status(400).json({error: "password Invalid Credential"});
+            }
+            else
+            {
+                if(!userLogin.verified)
+                {
+                    res.json({
+                        status: "FAILED",
+                        message: "user hasn't been verified"
+                    });
+                }
+                else
+                {
+                    const token = jwt.sign({user: userLogin}, process.env.SECRET);
+                    return res.status(200).json({messgae: "Login Success", token: token,user:userLogin});
+                }
             }
         } else {
             res.status(400).json({error: "email Invalid Credential"});
@@ -148,6 +196,139 @@ router.route('/login').post(async (req, res) => {
         res.status(400).json({Error: "Login Failed!!!"});
     }
 });
+
+router.route('/verify-account/:token/:userid').get( async (req, res) => {
+    const token = await UserVerify.findOne({ token : req.params.token })
+    if(token)
+    {
+        const user = await User.findOne({ userId : req.params.userid })
+        if(user)
+        {
+            const update = await User.updateOne({ _id : req.params.userid }, {verified : true})
+            if(update)
+            {
+                return res.json("account verified successfully")
+            }
+            else{
+                return res.json("error verifying account")
+            }
+        }
+    }
+  })
+
+router.route('/changePassword').post(async(req,res)=>{
+    const newPass = req.body.newPass;
+    const confirmPass = req.body.confirmPass;
+    const email = req.body.email;
+
+    if(newPass == confirmPass){
+        const salt = 10;
+        const passwordHash = await bcrypt.hash(req.body.newPass, salt);
+
+        User.updateOne({email: email},{password:passwordHash})
+        .then((result)=>{
+            return res.json({
+                status: "ok",
+                message: "password has been changed to new password"
+            })
+        })
+        .catch((error)=>{
+            return res.json({
+                status: "Failed",
+                message: "password not changed try again"
+            })
+        })
+    }
+    else{
+        return res.json({
+            status: "failed",
+            message: "confrim and new passwords do not match"
+        })
+    }
+});
+
+router.route('/resetPassword/:token/:userid').post( async (req, res) => {
+    const newpass = req.body.newpassword;
+    console.log("token: " + req.params.token + " " + "userid: " + req.params.userid)
+    console.log("new password recieved" + newpass);
+
+    const salt = 10;
+    const newpwd = await bcrypt.hash(newpass, salt)
+    console.log(newpwd);
+
+
+    const token = await UserVerify.findOne({ token : req.params.token })
+      if(token)
+      {
+          const user = await User.findOne({ userId : req.params.userid })
+          if(user)
+          {
+              const update = await User.updateOne({ _id : req.params.userid }, {password : newpwd})
+              if(update)
+              {
+                  res.json("password changed successfully")
+
+              }
+          }
+      }
+  })
+
+router.route('/forgotPassword').post( async (req, res) => {
+    const email = req.body.email;
+    let userid;
+    console.log("email recieved: " + email)
+    const user = User.findOne({email})
+    .then((result) => {
+      if(result == null)
+      {
+        return res.json("user not found");
+      }
+      else{
+        userid = result._id;
+      }
+    })
+
+    const token = await UserVerify.findOne({ _id: user._id });
+    if (token) {
+          await UserVerify.deleteOne()
+    };
+
+    let resetToken = crypto.randomBytes(32).toString("hex");
+
+    await new UserVerify({
+      userid: userid,
+      token: resetToken,
+      createdAt: Date.now(),
+    }).save();
+
+    const link = `https://localhost:4000/user/resetPassword/${resetToken}/${userid}`;
+    console.log(link)
+
+  //  const currentUrl = "https://localhost:4000/";
+
+    const mailOptions = {
+      from: process.env.AUTH_EMAIL,
+      to: email,
+      subject: "Password forgot Request",
+      html: `
+      <body>
+      <h1>Password forgot Request </h1>
+      <hr>
+      <h3>Important: This link will be valid for only 1 Hour! </h3>
+      <p> Click <a href=${link}>here</a> to change your password. </p>
+      <hr>
+      </body>
+      `
+    }
+
+    transporter.sendMail(mailOptions)
+      .then(() => {
+          res.json("Mail Sent!")
+      })
+      .catch((err) => {
+          res.json(err);
+      });
+  })
 
 
 router.route('/admin/login').post(async (req, res) => {
@@ -168,17 +349,17 @@ router.route('/admin/login').post(async (req, res) => {
 
 
             if (!validPassword) {
-                res.status(400).json({error: "password Invalid Credential"});
+                return res.status(400).json({error: "password Invalid Credential"});
             } else {
                 const token = jwt.sign({user: userLogin}, process.env.SECRET);
-                res.status(200).json({messgae: "Login Success", token: token,user:userLogin});
+                return res.status(200).json({messgae: "Login Success", token: token,user:userLogin});
             }
         } else {
-            res.status(400).json({error: "email Invalid Credential"});
+            return res.status(400).json({error: "email Invalid Credential"});
         }
     } catch (err) {
         console.log(err);
-        res.status(400).json({Error: "Login Failed!!!"});
+        return res.status(400).json({Error: "Login Failed!!!"});
     }
 });
 

@@ -1,0 +1,34 @@
+const jwt = require('jsonwebtoken');
+const Course = require('../models/course.model')
+
+module.exports = (req,res,next)=>{
+    console.log("Authentication middleware");
+    const header = req.headers.authorization.split(' ')[1];
+    jwt.verify(header,process.env.SECRET,(error,result)=>{
+        
+        if(error){
+            res.setHeader("content-type",'application/json');
+            res.status(400).send(error);
+            return;
+        }
+        if(!result){
+            res.setHeader("content-type",'application/json');
+            res.status(400).send({error:"User not founds"});
+            return;
+        }
+
+        course.findOne({email:result.user.email, role:result.user.role})
+        .then(user=>{
+            if(!user){
+                res.setHeader("content-type",'application/json');
+                res.status(400).send({error:"User not found"});
+                return;
+            }
+            req.user = user;
+            next()
+        })
+        .catch(err=>next(err))
+
+    });
+    next();
+}
