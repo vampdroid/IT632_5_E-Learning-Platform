@@ -9,7 +9,7 @@ let User = require('../models/user.model');
 
 const verifyJWT = require('../middleware/VerifyToken')
 const Instructor = require('../models/instructor.model')
-
+const fileUpload = require('express-fileupload')
 //user verification model
 let UserVerify = require('../models/userVerify.model');
 const crypto = require("crypto");
@@ -52,6 +52,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 app.use(express.json())
+router.use(fileUpload())
 //const upload = require("../middleware/upload");
 //const upload = multer({desc:'photos/'});
 
