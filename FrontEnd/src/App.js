@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-// import './App.css';
+//import './App.css';
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Rout from "./Rout";
 import Login from "./Component/Login";
@@ -24,19 +24,19 @@ import AdminTable from './Component/Admintable';
 import AdminLogin from './Component/Alogin';
 
 function App() {
-  const [enrolledCourses,setEnrolledCourses] = useState([]);
+  // const [enrolledCourses,setEnrolledCourses] = useState([]);
     // console.log(courseDetail,courseDetail.Contents);
 
-    useEffect(async()=>{
-      console.log(localStorage.getItem("token"))
-         fetch(`http://localhost:4000/enroll`,{
-            method:"GET",
-            "Content-Type":"application/json",
-            "authorization": `Bearer ${localStorage.getItem("token")}`
-        }).then(data=>{
-            console.log(data);
-        })
-    },[])
+    // useEffect(async()=>{
+    //   console.log(localStorage.getItem("token"))
+    //      fetch(`http://localhost:4000/enroll`,{
+    //         method:"GET",
+    //         "Content-Type":"application/json",
+    //         "authorization": `Bearer ${localStorage.getItem("token")}`
+    //     }).then(data=>{
+    //         console.log(data);
+    //     })
+    // },[])
   return (
 
     <div className="App">
