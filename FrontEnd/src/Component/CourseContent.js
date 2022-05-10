@@ -28,9 +28,13 @@ const CourseContent=()=>{
          setFlag(true);
         })
      })  
+<<<<<<< Updated upstream
    },[courseContent])
    console.log(courseContent.Contents,"idgaf");
    
+=======
+   },[])
+>>>>>>> Stashed changes
     return(
         <>
         <Header/>
