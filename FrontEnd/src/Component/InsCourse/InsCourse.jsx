@@ -28,7 +28,7 @@ let InCour=()=>{
   </div>
   <div className="mt-4 border button1">
       <button >
-      <Link to='/Addnew' className="Link">
+      <Link to='/add-course' className="Link">
       <h3>Add new <FontAwesomeIcon width={"1em"} icon={faPlus}/></h3>
     </Link>
     </button>
@@ -70,7 +70,7 @@ const idisp=()=>{
 
                 </h5>
                 <FontAwesomeIcon width={"5em"} icon={faDumpster}/>
-                <Link to='/EditCourse' className="Link">
+                <Link to='/edit-Course/:id' className="Link">
                 <FontAwesomeIcon width={"5em"} icon={faEdit}/>
                 </Link>
               </div>

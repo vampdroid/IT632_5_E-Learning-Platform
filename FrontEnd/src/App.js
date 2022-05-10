@@ -37,12 +37,14 @@ function App() {
           <Route path='/Profcour' element={<Profcour/>}/> */}
           <Route path='/change-password'  element={<Passedit/>}/>
           <Route path='/courses' element={<CourseList />}/>
+          <Route path='/course-detail/' element={<CourseDetail />}/>
           <Route path='/course-detail/:id' element={<CourseDetail />}/>
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/discuss-course" element={ <Discussion/>} />
           {/* Instructors */}
           <Route path="/add-course" element={ <AddCourse/>} />
           <Route path="/edit-course" element={ <EditCourse/>} />
+          <Route path="/edit-course/:id" element={ <EditCourse/>} />
           <Route path="/course-content/:id" element={ <CourseContent/>} />
           {/* Admin */}
           <Route path="/admin-login" element={ <AdminLogin/>} />

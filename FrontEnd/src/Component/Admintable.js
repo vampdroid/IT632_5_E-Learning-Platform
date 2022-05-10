@@ -10,6 +10,19 @@ const AdminTable=()=>{
   const params = useParams();
   const [detail,setDetail] = useState("")
 
+  // useEffect(()=>
+  // {
+  //   fetch(`http://localhost:4000/user/${params.table}/`)
+  //   .then((result)=>
+  //    {
+  //      result.json()
+  //      .then((resp)=>{
+  //        console.log("result",resp) 
+  //        setDetail(resp) 
+  //      })
+  //    });
+  // },[])
+
   useEffect(()=>{
     console.log(params.table)
     if(params.table=="student")
@@ -142,7 +155,7 @@ const AdminTable=()=>{
           params.table=="enrollments" ?
           <>
             <td scope="col">{entry._id}</td>
-            <td scope="col">Course</td>
+            <td scope="col"></td>
             <td scope="col">User Id</td>
             <td scope="col">Status</td>
             <td scope="col">Handle</td>

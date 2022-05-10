@@ -34,7 +34,7 @@ const cdisp=()=>{
     {
         arr.push( 
           <div className=" col-md-4 col-12 mt-4 ms-2 mb-3">
-          <Link to='/CourseDetail' className='Link'>
+          <Link to='/course-detail' className='Link'>
           <div className="card border-0 work-container work-classic inscourse">
             <div className="card-body p-0">
                 <img

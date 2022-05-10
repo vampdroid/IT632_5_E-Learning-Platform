@@ -39,7 +39,7 @@ function Login() {
             if(data.token){
                 localStorage.setItem("token",data.token);
                 alert("Login sucessfull")
-                window.location.href = '/aboutus'
+                window.location.href = '/'
             }
             else{
                 alert("Login Failure")
