@@ -27,12 +27,9 @@ import InstructorTable from './Component/InstructorAdmin';
 import CourseTable from './Component/CourseAdmin';
 import EnrollmentTable from './Component/EnrollmentAdmin';
 import AdminLogin from './Component/Alogin';
-<<<<<<< Updated upstream
 import Certificate from './Component/certificate';
-=======
 import Verify_Account from './Component/Verify_Account';
 import Reset_password from './Component/reset-password';
->>>>>>> Stashed changes
 function App() {
   return (
 
@@ -52,11 +49,8 @@ function App() {
           <Route path='/course-detail/:id' element={<CourseDetail />}/>
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/discuss-course" element={ <Discussion/>} />
-<<<<<<< Updated upstream
           <Route path="/certificate" element={ <Certificate/>} />
-=======
           <Route path='/user/verify-account/:resetToken/:userid' element={ <Verify_Account /> }/>
->>>>>>> Stashed changes
           {/* Instructors */}
           <Route path="/add-course" element={ <AddCourse/>} />
           <Route path="/edit-course" element={ <EditCourse/>} />
