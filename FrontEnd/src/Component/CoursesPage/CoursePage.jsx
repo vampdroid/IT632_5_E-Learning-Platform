@@ -32,57 +32,7 @@ const CoursePage=()=>{
   <div className="container">
     <div className="row justify-content-center">
       <div className="col-lg-12">
-        <form className="p-4 shadow bg-white rounded">
-          <h4 className="mb-1">Filter !</h4>
-          <div className="row text-start">
-            <div className="col-lg-3 col-md-6">
-              <div className="mb-3 mb-lg-0">
-                <label className="form-label"> Check by date : </label>
-                <input
-                  name="date"
-                  type="date"
-                  className="form-control start"
-                  placeholder="Select date :"
-                />
-              </div>
-            </div>
-            {/*end col*/}
-            <div className="col-lg-3 col-md-6">
-              <div className="mb-3 mb-lg-0">
-              <label className="form-label"> Check by date : </label>
-              <br/>
-               <select
-            className="custom-select form-control-simple"
-            id="account-country"
-          >
-            
-            <option value="">Sort by:</option>
-            <option value="Brazil">Popularity(High to low)</option>
-            <option value="Belgium">Popularity(low to high)</option>
-            <option value="France">by Ratings</option>
-            
-          </select>
-              </div>
-            </div>
-            {/*end col*/}
-            <div className="col-lg-6">
-              <div className="row align-items-center">
-                <div className="col-md-4 mt-lg-4 pt-2 pt-lg-1">
-                  <div className="d-grid">
-                    <input
-                      type="submit"
-                      id="search"
-                      name="search"
-                      className="searchbtn btn btn-primary"
-                      defaultValue="Search"
-                    />
-                  </div>
-                </div>
-                {/*end col*/}
-              </div>
-            </div>
-          </div>
-        </form>
+        
       </div>
       {/*end col*/}
     </div>

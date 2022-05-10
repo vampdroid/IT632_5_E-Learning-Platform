@@ -136,7 +136,7 @@ router
             .catch(err=>next(err));
 
 })
-    .get('/search',(req,res,next)=>{
+    .post('/search',(req,res,next)=>{
         Course
             .aggregate([{
                 $match:{

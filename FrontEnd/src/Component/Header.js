@@ -20,6 +20,7 @@ import NavbarToggle from "react-bootstrap/NavbarToggle";
 function Header(){
     const token = localStorage.getItem('token');
 
+
     const userLogin = ()=>{
         if(token){
             return (
@@ -27,8 +28,7 @@ function Header(){
                     <NavLink className="dropdown-item" to="/profile">Your Profile</NavLink>
                 {/* <NavLink className="dropdown-item" to="/Profile-edit">Update Profile</NavLink>
                     <NavLink className="dropdown-item" to="/Password-edit">update password</NavLink> */}
-                    <NavLink className="dropdown-item" to="/change-password">Log out</NavLink>
-                </>
+                    <button className="dropdown-item" onClick={()=>logout()} >Logout</button>                </>
             )
         }
         else {

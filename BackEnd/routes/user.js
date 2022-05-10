@@ -92,7 +92,7 @@ router.post('/',async (req, res) => {
             token: resetToken,
             createdAt: Date.now(),
           }).save();
-          const link = `https://localhost:4000/user/verify-account/${resetToken}/${userid}`;
+          const link = `https://localhost:3000/user/verify-account/${resetToken}/${userid}`;
           console.log(link);
 
 
