@@ -11,7 +11,7 @@ import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import Header from "./Header";
 import {useState} from "react";
 import {useEffect} from "react";
-const [enrolledCourses,setEnrolledCourses] = useState([]);
+
     // console.log(courseDetail,courseDetail.Contents);
 
     // useEffect(()=>{
@@ -27,7 +27,7 @@ const [enrolledCourses,setEnrolledCourses] = useState([]);
 const Course=()=>{
     const params = useParams();
     const [courseDetail,setCourseDetail] = useState({})
-    
+    const [enrolledCourses,setEnrolledCourses] = useState([]);
 
     useEffect(()=>{ 
       fetch(`http://localhost:4000/courses/${params.id}`)
@@ -40,7 +40,6 @@ const Course=()=>{
        })
      })  
    },[])
-<<<<<<< Updated upstream
 
    
  const enrollCourse = (event) =>{
@@ -62,8 +61,6 @@ const Course=()=>{
     })
   }
  
-=======
->>>>>>> Stashed changes
    return(
        <div>
            <Header/>

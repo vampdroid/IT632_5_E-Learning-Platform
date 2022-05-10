@@ -57,12 +57,8 @@ function App() {
           <Route path="/discuss-course" element={ <Discussion/>} />
           {/* Instructors */}
           <Route path="/add-course" element={ <AddCourse/>} />
-<<<<<<< Updated upstream
           <Route path="/edit-course" element={ <EditCourse/>} />
           <Route path="/edit-course/:id" element={ <EditCourse/>} />
-=======
-          <Route path="/edit" element={ <EditCourse/>} />
->>>>>>> Stashed changes
           <Route path="/course-content/:id" element={ <CourseContent/>} />
           {/* Admin */}
           <Route path="/admin-login" element={ <AdminLogin/>} />
