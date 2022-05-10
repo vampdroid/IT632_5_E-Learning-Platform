@@ -1,0 +1,97 @@
+.maindiv {
+    /* width:100%; */
+    /* margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px; */
+    color: black;
+    align-self: center;
+    display: table;
+    font-family: Georgia, serif;
+    font-size: 24px;
+    text-align: center;
+    display:flex;
+   
+}
+div.container113 {
+    
+    border: 10px solid #3EB489;
+    /* box-shadow: 0px 0px 2px 2px #3EB489; */
+    width: 700px;
+    height: 1000px;
+    display:block;
+    margin-left: 50px;
+    margin-top: 20px;
+  
+   
+}
+
+div.container112 {
+    
+    border: 10px solid #3EB489;
+    width: 850px;
+    height: 1000px;
+    display:block;
+    margin-left: 50px;
+    margin-top: 20px;
+    
+   
+}
+.logopic{
+    
+    width:40%;
+    height:30%;
+    
+    
+}
+.logo {
+    color: #3EB489;
+}
+
+.marquee {
+    color: #3EB489;
+    font-size: 48px;
+    margin: 20px;
+}
+.assignment {
+    margin: 20px;
+}
+.person {
+    border-bottom: 2px solid black;
+    font-size: 32px;
+    font-style: italic;
+    margin: 20px auto;
+    width: 400px;
+}
+.coursename {
+    border-bottom: 2px solid black;
+    font-size: 32px;
+    font-style: italic;
+    margin: 20px auto;
+    width: 400px;
+}
+.btn1{
+    text-align: center;
+    color: #fff;
+    background-color: #3EB489;
+    border-color: #3EB489;
+}
+.reason {
+    margin: 20px;
+}
+.insidecontainer113{
+    margin-top: 10%;
+    margin-left: 10%;
+    width:85%;
+    height: 90%;
+    /* border: 2px solid #3EB489; */
+    /* box-shadow: 0px 0px 2px 2px #3EB489; */
+
+    
+}
+.hiiheader{
+    color:#3EB489;
+}
+#h100{
+    color:#3EB489;
+}

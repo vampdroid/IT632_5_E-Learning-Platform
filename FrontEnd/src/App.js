@@ -22,7 +22,7 @@ import CourseContent from "./Component/CourseContent";
 import AdminPanel  from './Component/AdminPanel';
 import AdminTable from './Component/Admintable';
 import AdminLogin from './Component/Alogin';
-
+import Certificate from './Component/certificate';
 function App() {
   // const [enrolledCourses,setEnrolledCourses] = useState([]);
     // console.log(courseDetail,courseDetail.Contents);
@@ -55,6 +55,7 @@ function App() {
           <Route path='/course-detail/:id' element={<CourseDetail />}/>
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/discuss-course" element={ <Discussion/>} />
+          <Route path="/certificate" element={ <Certificate/>} />
           {/* Instructors */}
           <Route path="/add-course" element={ <AddCourse/>} />
           <Route path="/edit-course" element={ <EditCourse/>} />

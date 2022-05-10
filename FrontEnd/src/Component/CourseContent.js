@@ -44,7 +44,8 @@ const CourseContent=()=>{
                     // console.log(chapterName,"i99dgaf");
                     return (
                     <li className="text-light">
-                        <button onClick={()=>{setYoutubeLink(chapterName.video);setOurTitle(chapterName.title)}} className="">{chapterName.title}</button></li>
+                        {/* <button onClick={()=>{setYoutubeLink(chapterName.video);setOurTitle(chapterName.title)}} className="">{chapterName.title}</button></li> */}
+                        <button onClick={()=>{setYoutubeLink("https://www.youtube.com/watch?v=YoXxevp1WRQ");setOurTitle(chapterName.title)}} className="">{chapterName.title}</button></li>
                     )
                     })}
                 </ul>
