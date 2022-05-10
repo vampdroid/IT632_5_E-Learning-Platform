@@ -62,7 +62,7 @@ app.use(express.json())
 
 
 //adding user to database on registration
-router.route('/').post(async (req, res) => {
+router.post('/',async (req, res) => {
     console.log(req.body)
     const salt = 10;
     const passwordHash = await bcrypt.hash(req.body.password, salt);
@@ -124,9 +124,26 @@ router.route('/').post(async (req, res) => {
     // .catch (err) {
     //     res.json({status: 'error', error: 'email exists', trace: err})
     // }
-});
+})
+.put('/:userid',(req,res,next)=>{
 
-        console.log(req.body);
+    console.log(req.files)
+    if(req.files?.profile_picture!=undefined) {
+        req.body.profile_picture = req.files.profile_picture.data;
+        req.body.contenType = req.files.profile_picture.mimetype
+    }
+
+    if(req.body.email!=undefined){
+        delete req.body["email"];
+    }
+
+    if(req.body.role!=undefined)
+        delete req.body['role']
+
+    if(req.body.password!=undefined)
+        delete req.body['password']
+
+    console.log(req.body);
 
         User.updateOne(req.params.userId,req.body)
             .then((response)=>{
@@ -367,7 +384,19 @@ router
     .get('/instructor',(req, res, next) => {
         if(req.body.instructorID)
             req.body._id = mongoose.Types.ObjectId(req.body.instructorID);
-        Instructor.find(req.body)
+        Instructor
+            .aggregate([
+                {
+                    $match: req.body
+                }, {
+                    $lookup: {
+                        from: 'users',
+                        localField: 'user',
+                        foreignField: '_id',
+                        as: 'userData'
+                    }
+                },
+                ])
             .then(instructors => {
                 if (!instructors) {
                     res.status(404).json({
