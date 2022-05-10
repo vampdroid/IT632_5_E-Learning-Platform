@@ -12,10 +12,23 @@ import Header from "./Header";
 import {useState} from "react";
 import {useEffect} from "react";
 
+    // console.log(courseDetail,courseDetail.Contents);
+
+    // useEffect(()=>{
+    //   console.log(localStorage.getItem("token"))
+    //      fetch(`http://localhost:4000/enroll`,{
+    //         method:"GET",
+    //         "Content-Type":"application/json",
+    //         Authorization: `Bearer 1 ${localStorage.getItem("token")}`
+    //     }).then(data=>{
+    //         console.log(data);
+    //     })
+    // },[])
 const Course=()=>{
     const params = useParams();
     const [courseDetail,setCourseDetail] = useState({})
-    // console.log(courseDetail,courseDetail.Contents);
+    const [enrolledCourses,setEnrolledCourses] = useState([]);
+
     useEffect(()=>{ 
       fetch(`http://localhost:4000/courses/${params.id}`)
      .then((result)=>
@@ -43,7 +56,7 @@ const Course=()=>{
     {
       result.json()
       .then((resp)=>{
-        console.log("enroll",resp)
+        // console.log("enroll",resp)
       })
     })
   }
