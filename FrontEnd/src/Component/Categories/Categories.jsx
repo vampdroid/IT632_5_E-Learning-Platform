@@ -49,7 +49,9 @@ const Categories=(props)=>{
             <Link className="Link" to="/Courses"><Sub /></Link>
             <Link className="Link" to="/Courses"><Sub /></Link> */}
             {categoryList.map((category) => 
-            <div className="Link" to="/Courses"><Sub name={category.name}/></div>
+           
+            <Link className="Link" to={`/courses/${category._id}`}><Sub name={category.name}/></Link>
+            
             )}
         </div>
 

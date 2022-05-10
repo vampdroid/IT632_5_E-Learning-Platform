@@ -22,6 +22,10 @@ import AddCourse from "./Component/add-course";
 import CourseContent from "./Component/CourseContent";
 import AdminPanel  from './Component/AdminPanel';
 import AdminTable from './Component/Admintable';
+import StudentTable from './Component/StudentAdmin';
+import InstructorTable from './Component/InstructorAdmin';
+import CourseTable from './Component/CourseAdmin';
+import EnrollmentTable from './Component/EnrollmentAdmin';
 import AdminLogin from './Component/Alogin';
 import Certificate from './Component/certificate';
 function App() {
@@ -52,7 +56,10 @@ function App() {
           {/* Admin */}
           <Route path="/admin-login" element={ <AdminLogin/>} />
           <Route path="/admin-panel" element={ <AdminPanel/>} />
-          <Route path="/admin-table/:table" element={ <AdminTable/>} />
+          <Route path="/admin-table/student" element={ <StudentTable/>} />
+          <Route path="/admin-table/instructor" element={ <InstructorTable/>} />
+          <Route path="/admin-table/courses" element={ <CourseTable/>} />
+          <Route path="/admin-table/enrollments" element={ <EnrollmentTable/>} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/dashboard" element={<adminDashboard />} />
         </Routes>

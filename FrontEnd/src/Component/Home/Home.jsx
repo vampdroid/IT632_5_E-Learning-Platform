@@ -202,7 +202,7 @@ const Owldemo1 = () => {
         <Slider {...settings}>
 
         {courseList.map((course) => 
-        <Link className="Link" to="/course-detail">
+        <Link className="Link" to={`/course-detail/${course._id}`}>
         <div className="outer card shadow pop">
         <img className="img img-fluid" src={js} alt="" />
         <h4 className="">{course.title}</h4>
