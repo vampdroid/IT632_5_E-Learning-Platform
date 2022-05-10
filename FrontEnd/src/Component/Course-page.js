@@ -40,6 +40,7 @@ const Course=()=>{
        })
      })  
    },[])
+<<<<<<< Updated upstream
 
    
  const enrollCourse = (event) =>{
@@ -61,6 +62,8 @@ const Course=()=>{
     })
   }
  
+=======
+>>>>>>> Stashed changes
    return(
        <div>
            <Header/>

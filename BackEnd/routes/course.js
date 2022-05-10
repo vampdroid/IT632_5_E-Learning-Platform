@@ -1,7 +1,11 @@
 const router = require('express').Router();
 let Course = require('../models/course.model');
 let Content = require('../models/content.model');
+<<<<<<< Updated upstream
 const mongoose = require('mongoose')
+=======
+const mongoose = require('mongoose');
+>>>>>>> Stashed changes
 const User = require('../models/user.model')
 const Category = require('../models/category.model')
 var bodyparser = require("body-parser");
@@ -294,6 +298,7 @@ router
 
 router.route("/:courseId")
     .get((req,res,next)=>{
+        console.log(req.params.courseId);
         const id = req.params.courseId;
         Course.findById(id,"-thumbnail -contentType")
             .then(course=>{

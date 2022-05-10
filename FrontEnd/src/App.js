@@ -13,7 +13,7 @@ import Profile from "./Component/Profedit/Profedit";
 import Profcour from "./Component/Courses/Courses";
 import CourseList from "./Component/CoursesPage/CoursePage";
 import CourseDetail from "./Component/Course-page";
-import EditCourse from "./Component/editCourse";
+import EditCourse from "./Component/EditCourse2";
 import InsCour from "./Component/InsCourse/InsCourse";
 import Discussion from "./Component/Forum";
 import Passedit from "./Component/Passedit/Passedit";
@@ -57,8 +57,12 @@ function App() {
           <Route path="/discuss-course" element={ <Discussion/>} />
           {/* Instructors */}
           <Route path="/add-course" element={ <AddCourse/>} />
+<<<<<<< Updated upstream
           <Route path="/edit-course" element={ <EditCourse/>} />
           <Route path="/edit-course/:id" element={ <EditCourse/>} />
+=======
+          <Route path="/edit" element={ <EditCourse/>} />
+>>>>>>> Stashed changes
           <Route path="/course-content/:id" element={ <CourseContent/>} />
           {/* Admin */}
           <Route path="/admin-login" element={ <AdminLogin/>} />
