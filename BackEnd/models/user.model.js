@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
   },
   city: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
+   // required: true,
     ref:'cities'
   }
  }, {
@@ -46,3 +46,7 @@ const userSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("users", userSchema);
+
+// DB_URL=mongodb+srv://sheryjain:Classical%402@cluster0.lx6ol.mongodb.net/e-learning?retryWrites=true&w=majority
+// DB_URL_MONGO=mongodb+srv://sheryjain:Classical%402@cluster0.lx6ol.mongodb.net/
+

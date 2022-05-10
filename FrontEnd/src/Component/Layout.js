@@ -2,6 +2,7 @@ import logo from '../logo.svg';
 import {Link} from "react-router-dom";
 import '../Styles/Layout.css';
 import Header from "./Header";
+import React from 'react';
 function Layout(props) {
 
     return (

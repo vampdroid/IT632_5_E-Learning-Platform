@@ -1,4 +1,5 @@
 import '../Styles/LayoutGuest.css'
+import React from 'react';
 function LayoutGuest(props){
     return(
             <div className="container-layout">

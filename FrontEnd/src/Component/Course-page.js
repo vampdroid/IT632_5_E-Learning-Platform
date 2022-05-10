@@ -11,6 +11,7 @@ import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import Header from "./Header";
 import {useState} from "react";
 import {useEffect} from "react";
+
 const Course=()=>{
     const params = useParams();
     const [courseDetail,setCourseDetail] = useState({})

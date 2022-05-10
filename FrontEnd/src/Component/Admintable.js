@@ -2,6 +2,7 @@
 import '../App.css';
 import './AdminPanel'
 import AdminPanel from './AdminPanel';
+import React from 'react'; 
 
 const AdminTable=()=>{
   return(
