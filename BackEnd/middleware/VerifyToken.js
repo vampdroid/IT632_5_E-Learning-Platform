@@ -21,7 +21,7 @@ module.exports = (req,res,next)=>{
             .then(user=>{
                 if(!user){
                     res.setHeader("content-type",'application/json');
-                    res.status(400).send({error:"User not founds"});
+                    res.status(400).send({error:"User not found"});
                     return;
                 }
                 req.user = user;
