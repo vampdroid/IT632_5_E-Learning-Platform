@@ -21,8 +21,10 @@ import CourseContent from "./Component/CourseContent";
 import AdminPanel  from './Component/AdminPanel';
 import AdminTable from './Component/Admintable';
 import AdminLogin from './Component/Alogin';
+import {useEffect} from "react";
 
 function App() {
+
   return (
 
     <div className="App">

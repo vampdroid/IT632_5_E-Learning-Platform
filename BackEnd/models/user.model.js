@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   profile_picture: {
-    type: String
+    type: Buffer
   },
   dob: {
     type: Date
@@ -40,6 +40,9 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref:'cities'
+  },
+  contenType:{
+    type:String
   }
  }, {
     timestamps: true,

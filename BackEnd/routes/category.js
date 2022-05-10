@@ -15,6 +15,7 @@ router.route('/').post((req,res) => {
         .catch(err => res.status(400).json("error:"+err));
 });
 
+
 router.route("/:categoryId").delete((req,res,next)=>{
     Category.deleteOne({_id:req.params.categoryId})
         .then((response)=>{
@@ -57,9 +58,8 @@ router.route("/:courseId").put((req,res,next)=>{
         .catch(err=>next(err));
 })
 
-
-
 router.route("/").get((req,res,next)=>{
+
     Category.find(req.body)
         .then((categories)=>{
             if(!categories){

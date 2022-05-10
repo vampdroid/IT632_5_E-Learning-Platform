@@ -4,7 +4,7 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken')
 //user model
 let User = require('../models/user.model');
-
+const fileUploader= require('express-fileupload')
 const verifyJWT = require('../middleware/VerifyToken')
 const Instructor = require('../models/instructor.model')
 //user verification model
@@ -47,11 +47,13 @@ const mongoose = require("mongoose");
 const app = express();
 
 app.use(express.json())
+router.use(fileUploader())
 //const upload = require("../middleware/upload");
 //const upload = multer({desc:'photos/'});
 
 //adding user to database on registration
-router.route('/').post(async (req, res) => {
+router.
+    post('/',async (req, res) => {
     console.log(req.body)
     const salt = 10;
     const passwordHash = await bcrypt.hash(req.body.password, salt);
@@ -69,8 +71,51 @@ router.route('/').post(async (req, res) => {
     } catch (err) {
         res.json({status: 'error', error: 'email exists', trace: err})
     }
-});
+})
+    .put('/:userid',(req,res,next)=>{
 
+        console.log(req.files)
+        if(req.files?.profile_picture!=undefined) {
+            req.body.profile_picture = req.files.profile_picture.data;
+            req.body.contenType = req.files.profile_picture.mimetype
+        }
+
+        if(req.body.email!=undefined){
+            delete req.body["email"];
+        }
+
+        if(req.body.role!=undefined)
+            delete req.body['role']
+
+        if(req.body.password!=undefined)
+            delete req.body['password']
+
+        console.log(req.body);
+
+        User.updateOne(req.params.userId,req.body)
+            .then((response)=>{
+                if(response.modifiedCount==0 && response.matchedCount ==0) {
+                    res.status(200)
+                        .json({
+                            error:"user not found"
+                        })
+                    return;
+                }
+
+                if(response.modifiedCount==0 && response.matchedCount !=0) {
+                    res.status(200)
+                        .json({
+                            error:"user not updated"
+                        })
+                    return;
+                }
+                response.success="user updated";
+                res.status(200)
+                    .json(response);
+            })
+            .catch(err=>next(err));
+    })
+;
 
 //verifying user on login
 router.route('/login').post(async (req, res) => {
@@ -140,16 +185,8 @@ router.route('/admin/login').post(async (req, res) => {
 router
     .get('/instructor',(req, res, next) => {
         if(req.body.instructorID)
-            req.body._id = mongoose.Types.ObjectId(req.body._id);
-        Instructor
-            .aggregate([{
-                $match:req.body
-            }]).lookup({
-                from: 'users',
-                localField: 'user',
-                foreignField: '_id',
-                as: 'userData'
-            })
+            req.body._id = mongoose.Types.ObjectId(req.body.instructorID);
+        Instructor.find(req.body)
             .then(instructors => {
                 if (!instructors) {
                     res.status(404).json({
@@ -168,14 +205,17 @@ router
             req.body._id = mongoose.Types.ObjectId(req.params.instructorID);
 
         Instructor
-            .aggregate([{
-                $match:req.body
-            }]).lookup({
-            from: 'users',
-            localField: 'user',
-            foreignField: '_id',
-            as: 'userData'
-        })
+            .aggregate([
+                {
+                $match: req.body
+            }, {
+                    $lookup: {
+                        from: 'users',
+                        localField: 'user',
+                        foreignField: '_id',
+                        as: 'userData'
+                    }
+            }])
             .then(instructors => {
                 if (!instructors) {
                     res.status(404).json({
@@ -320,4 +360,40 @@ router
         .catch(err => next(err));
 
 })
+
+    .get('/:userId',(req,res,next)=>{
+        User
+            .aggregate([{
+                $match: {
+                    _id : mongoose.Types.ObjectId(req.params.userId)
+                },
+            },
+                {
+                    $lookup: {
+                        from: 'enrollments',
+                        localField: '_id',
+                        foreignField: 'user',
+                        as: 'enrolled'
+                    }
+                },
+                {
+                    "$addFields": {
+                        "enrollments": {
+                            "$size":  "$enrolled"
+                        }
+                    }
+                },])
+            .then(user => {
+                if (!user) {
+                    res.status(404).json({
+                        error: "user not found"
+                    })
+                } else {
+                    res.status(200)
+                        .json(user);
+                }
+            })
+            .catch(err => next(err));
+    })
+
 module.exports = router;
