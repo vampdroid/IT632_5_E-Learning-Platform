@@ -1,5 +1,6 @@
 import logo from './logo.svg';
-//import './App.css';
+// import './App.css';
+import React from 'react';
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Rout from "./Rout";
 import Login from "./Component/Login";
@@ -13,7 +14,7 @@ import Profile from "./Component/Profedit/Profedit";
 import Profcour from "./Component/Courses/Courses";
 import CourseList from "./Component/CoursesPage/CoursePage";
 import CourseDetail from "./Component/Course-page";
-import EditCourse from "./Component/EditCourse2";
+import EditCourse from "./Component/editCourse";
 import InsCour from "./Component/InsCourse/InsCourse";
 import Discussion from "./Component/Forum";
 import Passedit from "./Component/Passedit/Passedit";
@@ -24,19 +25,6 @@ import AdminTable from './Component/Admintable';
 import AdminLogin from './Component/Alogin';
 import Certificate from './Component/certificate';
 function App() {
-  // const [enrolledCourses,setEnrolledCourses] = useState([]);
-    // console.log(courseDetail,courseDetail.Contents);
-
-    // useEffect(async()=>{
-    //   console.log(localStorage.getItem("token"))
-    //      fetch(`http://localhost:4000/enroll`,{
-    //         method:"GET",
-    //         "Content-Type":"application/json",
-    //         "authorization": `Bearer ${localStorage.getItem("token")}`
-    //     }).then(data=>{
-    //         console.log(data);
-    //     })
-    // },[])
   return (
 
     <div className="App">

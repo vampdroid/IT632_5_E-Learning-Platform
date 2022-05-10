@@ -5,6 +5,7 @@ import {useParams} from "react-router-dom";
 import {useState} from "react";
 import {useEffect} from "react";
 import AdminPanel from './AdminPanel';
+import React from 'react'; 
 
 const AdminTable=()=>{
   const params = useParams();
