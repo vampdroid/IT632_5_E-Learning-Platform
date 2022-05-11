@@ -21,6 +21,21 @@ const AdminTable=()=>{
     }
     )},[])
 
+   async function changeStatus(event) {
+      event.preventDefault();
+  const accept = fetch(`http://localhost:4000/user/instructor/${event.target.value}`, {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+    }),
+}).then(result => result.json())
+   .then((data)=>{
+     console.log(data)
+     window.location.href="/admin-table/instructor"
+   })
+   }
   return(
   <div className="main">
           <div className="left"><AdminPanel/></div>
@@ -67,7 +82,7 @@ const AdminTable=()=>{
         <td scope="col">{entry.userData[0]?.lname}</td>
         <td scope="col">{entry.status ? "Accepted" : "Pending"}</td>
         {entry.status ?
-         <></>: <button>Accept</button>}
+         <></>: <button value={entry._id} onClick={changeStatus}>Accept</button>}
        
         <button>View</button>
         <button>Disable</button>

@@ -30,7 +30,7 @@ const AdminTable=()=>{
           <div className="right">
 
 <div className="Orders">
-  <h2>All Orders</h2><br/>
+  <h2>All Courses</h2><br/>
 <label>Rows per page: </label>  
 <select  className="form-select-2" aria-label="Default select example">
     <option selected>Select Rows</option>
@@ -73,9 +73,9 @@ const AdminTable=()=>{
           <td scope="col">{entry.userData?.fname}</td>
           <td scope="col">{entry.Enrollments.length}</td>
           <td scope="col">
-              <button>View</button>
-              <button>Edit</button>
-              <button>Disable</button>
+             <Link to={`/course-detail/${entry._id}`}> <button>View</button></Link>
+             <Link to={`/edit-course/${entry._id}`}><button>Edit</button></Link>
+             {/* <button>Disable</button> */}
           </td>
          
           </tr>
