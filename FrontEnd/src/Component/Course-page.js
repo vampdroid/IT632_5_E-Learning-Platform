@@ -56,7 +56,8 @@ const Course=()=>{
     {
       result.json()
       .then((resp)=>{
-        // console.log("enroll",resp)
+        console.log("enroll",resp)
+        window.location.href=`/course-content/${courseDetail._id}`
       })
     })
   }
@@ -83,7 +84,7 @@ const Course=()=>{
                    <p className="text-white desc">
                    <strong>{courseDetail.description}</strong>
                    </p><br></br></div> 
-                   <Link to="/course-content">
+                   <Link to={`course-content/${courseDetail._id}`}>
                    <button onClick={(e)=>enrollCourse(e)} className="btn btn-light btn-lg text-success enroll">Enroll Now</button><br/>
                     </Link>
                </div>
