@@ -320,4 +320,50 @@ router
         .catch(err => next(err));
 
 })
+
+.put('/:userid',(req,res,next)=>{
+
+    console.log(req.files)
+    if(req.files?.profile_picture!=undefined) {
+        req.body.profile_picture = req.files.profile_picture.data;
+        req.body.contenType = req.files.profile_picture.mimetype
+    }
+
+    if(req.body.email!=undefined){
+        delete req.body["email"];
+    }
+
+    if(req.body.role!=undefined)
+        delete req.body['role']
+
+    if(req.body.password!=undefined)
+        delete req.body['password']
+
+    console.log(req.body);
+
+        User.updateOne(req.params.userId,req.body)
+            .then((response)=>{
+                if(response.modifiedCount==0 && response.matchedCount ==0) {
+                    res.status(200)
+                        .json({
+                            error:"user not found"
+                        })
+                    return;
+                }
+
+                if(response.modifiedCount==0 && response.matchedCount !=0) {
+                    res.status(200)
+                        .json({
+                            error:"user not updated"
+                        })
+                    return;
+                }
+                response.success="user updated";
+                res.status(200)
+                    .json(response);
+            })
+            .catch(err=>next(err));
+    })
+;
+
 module.exports = router;

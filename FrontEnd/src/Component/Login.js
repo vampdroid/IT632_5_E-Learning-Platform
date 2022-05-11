@@ -41,8 +41,11 @@ function Login() {
                 localStorage.setItem("token",data.token);
                 alert("Login sucessfull")
                 console.log(data)
-                localStorage.setItem("user",JSON.stringify(data));
+                if(data?.user){
+                    localStorage.setItem("user",JSON.stringify(data?.user));
                 window.location.href = '/aboutus'
+                }
+                
             }
             else{
                 alert("Login Failure")
