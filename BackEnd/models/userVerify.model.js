@@ -1,20 +1,19 @@
 const mongoose = require("mongoose");
 
 const userVerifySchema = new mongoose.Schema({
-  user: {
-    type: String,
-    required: true,
+  userid: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref:"user"
   },
-  uniqueString: {
+  token: {
     type: String,
     required: true,
   },
   createdAt: {
-    type: Date
+    type: Date,
+    default: Date.now,
+    expires: 3600,// this is the expiry time in seconds
   },
-  expiresAt: {
-    type: Date
-  }
 });
 
 module.exports = mongoose.model("userVerify", userVerifySchema);

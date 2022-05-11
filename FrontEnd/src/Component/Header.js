@@ -1,6 +1,7 @@
 import logo from '../logo.svg';
 import {Link, NavLink} from "react-router-dom";
 import '../Styles/Layout.css'
+import React from 'react';
 import {useState } from "react";
 import {
     Collapse,
@@ -19,15 +20,19 @@ import NavbarToggle from "react-bootstrap/NavbarToggle";
 function Header(){
     const token = localStorage.getItem('token');
 
+
     const userLogin = ()=>{
+        const logout = ()=>{
+            localStorage.removeItem('token')
+            window.location.href='/'
+        }
         if(token){
             return (
                 <>
                     <NavLink className="dropdown-item" to="/profile">Your Profile</NavLink>
                 {/* <NavLink className="dropdown-item" to="/Profile-edit">Update Profile</NavLink>
                     <NavLink className="dropdown-item" to="/Password-edit">update password</NavLink> */}
-                    <NavLink className="dropdown-item" to="/change-password">Log out</NavLink>
-                </>
+                    <button className="dropdown-item" onClick="()=>logout()" >Logout</button>                </>
             )
         }
         else {
@@ -108,14 +113,15 @@ function Header(){
                             <NavLink className="nav-link" to='/aboutus'>Aboutus</NavLink>
                         </NavItem>
                     </Nav>
-                    <Form className="d-flex">
+                    <Form className="d-flex" action='courses'>
                         <FormControl
                             className="form-control me-2"
                             type="search"
                             placeholder="Search"
                             aria-label="Search"
+                            name="search"
                         />
-                        <Button variant="outline-light" id="SearchButton">
+                        <Button variant="outline-light" id="SearchButton" type='submit'>
                             Search
                         </Button>
                     </Form>

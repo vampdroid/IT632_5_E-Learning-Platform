@@ -18,16 +18,16 @@
 .card-body{
     width: 10rem;
 }
-.booklist {
-    width: 90vw;
-    max-width: 1170px;
+.booklist1 {
+    /* width: 90vw; */
+    /* max-width: 1170px; */
     display: grid;
-    gap: 2rem;
+    gap: 0.5rem;
     margin: auto;
 }
 @media screen and (min-width:800px) {
-    .booklist {
-        grid-template-columns: repeat(4, 1fr);
+    .booklist1 {
+        grid-template-columns: repeat(3, 1fr);
     }
 
 }

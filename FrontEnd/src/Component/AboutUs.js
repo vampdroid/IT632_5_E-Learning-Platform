@@ -2,7 +2,7 @@ import Layout from "./Layout";
 import logowithtagline from '../logowithtagline.png';
 import logo from '../logo.svg';
 import {Link} from "react-router-dom";
-
+import React from 'react';
 function AboutUs() {
     return (
         <Layout>

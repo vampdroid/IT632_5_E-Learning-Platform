@@ -3,6 +3,7 @@ import '../Styles/Register.css';
 import LayoutGuest from "./LayoutGuest";
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import React from 'react';
 
 const Register = () => {
     const [fname, setFname] = useState("")

@@ -4,18 +4,24 @@ import { useState, useEffect } from "react";
 import Show from "../Showcase/Showcase";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Layout from "../Layout";
+import LayoutGuest from "../LayoutGuest";
+import Header from "../Header";
 var Slider = require("react-slick");
 
 const Profedit = () => {
   return (
-    <div className="main">
-      <div className="left">
-        <Show />
+    <>
+      <Header />
+      <div className="main">
+        <div className="left">
+          <Show />
+        </div>
+        <div className="right">
+          <Edit />
+        </div>
       </div>
-      <div className="right">
-        <Edit />
-      </div>
-    </div>
+    </>
   );
 };
 
@@ -23,20 +29,59 @@ let Edit = (match) => {
   const [values, setValues] = useState({
     fname: "",
     lname: "",
-    email: "",
-    work: "",
     bio: "",
-    dob: Date,
     photo: "",
+    dob: "",
     city: "",
-    addr: "",
-    pin: "",
   });
 
-  const clickSubmit = () => {
-    localStorage.setItem("user", JSON.stringify(values));
-    alert("Update done");
+  const clickSubmit = async (e) => {
+    e.preventDefault();
     console.log(values);
+    const uploadData = new FormData();
+    // for (const key in values) {
+    //   if (key === "profile_picture") {
+    //     uploadData.append(key, "");
+    //   } else uploadData.append(key, values[key]);
+    // }
+    uploadData.append("fname", values.fname);
+    uploadData.append("lname", values.lname);
+    uploadData.append("bio", values.bio);
+    uploadData.append("city", values.city);
+    uploadData.append(
+      "dob",
+      new Date(document.getElementById("account-date").value)
+    );
+
+    uploadData.append("profile_picture", values.photo);
+    await fetch(
+      `http://localhost:4000/user/${
+        JSON.parse(localStorage.getItem("user"))?._id
+      }`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: uploadData,
+      }
+    )
+      .then((res) => res.json())
+      .then((resp) => {
+        console.log(resp);
+        if (resp.ok) {
+          localStorage.setItem("user", JSON.stringify(values));
+          for (const [key, value] of uploadData) {
+            console.log(key, value);
+          }
+
+          alert("Update done");
+        }
+      });
+
+    for (const [key, value] of uploadData) {
+      console.log(key, value);
+    }
   };
   const init = () => {
     //console.log(JSON.parse(localStorage.getItem("user")));
@@ -50,6 +95,7 @@ let Edit = (match) => {
   const { fname, lname, email, addr, dob, city, bio, pin, photo } = values;
   const handleChange = (name) => (event) => {
     const value = name === "photo" ? event.target.files[0] : event.target.value;
+
     setValues({ ...values, [name]: value });
     // console.log(values)
   };
@@ -99,7 +145,6 @@ let Edit = (match) => {
                 className="form-control form-control-simple"
                 onChange={handleChange("date")}
                 type="date"
-                
                 id="account-date"
                 defaultValue={values.date}
               />
@@ -222,7 +267,7 @@ let Edit = (match) => {
               <button
                 className="btn btn-rounded btn-outline-primary btn-sm px-3 mt-3  "
                 type="button"
-                onClick={clickSubmit}
+                onClick={(e) => clickSubmit(e)}
               >
                 Save changes
               </button>

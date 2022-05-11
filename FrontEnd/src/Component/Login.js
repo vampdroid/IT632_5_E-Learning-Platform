@@ -3,6 +3,7 @@ import logo from '../logo.svg';
 import '../Styles/Login.css'
 import {useState} from "react";
 import {Link} from "react-router-dom";
+import React from 'react';
 
 function Login() {
 
@@ -46,6 +47,7 @@ function Login() {
                 window.location.href = '/aboutus'
                 }
                 
+                window.location.href = '/'
             }
             else{
                 alert("Login Failure")

@@ -10,19 +10,27 @@ import {useEffect} from "react";
 
 const CourseContent=()=>{
     const params = useParams();
-    const [courseDetail,setCourseDetail] = useState("")
+    
 
-    useEffect(()=>{ 
-      fetch(`http://localhost:4000/courses/${params.id}`)
+    const [courseContent,setCourseContent] = useState({})
+    const [youtubeLink,setYoutubeLink] = useState("")
+    const [ourTitle,setOurTitle] = useState("")
+    const [flag,setFlag] = useState(false);
+    useEffect(async ()=>{ 
+      await fetch(`http://localhost:4000/courses/${params.id}`)
      .then((result)=>
      {
        result.json()
        .then((resp)=>{
-         console.log("result",resp) 
-         setCourseDetail(resp) 
-       })
+         setCourseContent(resp[0]) 
+         setYoutubeLink(courseContent.Contents?.[0].video)
+         !flag && setOurTitle(courseContent.Contents?.[0].title)
+         setFlag(true);
+        })
      })  
-   })
+   },[])
+   console.log(courseContent.Contents,"idgaf");
+   
     return(
         <>
         <Header/>
@@ -30,15 +38,22 @@ const CourseContent=()=>{
              
             <div class="mainu1">
                 <div className="colu1">
-                <center><h2 className="text-light mt-2">{courseDetail.title}</h2></center><hr/>
+                <center><h2 className="text-light mt-2">{courseContent.title}</h2></center><hr/>
                 <ul>
-                    <li className="text-light">Introduction</li>
+                    {courseContent.Contents?.map((chapterName,index)=>{
+                    // console.log(chapterName,"i99dgaf");
+                    return (
+                    <li className="text-light">
+                        <button onClick={()=>{setYoutubeLink(chapterName.video);setOurTitle(chapterName.title)}} className="">{chapterName.title}</button></li>
+                        
+                    )
+                    })}
                 </ul>
                 </div>
                 
                 <div className="colu2">
                     <div class="editContentu">
-                        <p><h1 className="save display-5 mt-3 text-success">Our Title</h1></p>
+                        <p><h1 className="save display-5 mt-3 text-success">{ourTitle}</h1></p>
                         {/* <input  className="form-control  control save" type="text" placeholder="Enter Title Of Course"/> */}
                        <Link to='/discuss-course'>
                         <button className="savebtnu mt-2">Course Discussion</button>
@@ -46,7 +61,7 @@ const CourseContent=()=>{
                     </div>
                     <div className="descArea">
                         
-                    <center><iframe className="cvid mt-3" width="400rem" height="270rem" src="https://www.youtube.com/embed/Rezetez59Nk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
+                    <center><iframe className="cvid mt-3" width="400rem" height="270rem" src={youtubeLink} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
                     
                     </div>
                     

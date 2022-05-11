@@ -2,6 +2,7 @@ const router = require('express').Router();
 let Course = require('../models/course.model');
 let Content = require('../models/content.model');
 
+const mongoose = require('mongoose');
 const User = require('../models/user.model')
 const Category = require('../models/category.model')
 var bodyparser = require("body-parser");
@@ -26,11 +27,7 @@ router
             .aggregate([{
                 $match:req.body
             },
-                {
-                    $project: {
-                        "thumbnail": 0, "contentType": 0
-                    }
-                },
+               
                 {
                     $lookup:{
                            from: 'users',
@@ -78,11 +75,7 @@ router
                     ]
                 }
             },
-                {
-                    $project: {
-                        "thumbnail": 0, "contentType": 0
-                    }
-                },
+               
                 {
                     $lookup:{
                         from: 'users',
@@ -135,7 +128,7 @@ router
             .catch(err=>next(err));
 
 })
-    .get('/search',(req,res,next)=>{
+    .post('/search',(req,res,next)=>{
         Course
             .aggregate([{
                 $match:{
@@ -145,11 +138,7 @@ router
                     ]
                 }
             },
-                {
-                    $project: {
-                        "thumbnail": 0, "contentType": 0
-                    }
-                },
+                
                 {
                     $lookup:{
                         from: 'users',
@@ -196,11 +185,7 @@ router
             .aggregate([{
                 $match:req.body
             },
-                {
-                    $project: {
-                        "thumbnail": 0, "contentType": 0
-                    }
-                },
+                
                 {
                     $lookup:{
                         from: 'users',
@@ -294,6 +279,7 @@ router
 
 router.route("/:courseId")
     .get((req,res,next)=>{
+        console.log(req.params.courseId);
         const id = req.params.courseId;
         Course.findById(id,"-thumbnail -contentType")
             .then(course=>{

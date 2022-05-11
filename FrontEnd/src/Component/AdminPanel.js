@@ -14,7 +14,7 @@ const AdminPanel=()=>{
    <img src={logo} width="60rem" className="mt-1 mb-1 border" alt="profile pic" />
   <ul className="list-group list-group-clean">
     <li className="list-group-item ">
-      <Link to='/admin-table'>
+      <Link to='/admin-table/student'>
         <div className="d-flex justify-content-between align-items-center">
             <span>Students</span>
 
@@ -22,7 +22,7 @@ const AdminPanel=()=>{
       </Link>
     </li>
     <li className="list-group-item ">
-    <Link to='/admin-table'>
+    <Link to='/admin-table/instructor'>
         <div className="d-flex justify-content-between align-items-center">
           <span>
             <i className="icon icon-cart mr-2" />
@@ -32,7 +32,7 @@ const AdminPanel=()=>{
       </Link>
     </li>
     <li className="list-group-item ">
-    <Link to='/admin-table'>
+    <Link to='/admin-table/courses'>
         <div className="d-flex justify-content-between align-items-center">
           <span>
             <i className="icon icon-alarm mr-2" />
@@ -42,7 +42,7 @@ const AdminPanel=()=>{
       </Link>
     </li>
     <li className="list-group-item ">
-    <Link to='/admin-table'>
+    <Link to='/admin-table/enrollments'>
         <div className="d-flex justify-content-between align-items-center">
           <span>
             <i className="icon icon-alarm mr-2" />

@@ -7,13 +7,22 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import "./InsCourse.css";
+import Layout from "../Layout";
+import Header from "../Header";
 const InsCour=()=>{
-    return(
+    return (
+      <>
+        <Header />
         <div className="main">
-            <div className="left"><Show/></div>
-            <div className="right"><InCour/></div>
+          <div className="left">
+            <Show />
+          </div>
+          <div className="right">
+            <InCour />
+          </div>
         </div>
-    )
+      </>
+    );
 }
 
 let InCour=()=>{
@@ -21,14 +30,14 @@ let InCour=()=>{
         <>
   <div className="col-lg- col-12">
     <h5 className="mb-0 head">Courses instructed by you: </h5>
-    <div className="rounded shadow p-4 booklist">
+    <div className="rounded shadow p-4 booklist1">
       {idisp()}
         <br />
       
   </div>
   <div className="mt-4 border button1">
       <button >
-      <Link to='/Addnew' className="Link">
+      <Link to='/add-course' className="Link">
       <h3>Add new <FontAwesomeIcon width={"1em"} icon={faPlus}/></h3>
     </Link>
     </button>
@@ -69,8 +78,8 @@ const idisp=()=>{
                   </a>
 
                 </h5>
-                <FontAwesomeIcon width={"5em"} icon={faDumpster}/>
-                <Link to='/EditCourse' className="Link">
+                <FontAwesomeIcon onClick={()=>{alert("del")}} width={"5em"} icon={faDumpster}/>
+                <Link to='/edit-Course/:id' className="Link">
                 <FontAwesomeIcon width={"5em"} icon={faEdit}/>
                 </Link>
               </div>
