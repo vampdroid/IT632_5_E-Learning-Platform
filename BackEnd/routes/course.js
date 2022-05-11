@@ -27,11 +27,7 @@ router
             .aggregate([{
                 $match:req.body
             },
-                {
-                    $project: {
-                        "thumbnail": 0, "contentType": 0
-                    }
-                },
+               
                 {
                     $lookup:{
                            from: 'users',
@@ -79,11 +75,7 @@ router
                     ]
                 }
             },
-                {
-                    $project: {
-                        "thumbnail": 0, "contentType": 0
-                    }
-                },
+               
                 {
                     $lookup:{
                         from: 'users',
@@ -146,11 +138,7 @@ router
                     ]
                 }
             },
-                {
-                    $project: {
-                        "thumbnail": 0, "contentType": 0
-                    }
-                },
+                
                 {
                     $lookup:{
                         from: 'users',
@@ -197,11 +185,7 @@ router
             .aggregate([{
                 $match:req.body
             },
-                {
-                    $project: {
-                        "thumbnail": 0, "contentType": 0
-                    }
-                },
+                
                 {
                     $lookup:{
                         from: 'users',

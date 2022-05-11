@@ -126,13 +126,13 @@ router.post('/', async (req, res) => {
     //     res.json({status: 'error', error: 'email exists', trace: err})
     // }
 })
-    .put('/:userid', (req, res, next) => {
-
-        console.log(req.files)
-        if (req.files?.profile_picture != undefined) {
-            req.body.profile_picture = req.files.profile_picture.data;
-            req.body.contenType = req.files.profile_picture.mimetype
-        }
+.put('/:userid',(req,res,next)=>{
+    console.log(req.body)
+    console.log(req.files)
+    if(req.files?.profile_picture!=undefined) {
+        req.body.profile_picture = req.files.profile_picture.data;
+        req.body.contenType = req.files.profile_picture.mimetype
+    }
 
         if (req.body.email != undefined) {
             delete req.body["email"];
@@ -146,9 +146,10 @@ router.post('/', async (req, res) => {
 
         console.log(req.body);
 
-        User.updateOne(req.params.userId, req.body)
-            .then((response) => {
-                if (response.modifiedCount == 0 && response.matchedCount == 0) {
+        User.updateOne(req.params.userId,req.body)
+            .then((response)=>{
+                console.log("data"+response);
+                if(response.modifiedCount==0 && response.matchedCount ==0) {
                     res.status(200)
                         .json({
                             error: "user not found"
@@ -233,23 +234,46 @@ router.route('/changePassword').post(async (req, res) => {
     const confirmPass = req.body.confirmPass;
     const email = req.body.email;
 
-    if (newPass == confirmPass) {
+    console.log(req.body)
+    if(newPass == confirmPass){
         const salt = 10;
-        const passwordHash = await bcrypt.hash(req.body.newPass, salt);
-
-        User.updateOne({ email: email }, { password: passwordHash })
-            .then((result) => {
+        bcrypt.hash(newPass,salt)
+        .then(passwordHash=>{
+            console.log(passwordHash)
+            User.updateOne({email: email},{password:passwordHash})
+            .then((result)=>{
                 return res.json({
                     status: "ok",
                     message: "password has been changed to new password"
                 })
             })
-            .catch((error) => {
+            .catch((error)=>{
                 return res.json({
                     status: "Failed",
                     message: "password not changed try again"
                 })
             })
+        })
+        .catch(err=>{
+             return res.json({
+                    status: "Failed",
+                    message: "password not changed try again"
+                })
+            })
+
+        // User.updateOne({email: email},{password:passwordHash})
+        // .then((result)=>{
+        //     return res.json({
+        //         status: "ok",
+        //         message: "password has been changed to new password"
+        //     })
+        // })
+        // .catch((error)=>{
+        //     return res.json({
+        //         status: "Failed",
+        //         message: "password not changed try again"
+        //     })
+        // })
     }
     else {
         return res.json({
@@ -434,7 +458,15 @@ router
                         foreignField: '_id',
                         as: 'userData'
                     }
-                }])
+                },
+                {
+                    $lookup: {
+                        from: 'courses',
+                        localField: 'userData._id',
+                        foreignField: 'user',
+                        as: 'courses'
+                    }
+            }])
             .then(instructors => {
                 if (!instructors) {
                     res.status(404).json({
@@ -504,6 +536,7 @@ router
     //         .catch(err => next(err));
     // })
     .put('/instructor/:instructorId', (req, res, next) => {
+        console.log(req.params);
         Instructor.findById(req.params.instructorId)
             .then(async (instructor) => {
                 if (!instructor) {
@@ -541,9 +574,89 @@ router
 
     })
 
-    .get('/student', (req, res, next) => {
-        if (req.body._id)
-            req.body._id = mongoose.Types.ObjectId(req.body._id);
+.get('/student',(req,res,next)=>{
+    if(req.body._id)
+        req.body._id = mongoose.Types.ObjectId(req.body._id);
+    User
+        .aggregate([{
+            $match: {
+                ...req.body,
+                role: 'stu'
+            },
+        },
+        {
+            $lookup: {
+                from: 'enrollments',
+                localField: '_id',
+                foreignField: 'user',
+                as: 'enrolled'
+            }
+        },
+            {
+                "$addFields": {
+                    "enrollments": {
+                        "$size":  "$enrolled"
+                    }
+                }
+            },])
+        .then(instructors => {
+            if (!instructors) {
+                res.status(404).json({
+                    error: "request not created"
+                })
+            } else {
+                res.status(200)
+                    .json(instructors);
+            }
+        })
+        .catch(err => next(err));
+
+})
+
+.put('/:userid',(req,res,next)=>{
+
+    console.log(req.files)
+    if(req.files?.profile_picture!=undefined) {
+        req.body.profile_picture = req.files.profile_picture.data;
+        req.body.contenType = req.files.profile_picture.mimetype
+    }
+
+    if(req.body.email!=undefined){
+        delete req.body["email"];
+    }
+
+    if(req.body.role!=undefined)
+        delete req.body['role']
+
+    if(req.body.password!=undefined)
+        delete req.body['password']
+
+    console.log(req.body);
+
+        User.updateOne(req.params.userId,req.body)
+            .then((response)=>{
+                if(response.modifiedCount==0 && response.matchedCount ==0) {
+                    res.status(200)
+                        .json({
+                            error:"user not found"
+                        })
+                    return;
+                }
+
+                if(response.modifiedCount==0 && response.matchedCount !=0) {
+                    res.status(200)
+                        .json({
+                            error:"user not updated"
+                        })
+                    return;
+                }
+                response.success="user updated";
+                res.status(200)
+                    .json(response);
+            })
+            .catch(err=>next(err));
+    })
+    .get('/:userId',(req,res,next)=>{
         User
             .aggregate([{
                 $match: {

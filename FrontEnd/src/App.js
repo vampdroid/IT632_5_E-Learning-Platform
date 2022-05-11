@@ -25,12 +25,14 @@ import AdminTable from './Component/Admintable';
 import StudentTable from './Component/StudentAdmin';
 import InstructorTable from './Component/InstructorAdmin';
 import CourseTable from './Component/CourseAdmin';
+import CategoryTable from './Component/CategoryAdmin';
 import EnrollmentTable from './Component/EnrollmentAdmin';
 import AdminLogin from './Component/Alogin';
 // import AboutUs from './Component/AboutUs';
 import Verify_Account from './Component/Verify_Account';
 import Forgot_Password from './Component/forgot-password';
 import Reset_Password from './Component/reset_password';
+import CoursePageForCategory from "./Component/CoursesPage/CoursePageForCategory";
 function App() {
   return (
 
@@ -46,6 +48,7 @@ function App() {
           <Route path='/Profcour' element={<Profcour/>}/> */}
           <Route path='/change-password'  element={<Passedit/>}/>
           <Route path='/courses' element={<CourseList />}/>
+          <Route path='/category/:categoryId' element={<CoursePageForCategory />}/>
           <Route path='/course-detail/' element={<CourseDetail />}/>
           <Route path='/course-detail/:id' element={<CourseDetail />}/>
           <Route path="/aboutus" element={<AboutUs />} />
@@ -62,6 +65,7 @@ function App() {
           <Route path="/admin-table/student" element={ <StudentTable/>} />
           <Route path="/admin-table/instructor" element={ <InstructorTable/>} />
           <Route path="/admin-table/courses" element={ <CourseTable/>} />
+          <Route path="/admin-table/category" element={ <CategoryTable/>} />
           <Route path="/admin-table/enrollments" element={ <EnrollmentTable/>} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/dashboard" element={<adminDashboard />} />

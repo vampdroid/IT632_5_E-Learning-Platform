@@ -73,7 +73,7 @@ const Course=()=>{
                <center><h1 className="display-6 text-light">Course Details</h1></center>  <hr/>
                    {/* <h1 className="text-white display-2 title learn"> */}
                    <div className="flex-main">
-                   <img src="https://static.javatpoint.com/images/javascript/javascript_logo.png" className="thumbnail"/>
+                   <img src={"data:image/"+courseDetail.contentType+";base64,"+courseDetail.thumbnail?.toString("base64")} className="thumbnail"/>
                    
                    <h4 className="text-white display-2 title learn">{courseDetail.title}
                     </h4>

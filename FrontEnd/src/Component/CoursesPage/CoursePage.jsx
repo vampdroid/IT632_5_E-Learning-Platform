@@ -4,15 +4,37 @@ import js from "../Assets/js.png";
 // import OwlCarousel from 'react-owl-carousel';  
 // import 'owl.carousel/dist/assets/owl.carousel.css';  
 // import 'owl.carousel/dist/assets/owl.theme.default.css';
-import { Link } from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import Header from "../Header";
 import {useState} from "react";
 import {useEffect} from "react";
 
 const CoursePage=()=>{
   const [courseList,setCourse] = useState([])
+    const search = useLocation().search;
+    const seachData = new URLSearchParams(search).get('search');
 
-  useEffect(()=>{ 
+  useEffect(()=>{
+      if(seachData!=null){
+      fetch('http://localhost:4000/courses/search',{
+        method:"POST",
+        headers:{
+          'content-type':"application/json"
+        },
+        body:JSON.stringify({
+          search:seachData
+        })
+      })
+      .then((result)=>
+      {
+        result.json()
+        .then((resp)=>{
+          console.log("result",resp) 
+          setCourse(resp) 
+        })
+      })  
+    }
+    else{
     fetch('http://localhost:4000/courses')
    .then((result)=>
    {
@@ -22,6 +44,7 @@ const CoursePage=()=>{
        setCourse(resp) 
      })
    })  
+  }
  },[])
     return(
 
@@ -29,6 +52,7 @@ const CoursePage=()=>{
          <Header/>
          <br/>
         <section className="section-two bg-light mb-5" id="bookroom">
+  
   <div className="container">
     <div className="row justify-content-center">
       <div className="col-lg-12">
@@ -42,7 +66,7 @@ const CoursePage=()=>{
 </section>
 
       <div className="booklist">{/*disp()*/}
-      {courseList.map((course) =>
+      {courseList?courseList.map((course) =>
       <Link to='/CourseDetail' className="Link">
             <div class="card courses-desc overflow-hidden rounded shadow border-0">
                             <div class="position-relative d-block overflow-hidden">
@@ -53,14 +77,15 @@ const CoursePage=()=>{
 
                             <div class="card-body">
                                 <h5>{course.title}</h5>
-                                <div class="fees d-flex justify-content-between">   
+                                <div class="fees d-flex justify-content-between">
+                                    {course.userData[0]?.fname}
                                 <h6>{course.userData[0]?.fname} {course.userData[0]?.lname}</h6>
                                 {/* <h7>Date</h7> */}
                                 </div>
                             </div>
                         </div>
           </Link>
-      )}
+      ):null}
       </div>
         
        

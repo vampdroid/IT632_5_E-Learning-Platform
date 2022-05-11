@@ -33,13 +33,10 @@ const userSchema = new mongoose.Schema({
   },
   verified: {
     type: Boolean,
-    required: true,
     default: false,
   },
   city: {
-    type: mongoose.Schema.Types.ObjectId,
-   // required: true,
-    ref:'cities'
+    type: String
   },
   contenType:{
     type:String

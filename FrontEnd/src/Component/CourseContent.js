@@ -16,8 +16,8 @@ const CourseContent=()=>{
     const [youtubeLink,setYoutubeLink] = useState("")
     const [ourTitle,setOurTitle] = useState("")
     const [flag,setFlag] = useState(false);
-    useEffect(async ()=>{ 
-      await fetch(`http://localhost:4000/courses/${params.id}`)
+    useEffect( ()=>{
+       fetch(`http://localhost:4000/courses/${params.id}`)
      .then((result)=>
      {
        result.json()
@@ -28,9 +28,7 @@ const CourseContent=()=>{
          setFlag(true);
         })
      })  
-   },[courseContent])
-   console.log(courseContent.Contents,"idgaf");
-   
+   },[])
     return(
         <>
         <Header/>

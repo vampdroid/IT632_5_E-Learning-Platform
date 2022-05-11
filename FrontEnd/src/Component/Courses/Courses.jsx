@@ -3,14 +3,23 @@ import js from '../Assets/js.png';
 import Show from "../Showcase/Showcase";
 import './Courses.css';
 import { Link } from "react-router-dom";
+import Layout from "../Layout";
+import Header from "../Header";
 
 const Profcour=()=>{
     return (
+      <>
+        <Header/>
         <div className="main">
-            <div className="left"><Show/></div>
-            <div className="right"><Cour/></div>
+          <div className="left">
+            <Show />
+          </div>
+          <div className="right">
+            <Cour />
+          </div>
         </div>
-    )
+      </>
+    );
 }
 
 let Cour=()=>{
@@ -18,7 +27,7 @@ let Cour=()=>{
         <>
   <div className="col-lg- col-12">
     <h5 className="mb-0 head">Courses: </h5>
-    <div className="rounded shadow  booklist">
+    <div className="rounded shadow  booklist1">
       {cdisp()}
   </div>
   </div>

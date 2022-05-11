@@ -3,17 +3,37 @@
 import '../Styles/add-course.css';
 import {Link} from "react-router-dom";
 import Header from './Header';
+import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { useEffect } from 'react';
 import {useState} from "react";
 import React from 'react';
+import {Form} from "react-bootstrap";
 
 function Add_course() {
 
   const [thumbnail,setthumbnail] = useState(null);
+  const [categories,setCategory] = useState(null);
   const initialState ={
     title:"",
     description:"",
     thumbnail:"",
     category:"62624057a95105869d739ae0"
+  }
+  useEffect(()=>{
+
+    fetch('http://localhost:4000/category')
+        .then(res => res.json())
+        .then(res =>{
+          console.log(res);
+          setCategory(res);
+      })
+  },[])
+
+  const validateCategory = (ev)=>{
+    console.log(course.category)
+    if(course.category === "")
+      return false;
+    return true;
   }
 
   const handleChange = (ev) => {
@@ -67,7 +87,9 @@ function Add_course() {
     console.log("result",data);
   }
 
-
+  const categoriesOptions =  categories!=null?categories.map(category =>{
+    return <option value={category._id} key={category._id} >{category.name}</option>
+  }):null;
   return (
     <>
     <Header/>
@@ -93,13 +115,20 @@ function Add_course() {
             {/*           aria-describedby="inputGroupPrepend" required/><br/>*/}
             {/*  </div>*/}
             {/*</div>*/}
-            <div className="col-md-12">
-              {/* <label for="validationCustomUsername" className="form-label">Email</label> */}
+            {/* <div className="col-md-12">
               <div className="input-group has-validation">
                 <input name='category' placeholder='Enter Course Description' value={course.category}
                        onChange={handleChange}
                        type="text-area" className="form-control" id="validationCustomUsername"
                        aria-describedby="inputGroupPrepend" required/><br/>
+              </div>
+            </div> */}
+            <div className="col-md-12">
+              <div className="input-group has-validation">
+                <Form.Select value={course.category}  name="category" size="lg" onChange={handleChange} isValid={validateCategory()}>
+                  <option value=""> Select any category</option>
+                  {categoriesOptions}
+                </Form.Select>
               </div>
             </div>
             <div className="col-md-12">
@@ -115,7 +144,6 @@ function Add_course() {
               <input name='thumbnail' placeholder='Enter Course Thumbnail' value={course.thumbnail}
                      onChange={handleChange}  type="file" className="form-control"
                      id="validationCustom03" required/>
-
             </div>
             <Link to="/edit-course">
             <div className="col-md-12">

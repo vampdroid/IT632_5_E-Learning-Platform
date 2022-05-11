@@ -20,7 +20,7 @@ module.exports = (req,res,next)=>{
             const videoReadStram = fs.createReadStream(req.files.content.tempFilePath);
             videoReadStram.pipe(videoUploadStream);
 
-            videoUploadStream.on('close', () => {
+            videoReadStram.on('close', () => {
                 console.log("create");
                 next()
             })

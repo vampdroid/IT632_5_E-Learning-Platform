@@ -1,7 +1,7 @@
 import logo from '../logo.svg';
 import {Link, NavLink} from "react-router-dom";
 import '../Styles/Layout.css'
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useState } from "react";
 import {
     Collapse,
@@ -20,15 +20,34 @@ import NavbarToggle from "react-bootstrap/NavbarToggle";
 function Header(){
     const token = localStorage.getItem('token');
 
+    const [categories , setCategory] = useState(null);
+    useEffect(()=>{
+
+        fetch('http://localhost:4000/category')
+            .then(res => res.json())
+            .then(res=>{
+                console.log(res);
+                setCategory(res);
+            })
+    },[])
+
+    const categoriesList = categories ? categories.map(category=>{
+        return  <a className="dropdown-item" href={`/category/${category._id}`}>{category.name}</a>
+    }) : null
+
 
     const userLogin = ()=>{
+        const logout = ()=>{
+            localStorage.removeItem('token')
+            window.location.href='/login'
+        }
         if(token){
             return (
                 <>
                     <NavLink className="dropdown-item" to="/profile">Your Profile</NavLink>
                 {/* <NavLink className="dropdown-item" to="/Profile-edit">Update Profile</NavLink>
                     <NavLink className="dropdown-item" to="/Password-edit">update password</NavLink> */}
-                    <button className="dropdown-item" onClick="()=>logout()" >Logout</button>                </>
+                    <button className="dropdown-item" onClick={()=>logout()} >Logout</button>                </>
             )
         }
         else {
@@ -108,15 +127,19 @@ function Header(){
                         <NavItem>
                             <NavLink className="nav-link" to='/aboutus'>Aboutus</NavLink>
                         </NavItem>
+                        <NavDropdown title="Categories" id="collasible-nav-dropdown">
+                            {categoriesList}
+                        </NavDropdown>
                     </Nav>
-                    <Form className="d-flex">
+                    <Form className="d-flex" action='courses'>
                         <FormControl
                             className="form-control me-2"
                             type="search"
                             placeholder="Search"
                             aria-label="Search"
+                            name="search"
                         />
-                        <Button variant="outline-light" id="SearchButton">
+                        <Button variant="outline-light" id="SearchButton" type='submit'>
                             Search
                         </Button>
                     </Form>
