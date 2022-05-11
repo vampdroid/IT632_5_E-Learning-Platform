@@ -1,9 +1,9 @@
-//import '../Styles/ForgotPassword.css';
+import '../Styles/ForgotPassword.css';
 
 import React from "react";
-import { Link, usePareams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-function VerifyOTP() {
+function Verify_Account() {
   const params = useParams();
   const verify = async () => {
     const url = `http://localhost:4000/user/verify-account/${params.resetToken}/${params.userid}`;
@@ -26,4 +26,4 @@ function VerifyOTP() {
   );
 }
 
-export default VerifyOTP;
+export default Verify_Account;
