@@ -1,7 +1,86 @@
 import '../Styles/Alogin.css';
 import React from 'react';
+import {useState} from "react";
 import { Link } from "react-router-dom";
 function Alogin() {
+
+  
+  const token = localStorage.getItem('token');
+    
+  if(token){
+      window.location.href = '/admin-table/student'
+  }
+  const [email, setEmail] = useState("");
+  const [emailErr, setEmailErr] = useState(false);
+  const [password, setPasswd] = useState("");
+  const [passwdErr, setPasswdErr] = useState(false);
+
+  async function submitForm(event) {
+      event.preventDefault();
+      // if(emailErr || passwdErr || email== null || passwd == null  ){
+      //     alert("Invalid data");
+      // }
+      // else{
+          //let values = {email, passwd};
+      
+          const result = await fetch('http://localhost:4000/user/login', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  email,
+                  password,
+              }),
+          })
+
+          const data = await result.json();
+          if(data.token){
+              localStorage.setItem("token",data.token);
+              alert("Login sucessfull")
+              window.location.href = '/'
+          }
+          else{
+              alert("Login Failure")
+          }
+          console.log("result",data);
+      //}
+      
+
+      // const data = await result.json();
+      // if(data.email){
+      //     alert("Registration sucessfull")
+      //     window.location.href = '/login'
+      // }
+      // else{
+      //     alert("registration Failure")
+      // }
+      // console.log("result",data);
+  }
+
+  function validateEmail(event) {
+      let emailEvent = event.target.value;
+      if (emailEvent.length <= 5) {
+          setEmailErr(true);
+          setEmail(null)
+      } else {
+          setEmailErr(false);
+          setEmail(emailEvent)
+      }
+  }
+
+  function validatePasswd(event) {
+      let passwdEvent = event.target.value;
+      if (passwdEvent.length <= 5) {
+          setPasswdErr(true);
+          setPasswd(null)
+      } else {
+          setPasswdErr(false);
+          setPasswd(passwdEvent)
+      }
+  }
+
+
 
   return (
     <>
@@ -22,7 +101,7 @@ function Alogin() {
     <input placeholder='Enter Password' type="password" className="form-control" id="validationCustom01"  required/>
   </div>
   
-   <Link to='/admin-table'>
+   <Link to='/admin-table/student'>
   <div className="col-md-12">
     <center><button className="btn1 btn2" type="submit" >Login</button></center>
   </div>

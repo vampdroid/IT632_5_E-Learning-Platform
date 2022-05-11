@@ -1,6 +1,10 @@
 import React from 'react';
 
+<<<<<<< Updated upstream
 //import './Styles/ForgotPassword.css';
+=======
+//import '../Styles/ForgotPassword.css';
+>>>>>>> Stashed changes
 
 function ForgotPassword() {
   return (

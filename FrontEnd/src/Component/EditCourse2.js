@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import "../Styles/editCourse.css";
 import "bootstrap/dist/css/bootstrap.css";
+import List_Content from "./List_Content";
 
 const EditCourse2 = () => {
   const initialState = {
@@ -77,36 +78,42 @@ const EditCourse2 = () => {
   };
   var id;
   var contentString = "";
+  const [idx,setIdx] = useState(0);
   useEffect(async () => {
     const url = `http://localhost:4000/courses/623b022071928a40fd8b9b47`;
     fetch(url, {
       method: "GET",
       headers: {
+          Accept:"application/json",
         "Content-Type": "application/json",
       },
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data[0].Contents);
-        for (let i in data[0].Contents) {
-          console.log(data[0].Contents[i].title);
+        console.log(data);
+        setCourseDetails(data?.[0])
+        // for (let i in data[0].Contents) {
+        //   console.log(data[0].Contents[i].title);
 
-          var t = document.createElement("span");
-          var b = document.createElement("br");
-          t.className = "text-light";
-          var tx = document.createTextNode(data[0].Contents[i].title);
-          id = document.createTextNode(data[0].Contents[i].id);
-          contentString += data[0].Contents[i].title;
-          t.appendChild(tx);
-          t.appendChild(b);
-          document.getElementById("d").appendChild(t);
-        }
+        //   var t = document.createElement("span");
+        //   var b = document.createElement("br");
+        //   t.className = "text-light";
+        //   var tx = document.createTextNode(data[0].Contents[i].title);
+        //   id = document.createTextNode(data[0].Contents[i].id);
+        //   contentString += data[0].Contents[i].title;
+        //   t.appendChild(tx);
+        //   t.appendChild(b);
+        //   document.getElementById("d").appendChild(t);
+        // }
       });
-  }, []);
+  }, [idx]);
+  console.log("____________",courseDetails)
   return (
     <div>
+
       <div className="main1">
-        <div className="col1" id="d">
+
+         <div className="col1" id="d">
           <center>
             <h2 className="text-light mt-2">List Of Content</h2>
           </center>
@@ -115,27 +122,39 @@ const EditCourse2 = () => {
             type="text"
             id="content"
             name="content"
-            value={courseDetails.content}
+            value={courseDetails.title}
             onChange={handleChange}
           ></input>
 
           <input type="button" id="addtxt" value="+" onClick={add_field} />
           <br></br>
+          <ul>
+                    {courseDetails.Contents?.map((chapterName,index)=>{
+                    // console.log(chapterName,"i99dgaf");
+                    return (
+                    <li key = {index} className="text-light">
+                        
+                        <button onClick={()=>{setIdx(index)}} className="">{chapterName.title}</button>
+                         </li>
+                    )
+                    })}
+                </ul>
 
           {/* <span className="text-light">Introduction</span> */}
         </div>
-
         <div className="col2">
           <div className="editContent">
-            <input
+            {/* <input
               className="form-control  control save"
               type="text"
               id="title"
               name="title"
-              value={courseDetails.title}
-              onChange={handleChange}
+              value={courseDetails?.[idx]}
+            //   onChange={handleChange}
               placeholder="Enter Title Of Course"
-            />
+            /> */}
+            <h2>{courseDetails?.Contents?.[idx]?.title}</h2>
+
             <button className="savebtn text-light" onClick={insertContent}>
               Save
             </button>
@@ -175,7 +194,7 @@ const EditCourse2 = () => {
                 id="description"
                 name="description"
                 className="area"
-                value={courseDetails.description}
+                value={courseDetails?.Contents?.[idx].description}
                 onChange={handleChange}
                 placeholder="Enter Your Course Description"
               ></textarea>
