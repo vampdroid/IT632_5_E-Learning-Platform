@@ -36,8 +36,7 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
   city: {
-    type: String,
-   // required: true,
+    type: String
   },
   contenType:{
     type:String

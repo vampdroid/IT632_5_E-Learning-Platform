@@ -130,7 +130,7 @@ function Login() {
                 </div>
                 <div className="text-center pt-3 pb-1">
                     <span >Forgot</span>
-                    <Link to="/"> Password?</Link>
+                    <Link to="/forgotPassword"> Password?</Link>
                 </div>
 
                 <div className="text-center">

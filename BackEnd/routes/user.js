@@ -63,44 +63,44 @@ router.use(fileUpload())
 
 
 //adding user to database on registration
-router.post('/',async (req, res) => {
+router.post('/', async (req, res) => {
     console.log(req.body)
     const salt = 10;
     const passwordHash = await bcrypt.hash(req.body.password, salt);
 
-        let newUser = await User.create({
-            fname: req.body.fname,
-            lname: req.body.lname,
-            email: req.body.email,
-            password: passwordHash,
-            role: "stu",
-            city: req.body.city
-        })
-        if(!newUser){
-            return res.json({status: 'error', error: 'email exists', trace: err})
-        }
+    let newUser = await User.create({
+        fname: req.body.fname,
+        lname: req.body.lname,
+        email: req.body.email,
+        password: passwordHash,
+        role: "stu",
+        city: req.body.city
+    })
+    if (!newUser) {
+        return res.json({ status: 'error', error: 'email exists', trace: err })
+    }
 
-        const token = await UserVerify.findOne({ userid: newUser._id });
-        if (token) {
-              await UserVerify.deleteOne()
-        };
-        const userid = newUser._id;
-        let resetToken = crypto.randomBytes(32).toString("hex");
+    const token = await UserVerify.findOne({ userid: newUser._id });
+    if (token) {
+        await UserVerify.deleteOne()
+    };
+    const userid = newUser._id;
+    let resetToken = crypto.randomBytes(32).toString("hex");
 
-        await new UserVerify({
-            userid: userid,
-            token: resetToken,
-            createdAt: Date.now(),
-          }).save();
-          const link = `https://localhost:3000/user/verify-account/${resetToken}/${userid}`;
-          console.log(link);
+    await new UserVerify({
+        userid: userid,
+        token: resetToken,
+        createdAt: Date.now(),
+    }).save();
+    const link = `http://localhost:3000/user/verify-account/${resetToken}/${userid}`;
+    console.log(link);
 
 
-          const mailOptions = {
-            from: process.env.AUTH_EMAIL,
-            to: newUser.email,
-            subject: "Verification Email",
-            html: `
+    const mailOptions = {
+        from: process.env.AUTH_EMAIL,
+        to: newUser.email,
+        subject: "Verification Email",
+        html: `
             <body>
             <h1>Verify Your Email </h1>
             <hr>
@@ -108,17 +108,17 @@ router.post('/',async (req, res) => {
             <p> Click <a href=${link}>here</a> to verify your account. </p>
             <hr>
             </body> `
-          }
+    }
 
-          transporter.sendMail(mailOptions)
-          .then(() => {
-              console.log("Mail Sent!")
-          })
-          .catch((err) => {
-              console.log(err);
-          });
+    transporter.sendMail(mailOptions)
+        .then(() => {
+            console.log("Mail Sent!")
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 
-        return res.json({status: 'ok', email: req.body.email})
+    return res.json({ status: 'ok', email: req.body.email })
 
 
     //    res.json({status: 'ok', email: req.body.email})
@@ -134,42 +134,43 @@ router.post('/',async (req, res) => {
         req.body.contenType = req.files.profile_picture.mimetype
     }
 
-    if(req.body.email!=undefined){
-        delete req.body["email"];
-    }
+        if (req.body.email != undefined) {
+            delete req.body["email"];
+        }
 
-    if(req.body.role!=undefined)
-        delete req.body['role']
+        if (req.body.role != undefined)
+            delete req.body['role']
 
-    if(req.body.password!=undefined)
-        delete req.body['password']
+        if (req.body.password != undefined)
+            delete req.body['password']
 
-    console.log(req.body);
+        console.log(req.body);
 
         User.updateOne(req.params.userId,req.body)
             .then((response)=>{
+                console.log("data"+response);
                 if(response.modifiedCount==0 && response.matchedCount ==0) {
                     res.status(200)
                         .json({
-                            error:"user not found"
+                            error: "user not found"
                         })
                     return;
                 }
 
-                if(response.modifiedCount==0 && response.matchedCount !=0) {
+                if (response.modifiedCount == 0 && response.matchedCount != 0) {
                     res.status(200)
                         .json({
-                            error:"user not updated"
+                            error: "user not updated"
                         })
                     return;
                 }
-                response.success="user updated";
+                response.success = "user updated";
                 res.status(200)
                     .json(response);
             })
-            .catch(err=>next(err));
+            .catch(err => next(err));
     })
-;
+    ;
 
 //verifying user on login
 router.route('/login').post(async (req, res) => {
@@ -189,52 +190,46 @@ router.route('/login').post(async (req, res) => {
 
 
             if (!validPassword) {
-                return res.status(400).json({error: "password Invalid Credential"});
+                return res.status(400).json({ error: "password Invalid Credential" });
             }
-            else
-            {
-                if(!userLogin.verified)
-                {
+            else {
+                if (!userLogin.verified) {
                     res.json({
                         status: "FAILED",
                         message: "user hasn't been verified"
                     });
                 }
-                else
-                {
-                    const token = jwt.sign({user: userLogin}, process.env.SECRET);
-                    return res.status(200).json({messgae: "Login Success", token: token,user:userLogin});
+                else {
+                    const token = jwt.sign({ user: userLogin }, process.env.SECRET);
+                    return res.status(200).json({ messgae: "Login Success", token: token, user: userLogin });
                 }
             }
         } else {
-            res.status(400).json({error: "email Invalid Credential"});
+            res.status(400).json({ error: "email Invalid Credential" });
         }
     } catch (err) {
         console.log(err);
-        res.status(400).json({Error: "Login Failed!!!"});
+        res.status(400).json({ Error: "Login Failed!!!" });
     }
 });
 
-router.route('/verify-account/:token/:userid').get( async (req, res) => {
-    const token = await UserVerify.findOne({ token : req.params.token })
-    if(token)
-    {
-        const user = await User.findOne({ userId : req.params.userid })
-        if(user)
-        {
-            const update = await User.updateOne({ _id : req.params.userid }, {verified : true})
-            if(update)
-            {
+router.route('/verify-account/:token/:userid').get(async (req, res) => {
+    const token = await UserVerify.findOne({ token: req.params.token })
+    if (token) {
+        const user = await User.findOne({ userId: req.params.userid })
+        if (user) {
+            const update = await User.updateOne({ _id: req.params.userid }, { verified: true })
+            if (update) {
                 return res.json("account verified successfully")
             }
-            else{
+            else {
                 return res.json("error verifying account")
             }
         }
     }
-  })
+})
 
-router.route('/changePassword').post(async(req,res)=>{
+router.route('/changePassword').post(async (req, res) => {
     const newPass = req.body.newPass;
     const confirmPass = req.body.confirmPass;
     const email = req.body.email;
@@ -280,7 +275,7 @@ router.route('/changePassword').post(async(req,res)=>{
         //     })
         // })
     }
-    else{
+    else {
         return res.json({
             status: "failed",
             message: "confrim and new passwords do not match"
@@ -288,70 +283,76 @@ router.route('/changePassword').post(async(req,res)=>{
     }
 });
 
-router.route('/resetPassword/:token/:userid').post( async (req, res) => {
-    const newpass = req.body.newpassword;
-    console.log("token: " + req.params.token + " " + "userid: " + req.params.userid)
-    console.log("new password recieved" + newpass);
+router.route('/resetPassword/:token/:userid').post(async (req, res) => {
+    const newpass = req.body.newPass;
+    const confirmpass = req.body.confirmPass;
 
-    const salt = 10;
-    const newpwd = await bcrypt.hash(newpass, salt)
-    console.log(newpwd);
+    if (newpass === confirmpass) {
 
+        console.log("token: " + req.params.token + " " + "userid: " + req.params.userid)
+        console.log("new password recieved" + newpass);
 
-    const token = await UserVerify.findOne({ token : req.params.token })
-      if(token)
-      {
-          const user = await User.findOne({ userId : req.params.userid })
-          if(user)
-          {
-              const update = await User.updateOne({ _id : req.params.userid }, {password : newpwd})
-              if(update)
-              {
-                  res.json("password changed successfully")
+        const salt = 10;
+        const newpwd = await bcrypt.hash(newpass, salt)
+        console.log(newpwd);
 
-              }
-          }
-      }
-  })
+        const token = await UserVerify.findOne({ token: req.params.token })
+        if (token) {
+            console.log("hi");
+            const user = await User.findOne({ userId: req.params.userid })
+            if (user) {
+                console.log("hello");
+                const update = await User.updateOne({ _id: req.params.userid }, { password: newpwd })
+                if (update) {
+                    console.log("updated");
+                    return res.status(200).json({ messgae: "password changed sucessfully" });
+                }
+            }
+        }
+    }
+    else{
+        return res.status(400).json({ messgae: "new password and confirm passwords do not match"});
+    }
 
-router.route('/forgotPassword').post( async (req, res) => {
+})
+
+router.route('/forgotPassword').post(async (req, res) => {
     const email = req.body.email;
     let userid;
     console.log("email recieved: " + email)
-    const user = User.findOne({email})
-    .then((result) => {
-      if(result == null)
-      {
-        return res.json("user not found");
-      }
-      else{
-        userid = result._id;
-      }
-    })
+    const user = User.findOne({ email })
+        .then((result) => {
+            if (result == null) {
+                return res.json("user not found");
+            }
+            else {
+                userid = result._id;
+            }
+        })
 
     const token = await UserVerify.findOne({ _id: user._id });
     if (token) {
-          await UserVerify.deleteOne()
+        await UserVerify.deleteOne()
     };
 
     let resetToken = crypto.randomBytes(32).toString("hex");
 
     await new UserVerify({
-      userid: userid,
-      token: resetToken,
-      createdAt: Date.now(),
+        userid: userid,
+        token: resetToken,
+        createdAt: Date.now(),
     }).save();
 
-    const link = `https://localhost:4000/user/resetPassword/${resetToken}/${userid}`;
+    const link = `http://localhost:3000/user/resetPassword/${resetToken}/${userid}`;
     console.log(link)
 
-  //  const currentUrl = "https://localhost:4000/";
+    //  const currentUrl = "https://localhost:4000/";
 
     const mailOptions = {
-      from: process.env.AUTH_EMAIL,
-      to: email,
-      subject: "Password forgot Request",
-      html: `
+        from: process.env.AUTH_EMAIL,
+        to: email,
+        subject: "Password forgot Request",
+        html: `
       <body>
       <h1>Password forgot Request </h1>
       <hr>
@@ -363,13 +364,13 @@ router.route('/forgotPassword').post( async (req, res) => {
     }
 
     transporter.sendMail(mailOptions)
-      .then(() => {
-          res.json("Mail Sent!")
-      })
-      .catch((err) => {
-          res.json(err);
-      });
-  })
+        .then(() => {
+            res.json("Mail Sent!")
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+})
 
 
 router.route('/admin/login').post(async (req, res) => {
@@ -377,7 +378,7 @@ router.route('/admin/login').post(async (req, res) => {
 
         const userLogin = await User.findOne({
             email: req.body.email,
-            role:'admin'
+            role: 'admin'
         });
         console.log(userLogin.email);
 
@@ -390,23 +391,23 @@ router.route('/admin/login').post(async (req, res) => {
 
 
             if (!validPassword) {
-                return res.status(400).json({error: "password Invalid Credential"});
+                return res.status(400).json({ error: "password Invalid Credential" });
             } else {
-                const token = jwt.sign({user: userLogin}, process.env.SECRET);
-                return res.status(200).json({messgae: "Login Success", token: token,user:userLogin});
+                const token = jwt.sign({ user: userLogin }, process.env.SECRET);
+                return res.status(200).json({ messgae: "Login Success", token: token, user: userLogin });
             }
         } else {
-            return res.status(400).json({error: "email Invalid Credential"});
+            return res.status(400).json({ error: "email Invalid Credential" });
         }
     } catch (err) {
         console.log(err);
-        return res.status(400).json({Error: "Login Failed!!!"});
+        return res.status(400).json({ Error: "Login Failed!!!" });
     }
 });
 
 router
-    .get('/instructor',(req, res, next) => {
-        if(req.body.instructorID)
+    .get('/instructor', (req, res, next) => {
+        if (req.body.instructorID)
             req.body._id = mongoose.Types.ObjectId(req.body.instructorID);
         Instructor
             .aggregate([
@@ -428,7 +429,7 @@ router
                         as: 'courses'
                     }
                 }
-                ])
+            ])
             .then(instructors => {
                 if (!instructors) {
                     res.status(404).json({
@@ -441,16 +442,16 @@ router
             })
             .catch(err => next(err));
     })
-    .get('/instructor/:instructorID',(req, res, next) => {
+    .get('/instructor/:instructorID', (req, res, next) => {
 
-        if(req.params.instructorID)
+        if (req.params.instructorID)
             req.body._id = mongoose.Types.ObjectId(req.params.instructorID);
 
         Instructor
             .aggregate([
                 {
-                $match: req.body
-            }, {
+                    $match: req.body
+                }, {
                     $lookup: {
                         from: 'users',
                         localField: 'user',
@@ -479,17 +480,17 @@ router
             .catch(err => next(err));
     })
     .post('/instructor', verifyJWT, (req, res, next) => {
-        Instructor.findOne({user: req.user._id})
+        Instructor.findOne({ user: req.user._id })
             .then(instructor => {
                 // console.log(instructor);
                 if (instructor.status == true) {
                     res.status(200)
-                        .json({error: "you are already instructor"})
+                        .json({ error: "you are already instructor" })
                     return;
                 }
                 if (instructor) {
                     res.status(200)
-                        .json({error: "you had send request already"})
+                        .json({ error: "you had send request already" })
                     return;
                 }
                 const data = req.body;
@@ -508,7 +509,7 @@ router
                     })
                     .catch((err) => next(err))
             })
-            .catch(err=>next(err))
+            .catch(err => next(err))
     })
     // .get('/instructor', (req, res, next) => {
     //
@@ -535,6 +536,7 @@ router
     //         .catch(err => next(err));
     // })
     .put('/instructor/:instructorId', (req, res, next) => {
+        console.log(req.params);
         Instructor.findById(req.params.instructorId)
             .then(async (instructor) => {
                 if (!instructor) {
@@ -569,7 +571,7 @@ router
                 }
             })
             .catch(err => next(err));
-            
+
     })
 
 .get('/student',(req,res,next)=>{
@@ -658,24 +660,61 @@ router
         User
             .aggregate([{
                 $match: {
-                    _id : mongoose.Types.ObjectId(req.params.userId)
+                    ...req.body,
+                    role: 'stu'
                 },
             },
-                {
-                    $lookup: {
-                        from: 'enrollments',
-                        localField: '_id',
-                        foreignField: 'user',
-                        as: 'enrolled'
+            {
+                $lookup: {
+                    from: 'enrollments',
+                    localField: '_id',
+                    foreignField: 'user',
+                    as: 'enrolled'
+                }
+            },
+            {
+                "$addFields": {
+                    "enrollments": {
+                        "$size": "$enrolled"
                     }
+                }
+            },])
+            .then(instructors => {
+                if (!instructors) {
+                    res.status(404).json({
+                        error: "request not created"
+                    })
+                } else {
+                    res.status(200)
+                        .json(instructors);
+                }
+            })
+            .catch(err => next(err));
+
+    })
+
+    .get('/:userId', (req, res, next) => {
+        User
+            .aggregate([{
+                $match: {
+                    _id: mongoose.Types.ObjectId(req.params.userId)
                 },
-                {
-                    "$addFields": {
-                        "enrollments": {
-                            "$size":  "$enrolled"
-                        }
+            },
+            {
+                $lookup: {
+                    from: 'enrollments',
+                    localField: '_id',
+                    foreignField: 'user',
+                    as: 'enrolled'
+                }
+            },
+            {
+                "$addFields": {
+                    "enrollments": {
+                        "$size": "$enrolled"
                     }
-                },])
+                }
+            },])
             .then(user => {
                 if (!user) {
                     res.status(404).json({

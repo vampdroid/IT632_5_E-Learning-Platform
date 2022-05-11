@@ -7,6 +7,7 @@ import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootst
 import { useEffect } from 'react';
 import {useState} from "react";
 import React from 'react';
+import {Form} from "react-bootstrap";
 
 function Add_course() {
 
