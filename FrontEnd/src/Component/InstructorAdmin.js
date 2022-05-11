@@ -3,7 +3,6 @@ import '../App.css';
 import React from 'react';
 
 import './AdminPanel'
-import React from "react";
 import {useParams} from "react-router-dom";
 import {useState} from "react";
 import { Link } from "react-router-dom";

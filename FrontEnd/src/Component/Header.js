@@ -22,6 +22,10 @@ function Header(){
 
 
     const userLogin = ()=>{
+        const logout = ()=>{
+            localStorage.removeItem('token')
+            window.location.href='/'
+        }
         if(token){
             return (
                 <>
@@ -109,14 +113,15 @@ function Header(){
                             <NavLink className="nav-link" to='/aboutus'>Aboutus</NavLink>
                         </NavItem>
                     </Nav>
-                    <Form className="d-flex">
+                    <Form className="d-flex" action='courses'>
                         <FormControl
                             className="form-control me-2"
                             type="search"
                             placeholder="Search"
                             aria-label="Search"
+                            name="search"
                         />
-                        <Button variant="outline-light" id="SearchButton">
+                        <Button variant="outline-light" id="SearchButton" type='submit'>
                             Search
                         </Button>
                     </Form>
