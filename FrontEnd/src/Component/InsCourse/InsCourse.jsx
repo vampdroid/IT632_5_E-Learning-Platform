@@ -7,13 +7,22 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import "./InsCourse.css";
+import Layout from "../Layout";
+import Header from "../Header";
 const InsCour=()=>{
-    return(
+    return (
+      <>
+        <Header />
         <div className="main">
-            <div className="left"><Show/></div>
-            <div className="right"><InCour/></div>
+          <div className="left">
+            <Show />
+          </div>
+          <div className="right">
+            <InCour />
+          </div>
         </div>
-    )
+      </>
+    );
 }
 
 let InCour=()=>{
@@ -21,7 +30,7 @@ let InCour=()=>{
         <>
   <div className="col-lg- col-12">
     <h5 className="mb-0 head">Courses instructed by you: </h5>
-    <div className="rounded shadow p-4 booklist">
+    <div className="rounded shadow p-4 booklist1">
       {idisp()}
         <br />
       
@@ -69,7 +78,7 @@ const idisp=()=>{
                   </a>
 
                 </h5>
-                <FontAwesomeIcon width={"5em"} icon={faDumpster}/>
+                <FontAwesomeIcon onClick={()=>{alert("del")}} width={"5em"} icon={faDumpster}/>
                 <Link to='/edit-Course/:id' className="Link">
                 <FontAwesomeIcon width={"5em"} icon={faEdit}/>
                 </Link>

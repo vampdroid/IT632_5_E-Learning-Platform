@@ -30,7 +30,7 @@ const Register = () => {
 
         const data = await result.json();
         if(data.email){
-            alert("Registration sucessfull")
+            alert("Registration successful")
             window.location.href = '/login'
         }
         else{

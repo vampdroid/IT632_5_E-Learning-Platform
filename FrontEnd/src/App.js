@@ -31,6 +31,7 @@ import AdminLogin from './Component/Alogin';
 // import AboutUs from './Component/AboutUs';
 import Verify_Account from './Component/Verify_Account';
 import Reset_password from './Component/reset-password';
+import CoursePageForCategory from "./Component/CoursesPage/CoursePageForCategory";
 function App() {
   return (
 
@@ -46,6 +47,7 @@ function App() {
           <Route path='/Profcour' element={<Profcour/>}/> */}
           <Route path='/change-password'  element={<Passedit/>}/>
           <Route path='/courses' element={<CourseList />}/>
+          <Route path='/category/:categoryId' element={<CoursePageForCategory />}/>
           <Route path='/course-detail/' element={<CourseDetail />}/>
           <Route path='/course-detail/:id' element={<CourseDetail />}/>
           <Route path="/aboutus" element={<AboutUs />} />

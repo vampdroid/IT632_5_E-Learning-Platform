@@ -37,15 +37,23 @@ function Login() {
             })
 
             const data = await result.json();
+            console.log(data);
             if(data.token){
                 localStorage.setItem("token",data.token);
                 alert("Login sucessfull")
+                console.log(data)
+                if(data?.user){
+                    localStorage.setItem("user",JSON.stringify(data?.user));
+                window.location.href = '/aboutus'
+                }
+                
                 window.location.href = '/'
             }
             else{
                 alert("Login Failure")
             }
             console.log("result",data);
+            console.log(document.cookie)
         //}
         
 

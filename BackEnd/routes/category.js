@@ -2,7 +2,7 @@ const router = require('express').Router();
 let Category = require('../models/category.model');
 const bodyparser = require('body-parser')
 const {response} = require("express");
-
+const mongoose = require('mongoose')
 router.use(bodyparser.json())
 
 router.route('/').post((req,res) => {
@@ -72,6 +72,45 @@ router.route("/").get((req,res,next)=>{
             res.status(200)
                 .json(categories);
         })
+})
+
+
+router.get('/:categoryId',(req,res,next)=>{
+    Category.
+        aggregate([
+        {
+            $match:{
+                _id : mongoose.Types.ObjectId(req.params.categoryId)
+            },
+        },
+        {
+            $lookup:{
+                from: 'courses',
+                localField: '_id',
+                foreignField: 'category',
+                as: 'courses'
+            }
+        },
+        {    $lookup:{
+            from: 'users',
+                localField: 'courses.user',
+                foreignField: '_id',
+                as: 'userData'
+        }
+        }
+        ]
+    ).
+    then(categories => {
+        if (!categories[0]) {
+            res.status(404).json({
+                error: "user not found"
+            })
+        } else {
+            res.status(200)
+                .json(categories[0]);
+        }
+    })
+        .catch(err => next(err));
 })
 
 
