@@ -1,3 +1,4 @@
+import { faWindowRestore } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from '../logo.svg';
@@ -32,6 +33,16 @@ const AdminPanel=()=>{
       </Link>
     </li>
     <li className="list-group-item ">
+    <Link to='/admin-table/category'>
+        <div className="d-flex justify-content-between align-items-center">
+          <span>
+            <i className="icon icon-cart mr-2" />
+            <span>Category</span>
+          </span>
+        </div>
+      </Link>
+    </li>
+    <li className="list-group-item ">
     <Link to='/admin-table/courses'>
         <div className="d-flex justify-content-between align-items-center">
           <span>
@@ -52,14 +63,12 @@ const AdminPanel=()=>{
       </Link>
     </li>
     <li className="list-group-item ">
-    <Link to='/admin-table'>
-        <div className="d-flex justify-content-between align-items-center">
+        <button className="d-flex justify-content-between align-items-center" onClick={()=>{localStorage.removeItem("token"); window.location.href="/admin-login"}}>
           <span>
             <i className="icon icon-alarm mr-2" />
             <span>Logout</span>
           </span>
-        </div>
-      </Link>
+        </button>
     </li>
   </ul>
 </div>

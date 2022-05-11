@@ -52,6 +52,7 @@ const CoursePage=()=>{
          <Header/>
          <br/>
         <section className="section-two bg-light mb-5" id="bookroom">
+  
   <div className="container">
     <div className="row justify-content-center">
       <div className="col-lg-12">

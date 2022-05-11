@@ -25,6 +25,7 @@ import AdminTable from './Component/Admintable';
 import StudentTable from './Component/StudentAdmin';
 import InstructorTable from './Component/InstructorAdmin';
 import CourseTable from './Component/CourseAdmin';
+import CategoryTable from './Component/CategoryAdmin';
 import EnrollmentTable from './Component/EnrollmentAdmin';
 import AdminLogin from './Component/Alogin';
 // import AboutUs from './Component/AboutUs';
@@ -63,6 +64,7 @@ function App() {
           <Route path="/admin-table/student" element={ <StudentTable/>} />
           <Route path="/admin-table/instructor" element={ <InstructorTable/>} />
           <Route path="/admin-table/courses" element={ <CourseTable/>} />
+          <Route path="/admin-table/category" element={ <CategoryTable/>} />
           <Route path="/admin-table/enrollments" element={ <EnrollmentTable/>} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/dashboard" element={<adminDashboard />} />

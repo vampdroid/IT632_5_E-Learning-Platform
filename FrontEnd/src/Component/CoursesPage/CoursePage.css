@@ -9,12 +9,12 @@
     padding: 10px;
 }
 .owl-item.active{
-    width: 200px !important;
+    /* width: 200px !important; */
     margin-left:6rem ;
     margin-right: 0px;
 }
 .owl-item{
-    width: 200px !important;
+    width: 10rem !important;
     margin-left:6rem ;
     margin-right: 0px;
 }
