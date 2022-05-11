@@ -4,15 +4,38 @@ import js from "../Assets/js.png";
 // import OwlCarousel from 'react-owl-carousel';  
 // import 'owl.carousel/dist/assets/owl.carousel.css';  
 // import 'owl.carousel/dist/assets/owl.theme.default.css';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Header from "../Header";
 import {useState} from "react";
 import {useEffect} from "react";
 
 const CoursePage=()=>{
   const [courseList,setCourse] = useState([])
-
+  const seachData = useParams().search;
   useEffect(()=>{ 
+
+    console.log(seachData)
+    if(seachData!=null){
+      console.log('je')
+      fetch('http://localhost:4000/courses/search',{
+        method:"POST",
+        headers:{
+          'content-type':"application/json"
+        },
+        body:JSON.stringify({
+          search:seachData
+        })
+      })
+      .then((result)=>
+      {
+        result.json()
+        .then((resp)=>{
+          console.log("result",resp) 
+          setCourse(resp) 
+        })
+      })  
+    }
+    else{
     fetch('http://localhost:4000/courses')
    .then((result)=>
    {
@@ -22,6 +45,7 @@ const CoursePage=()=>{
        setCourse(resp) 
      })
    })  
+  }
  },[])
     return(
 

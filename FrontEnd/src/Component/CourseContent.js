@@ -28,7 +28,7 @@ const CourseContent=()=>{
          setFlag(true);
         })
      })  
-   },[courseContent])
+   },[])
    console.log(courseContent.Contents,"idgaf");
    
     return(

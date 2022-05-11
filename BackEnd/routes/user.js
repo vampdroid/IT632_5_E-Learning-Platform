@@ -434,6 +434,14 @@ router
                         foreignField: '_id',
                         as: 'userData'
                     }
+                },
+                {
+                    $lookup: {
+                        from: 'courses',
+                        localField: 'userData._id',
+                        foreignField: 'user',
+                        as: 'courses'
+                    }
             }])
             .then(instructors => {
                 if (!instructors) {
