@@ -77,7 +77,7 @@ const EditCourse2 = () => {
   };
   var id;
   var contentString = "";
-  useEffect(async () => {
+  useEffect( () => {
     const url = `http://localhost:4000/courses/623b022071928a40fd8b9b47`;
     fetch(url, {
       method: "GET",

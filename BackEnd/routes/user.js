@@ -148,6 +148,7 @@ router.post('/',async (req, res) => {
 
         User.updateOne(req.params.userId,req.body)
             .then((response)=>{
+                console.log("data"+response);
                 if(response.modifiedCount==0 && response.matchedCount ==0) {
                     res.status(200)
                         .json({
@@ -456,6 +457,7 @@ router
             .catch(err => next(err));
     })
     .post('/instructor', verifyJWT, (req, res, next) => {
+        console.log(req.user)
         Instructor.findOne({user: req.user._id})
             .then(instructor => {
                 // console.log(instructor);
@@ -512,6 +514,7 @@ router
     //         .catch(err => next(err));
     // })
     .put('/instructor/:instructorId', (req, res, next) => {
+        console.log(req.params);
         Instructor.findById(req.params.instructorId)
             .then(async (instructor) => {
                 if (!instructor) {

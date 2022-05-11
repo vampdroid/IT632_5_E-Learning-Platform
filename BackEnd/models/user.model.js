@@ -37,9 +37,7 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
   city: {
-    type: mongoose.Schema.Types.ObjectId,
-   // required: true,
-    ref:'cities'
+    type: String
   },
   contenType:{
     type:String
