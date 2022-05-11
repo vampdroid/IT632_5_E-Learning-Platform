@@ -28,7 +28,7 @@ function Header(){
                     <NavLink className="dropdown-item" to="/profile">Your Profile</NavLink>
                 {/* <NavLink className="dropdown-item" to="/Profile-edit">Update Profile</NavLink>
                     <NavLink className="dropdown-item" to="/Password-edit">update password</NavLink> */}
-                    <button className="dropdown-item" onClick={()=>logout()} >Logout</button>                </>
+                    <button className="dropdown-item" onClick="()=>logout()" >Logout</button>                </>
             )
         }
         else {

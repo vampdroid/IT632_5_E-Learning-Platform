@@ -1,5 +1,7 @@
 //import '../Styles/ForgotPassword.css';
 
+import React from 'react';
+
 import { Link, useParams } from "react-router-dom";
 
 function VerifyOTP() {
