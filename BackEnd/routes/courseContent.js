@@ -19,7 +19,7 @@ router
         UploadContet,
         (req, res, next) => {
 
-        if(!req.body.name && !req.files){
+        if(!req.body.video && !req.files){
             res.status(400)
                 .json({
                     error:"content not uploaded"

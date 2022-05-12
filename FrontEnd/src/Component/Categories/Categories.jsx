@@ -45,7 +45,7 @@ const Categories = (props) => {
             <Link className="Link" to="/Courses"><Sub /></Link>
             <Link className="Link" to="/Courses"><Sub /></Link> */}
         {categoryList.map((category) => (
-          <Link className="Link" to={`/courses/${category._id}`}>
+          <Link className="Link" to={`/category/${category._id}`}>
             <Sub name={category.name} />
           </Link>
         ))}

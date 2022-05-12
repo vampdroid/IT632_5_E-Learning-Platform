@@ -19,8 +19,7 @@ const contentSchema = new mongoose.Schema({
         required:false
     },
     contentType:{
-        type:String,
-        required:true
+        type:String
     }
  });
 
