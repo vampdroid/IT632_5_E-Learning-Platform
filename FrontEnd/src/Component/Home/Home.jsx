@@ -195,7 +195,7 @@ const Owldemo1 = () => {
       <div data-aos="fade-right">
         <Slider {...settings}>
           {courseList.map((course) => (
-            <Link className="Link" to="/course-detail">
+              <Link className="Link" to={`/course-detail/${course._id}`}>
               <div className="outer card shadow pop">
                 <img className="img img-fluid" src={"data:image/"+course.contentType+";base64,"+course.thumbnail?.toString("base64")} alt="" />
                 <h4 className="">{course.title}</h4>

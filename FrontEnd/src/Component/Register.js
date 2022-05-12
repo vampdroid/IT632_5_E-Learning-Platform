@@ -10,11 +10,24 @@ const Register = () => {
     const [lname, setLname] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPass] = useState("")
+    const [passErr, setPassErr] = useState(false);
 
     async function registerUser(event){
         event.preventDefault()
         //let values = {fname, lname, email, password};
-        
+        if(fname=="")
+        {alert("Enter Valid Name")
+    return}
+        if(email=="")
+        {
+            alert("Enter Valid Email");
+            return
+        }
+        if(password=="")
+        {
+            alert("Enter Valid Password");
+            return
+        }
         const result = await fetch('http://localhost:4000/user/', {
             method: 'POST',
             headers: {
@@ -38,6 +51,21 @@ const Register = () => {
         }
         console.log("result",data);
     }
+
+    function validatePasswd(event) {
+        
+        let passwdEvent = event.target.value;
+        
+        if (passwdEvent.length < 8 ) 
+        {
+            setPassErr(true);
+            setPass(null)
+        } else {
+            setPassErr(false);
+            setPass(passwdEvent)
+        }
+    }
+
 
     return (
         <LayoutGuest>
@@ -81,12 +109,18 @@ const Register = () => {
                     {/* <label for="validationCustom05" className="form-label">Password</label> */}
                     <input type="password" 
                     value={password} 
-                    onChange={(e) =>setPass(e.target.value)} 
+                    //onChange={(e) =>setPass(e.target.value)} 
                     placeholder='Enter Password'  
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                    className="form-control" 
+                    className={`form-control input100 ${ passErr ? "is-invalid" : ""}`} 
+                    onChange={(event) => validatePasswd(event)}
                     id="validationCustom05" required/>
 
+                        {
+                            passErr ?
+                                <span className="invalid-feedback">Enter Password of more han 8 characters</span>
+                                : null
+                        }
                 </div>
                 <div className="col-md-12">
                     <center>

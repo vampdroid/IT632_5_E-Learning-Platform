@@ -16,7 +16,7 @@ const InsCour = () => {
   useEffect(async () => {
     await fetch(`http://localhost:4000/user/instructor/${user._id}`)
       .then((data) => {
-        console.log(data);
+          // setIntructorCourses(data[0].courses)
         return data.json();
       })
       .then((data) => {

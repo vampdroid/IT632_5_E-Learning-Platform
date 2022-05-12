@@ -1,5 +1,5 @@
 
-import '../Styles/ForgotPassword.css';
+//import '../Styles/ForgotPassword.css';
 import React from 'react';
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -24,7 +24,7 @@ function Reset_Password() {
         const url = `http://localhost:4000/user/resetPassword/${token}/${userid}`;
         console.log("URL IS ", url);
 
-        const result = await fetch(url, {
+        let result = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -37,7 +37,8 @@ function Reset_Password() {
         const data = await result.json();
 
         if(data){
-            alert(data.message);
+            alert("Done");
+            window.location.href="/"
         }
     }
 

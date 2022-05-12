@@ -85,9 +85,9 @@ const CoursePage=()=>{
                             </div>
                         </div>
           </Link>
-      ):null}
+      ):<h1>No Course found</h1>}
       </div>
-        
+      {courseList?.length==0?<h1>No Course found</h1>:null}
        
        </div>
 

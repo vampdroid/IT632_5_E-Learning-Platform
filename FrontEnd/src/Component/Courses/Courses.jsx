@@ -45,7 +45,7 @@ const Profcour = () => {
                   enrolledCourses.map((mycourse, index) => {
                     return (
                       <div className=" col-md-4 col-12 mt-4 ms-2 mb-3">
-                        <Link to={`/course-detail/${mycourse.course}`} className="Link">
+                        <Link to={`/course-detail/${mycourse._id}`} className="Link">
                           <div className="card border-0 work-container work-classic inscourse">
                             <div className="card-body p-0">
                               <img

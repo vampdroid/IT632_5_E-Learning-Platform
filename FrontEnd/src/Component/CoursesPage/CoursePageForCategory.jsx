@@ -45,7 +45,7 @@ const CoursePageForCategory=()=>{
             </section>
 
             <div className="booklist">
-                {courseList!=null?courseList.map((course) =>
+                {courseList?.length>0?courseList.map((course) =>
                     <Link to='/CourseDetail' className="Link">
                         <div class="card courses-desc overflow-hidden rounded shadow border-0">
                             <div class="position-relative d-block overflow-hidden">
@@ -65,6 +65,8 @@ const CoursePageForCategory=()=>{
                     </Link>
                 ):null}
             </div>
+            
+            {courseList?.length==0?<h1>No Course found</h1>:null}
 
 
         </div>

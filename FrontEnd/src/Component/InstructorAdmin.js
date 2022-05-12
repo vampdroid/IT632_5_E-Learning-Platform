@@ -66,7 +66,7 @@ const AdminTable=()=>{
     <table className="table">
       <thead>
                    <tr>
-                   <th scope="col">Id.</th>
+                   <th scope="col">Email ID</th>
                     <th scope="col">First</th>
                     <th scope="col">Last</th>
                     <th scope="col">Status</th>
@@ -76,14 +76,14 @@ const AdminTable=()=>{
       <tbody>
     {detail.map((entry)=>
       <tr>
-        <td scope="col">{entry._id}</td>
+        <td scope="col">{entry.userData[0]?.email}</td>
         <td scope="col">{entry.userData[0]?.fname}</td>
         <td scope="col">{entry.userData[0]?.lname}</td>
         <td scope="col">{entry.status ? "Accepted" : "Pending"}</td>
         {entry.status ?
          <></>: <button value={entry._id} onClick={changeStatus}>Accept</button>}
        
-        <button>View</button>
+        {/* <button>View</button> */}
         <button>Disable</button>
         </tr>
         )}

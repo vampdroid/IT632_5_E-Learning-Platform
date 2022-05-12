@@ -311,13 +311,13 @@ router.route('/resetPassword/:token/:userid').post(async (req, res) => {
                 const update = await User.updateOne({ _id: req.params.userid }, { password: newpwd })
                 if (update) {
                     console.log("updated");
-                    return res.status(200).json({ messgae: "password changed sucessfully" });
+                    res.json({ messgae: "password changed sucessfully" });
                 }
             }
         }
     }
     else{
-        return res.status(400).json({ messgae: "new password and confirm passwords do not match"});
+        res.json({ messgae: "new password and confirm passwords do not match"});
     }
 
 })
@@ -489,6 +489,7 @@ router
             .catch(err => next(err));
     })
     .post('/instructor', verifyJWT, (req, res, next) => {
+        console.log(req.body)
         Instructor.findOne({ user: req.user._id })
             .then(instructor => {
                 console.log(instructor);
