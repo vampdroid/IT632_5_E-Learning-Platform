@@ -33,6 +33,7 @@ import Verify_Account from './Component/Verify_Account';
 import Forgot_Password from './Component/forgot-password';
 import Reset_Password from './Component/reset_password';
 import CoursePageForCategory from "./Component/CoursesPage/CoursePageForCategory";
+import InstructorDetail from './Component/InstructorDetail';
 function App() {
   return (
 
@@ -56,6 +57,7 @@ function App() {
           <Route path='/user/verify-account/:resetToken/:userid/' element={ <Verify_Account /> }/>
           {/* Instructors */}
           <Route path="/add-course" element={ <AddCourse/>} />
+          <Route path="/instructor-detail" element={ <InstructorDetail/>} />
           <Route path="/edit-course" element={ <EditCourse/>} />
           <Route path="/edit-course/:id" element={ <EditCourse/>} />
           <Route path="/course-content/:id" element={ <CourseContent/>} />

@@ -37,7 +37,8 @@ function Reset_Password() {
         const data = await result.json();
 
         if(data){
-            alert(data.message);
+            alert("Done");
+            window.location.href="/"
         }
     }
 

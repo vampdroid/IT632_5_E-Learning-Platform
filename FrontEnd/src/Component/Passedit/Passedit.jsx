@@ -48,6 +48,7 @@ let PEdit = () => {
       })
       .then((data) => {
         console.log(data);
+        alert("Password Edit Successful")
       });
   };
 

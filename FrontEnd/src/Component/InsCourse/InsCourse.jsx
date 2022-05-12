@@ -13,25 +13,16 @@ const InsCour = () => {
   const [instructorCourses, setIntructorCourses] = useState([]);
   useEffect(async () => {
     var myarr = [];
-    await fetch("http://localhost:4000/courses/")
+    await fetch(`http://localhost:4000/user/instructor/${localStorage.getItem("user")._id}`)
       .then((data) => {
         console.log(data);
+        if(data==myarr)
+          setIntructorCourses(myarr);
+        else
+          setIntructorCourses(data[0].courses)
         return data.json();
       })
-      .then((data) => {
-        console.log(data);
-        data &&
-          data.map((course, idx) => {
-            if (
-              // course?.user === JSON.stringify(localStorage.getItem("user"))?._id
-              course?.user === "6263e529985b42c016c0ad6a"
-            ) {
-              myarr.push(course);
-            }
-          });
-        console.log(myarr);
-        setIntructorCourses([...myarr]);
-      });
+
   }, []);
 
   console.log(instructorCourses);
@@ -79,7 +70,7 @@ let InCour = ({ instructorCourses }) => {
                             {course?.title}
                           </a>
                         </h5>
-                        <Link to="/edit-Course/:id" className="Link">
+                        <Link to={`/edit-Course/${course._id}`} className="Link">
                           <FontAwesomeIcon width={"5em"} icon={faEdit} />
                         </Link>
                       </div>

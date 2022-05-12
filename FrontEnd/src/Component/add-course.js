@@ -3,7 +3,7 @@
 import '../Styles/add-course.css';
 import {Link} from "react-router-dom";
 import Header from './Header';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel,Form } from "react-bootstrap";
 import { useEffect } from 'react';
 import {useState} from "react";
 import React from 'react';
@@ -78,10 +78,11 @@ function Add_course() {
     const data = await result.json();
     if(data.email){
       alert("Course Added Successfully")
-      window.location.href = '/editCourse'
+      window.location.href = '/InsCourse'
     }
     else{
       alert("Course Not Added")
+      window.location.href = '/InsCourse'
     }
     console.log("result",data);
   }

@@ -480,10 +480,11 @@ router
             .catch(err => next(err));
     })
     .post('/instructor', verifyJWT, (req, res, next) => {
+        console.log(req.body)
         Instructor.findOne({ user: req.user._id })
             .then(instructor => {
                 // console.log(instructor);
-                if (instructor.status == true) {
+                if (instructor!=null && nstructor.status == true) {
                     res.status(200)
                         .json({ error: "you are already instructor" })
                     return;
