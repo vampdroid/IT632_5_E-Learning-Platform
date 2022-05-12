@@ -30,7 +30,8 @@ import EnrollmentTable from './Component/EnrollmentAdmin';
 import AdminLogin from './Component/Alogin';
 // import AboutUs from './Component/AboutUs';
 import Verify_Account from './Component/Verify_Account';
-import Reset_password from './Component/reset-password';
+import Forgot_Password from './Component/forgot-password';
+import Reset_Password from './Component/reset_password';
 import CoursePageForCategory from "./Component/CoursesPage/CoursePageForCategory";
 function App() {
   return (
@@ -52,7 +53,7 @@ function App() {
           <Route path='/course-detail/:id' element={<CourseDetail />}/>
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/discuss-course" element={ <Discussion/>} />
-          <Route path='/user/verify-account/:resetToken/:userid' element={ <Verify_Account /> }/>
+          <Route path='/user/verify-account/:resetToken/:userid/' element={ <Verify_Account /> }/>
           {/* Instructors */}
           <Route path="/add-course" element={ <AddCourse/>} />
           <Route path="/edit-course" element={ <EditCourse/>} />
@@ -68,7 +69,8 @@ function App() {
           <Route path="/admin-table/enrollments" element={ <EnrollmentTable/>} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/dashboard" element={<adminDashboard />} />
-          <Route path="/resetPassword" element={<resetPassword/>} />
+          <Route path="/forgotPassword" element={<Forgot_Password/>} />
+          <Route path="/user/resetPassword/:token/:userid" element={<Reset_Password/>} />
         </Routes>
         <Rout />
 

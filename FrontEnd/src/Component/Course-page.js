@@ -11,6 +11,7 @@ import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import Header from "./Header";
 import {useState} from "react";
 import {useEffect} from "react";
+import { ToggleButton } from "react-bootstrap";
 
     // console.log(courseDetail,courseDetail.Contents);
 
@@ -27,36 +28,24 @@ import {useEffect} from "react";
 const Course=()=>{
     const params = useParams();
     const [courseDetail,setCourseDetail] = useState({})
-    const [enrolledCourses,setEnrolledCourses] = useState(false);
-
-    var token = localStorage.getItem("token"); 
- 
-    useEffect(()=>{
-        if(token==""){
-            window.location.href='/login'
+    const [enrolledCourses,setEnrolledCourses] = useState([]);
+    const [toggle,setToggle] = useState(false);
+    const unenrollCourse = async(e) =>{
+    e.preventDefault();
+    await fetch(`http://localhost:4000/enroll/${courseDetail?._id}`,{
+        method:"DELETE",
+        headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`
         }
-    
-        fetch('http://localhost:4000/enroll',{
-            method:"GET",
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-        .then(res=>res.json())
-        .then(res=>{
-            console.log(res)
-            for(var i = 0 ; i< res.length ; i++){
-                if(res[i].course == params.id){
-                    setEnrolledCourses(true)
-                    return;
-                }
-            }
-        
-            setEnrolledCourses(false);
-        })
+    }).then(resp=>{
+        console.log(resp);
+        return resp.json();
+    }).then(data=>{console.log(data)
+        setToggle(!toggle);
+    })
+  }
 
-
-
+    useEffect(()=>{ 
       fetch(`http://localhost:4000/courses/${params.id}`)
      .then((result)=>
      {
@@ -65,16 +54,24 @@ const Course=()=>{
         //  console.log("result",resp) 
          setCourseDetail(resp[0]) 
        })
-     })
-   },[])
-
+     })  
+   },[toggle])
+   console.log(courseDetail)
+    useEffect(async()=>{
+        await fetch("http://localhost:4000/enroll",{
+            method:"GET",
+            headers:{
+                Accept:"application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        }).then(resp=>{return resp.json()}).then(data=>{console.log(data)
+            setEnrolledCourses(data);
+        })
+    },[toggle])
    
  const enrollCourse = (event) =>{
     event.preventDefault();
-    console.log(enrolledCourses)
-    if(enrolledCourses===true){
-        window.location.href=`/course-content/${courseDetail._id}`
-    }
     fetch(`http://localhost:4000/enroll/${courseDetail?._id}`,{
         method:"POST",
         headers:{
@@ -88,18 +85,14 @@ const Course=()=>{
       result.json()
       .then((resp)=>{
         console.log("enroll",resp)
-        if(resp.error){
-            alert(resp.error )
-            return;
-        }
-        window.location.href=`/course-content/${courseDetail._id}`
+        setToggle(!toggle);
+        // window.location.href=`/course-content/${courseDetail._id}`
       })
     })
   }
+
+  
  
-
-
-
    return(
        <div>
            <Header/>
@@ -111,7 +104,7 @@ const Course=()=>{
                <center><h1 className="display-6 text-light">Course Details</h1></center>  <hr/>
                    {/* <h1 className="text-white display-2 title learn"> */}
                    <div className="flex-main">
-                   <img src={"data:image/"+courseDetail?.contentType+";base64,"+courseDetail?.thumbnail?.toString("base64")} className="thumbnail"/>
+                   <img src={"data:image/"+courseDetail.contentType+";base64,"+courseDetail.thumbnail?.toString("base64")} className="thumbnail"/>
                    
                    <h4 className="text-white display-2 title learn">{courseDetail.title}
                     </h4>
@@ -122,10 +115,13 @@ const Course=()=>{
                    <p className="text-white desc">
                    <strong>{courseDetail.description}</strong>
                    </p><br></br></div> 
-                   <Link to={`course-content/${courseDetail._id}`}>
-
-                       <button onClick={enrollCourse} className="btn btn-light btn-lg text-success enroll">{enrolledCourses === false ? "Enroll now " : "content"}</button><br/>
-                    </Link>
+                   {!(enrolledCourses && enrolledCourses.length>0 && enrolledCourses.find((course)=>
+                       course?.course === courseDetail?._id
+                   )) ? <><button onClick={(e)=>enrollCourse(e)} className="btn btn-light btn-lg text-success enroll">Enroll Now</button><br/></> : <><button onClick={(e)=>unenrollCourse(e)} className="btn btn-light btn-lg text-success enroll">Unenroll</button><br/><Link to={`/course-content/${courseDetail._id}`}>
+                    <button className="btn btn-light btn-lg text-success enroll">View Course</button>
+                    </Link></> }
+                   
+                    
                </div>
                </div>
            </div>
@@ -183,7 +179,6 @@ const Course=()=>{
                    <p className="ms-3">
                        <FontAwesomeIcon icon={faClock}/>
                        &nbsp;&nbsp;&nbsp; 20 hours
-
                    </p>
                    <p className="ms-3">
                        <FontAwesomeIcon icon={faBarChart}/>

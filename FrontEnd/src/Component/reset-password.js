@@ -1,5 +1,6 @@
 import React from 'react';
 
+//import '../Styles/ForgotPassword.css';
 
 function ForgotPassword() {
   return (
