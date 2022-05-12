@@ -49,7 +49,7 @@ const CoursePageForCategory=()=>{
                     <Link to='/CourseDetail' className="Link">
                         <div class="card courses-desc overflow-hidden rounded shadow border-0">
                             <div class="position-relative d-block overflow-hidden">
-                                <img src={js} class="img-fluid rounded-top mx-auto" alt=""/>
+                                <img src={"data:image/"+course.contentType+";base64,"+course.thumbnail?.toString("base64")} class="img-fluid rounded-top mx-auto" alt=""/>
                                 <div class="overlay-work bg-dark"></div>
                                 <a href="javascript:void(0)" class="text-white h6 preview">Preview Now <i class="uil uil-angle-right-b align-middle"></i></a>
                             </div>

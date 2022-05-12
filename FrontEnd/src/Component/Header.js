@@ -131,7 +131,7 @@ function Header(){
                             {categoriesList}
                         </NavDropdown>
                     </Nav>
-                    <Form className="d-flex" action='courses'>
+                    <Form className="d-flex" action='http://localhost:3000/courses'>
                         <FormControl
                             className="form-control me-2"
                             type="search"

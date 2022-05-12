@@ -67,19 +67,19 @@ const CoursePage=()=>{
 
       <div className="booklist">{/*disp()*/}
       {courseList?courseList.map((course) =>
-      <Link to='/CourseDetail' className="Link">
+      <Link to={`/course-detail/${course._id}`} className="Link">
             <div class="card courses-desc overflow-hidden rounded shadow border-0">
                             <div class="position-relative d-block overflow-hidden">
-                                <img src={js} class="img-fluid rounded-top mx-auto" alt=""/>
+                                <img src={"data:image/"+course.contentType+";base64,"+course.thumbnail?.toString("base64")} class="img-fluid rounded-top mx-auto" alt=""/>
                                 <div class="overlay-work bg-dark"></div>
                                 <a href="javascript:void(0)" class="text-white h6 preview">Preview Now <i class="uil uil-angle-right-b align-middle"></i></a>
                             </div>
 
                             <div class="card-body">
-                                <h5>{course.title}</h5>
+                                <h5>{course?.title}</h5>
                                 <div class="fees d-flex justify-content-between">
-                                    {course.userData[0]?.fname}
-                                <h6>{course.userData[0]?.fname} {course.userData[0]?.lname}</h6>
+                                    {course?.userData[0]?.fname}
+                                <h6>{course?.userData[0]?.fname} {course?.userData[0]?.lname}</h6>
                                 {/* <h7>Date</h7> */}
                                 </div>
                             </div>

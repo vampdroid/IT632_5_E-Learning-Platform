@@ -173,12 +173,12 @@ const Owldemo1 = () => {
           {courseList.map((course) => (
             <Link className="Link" to={`/course-detail/${course._id}`}>
               <div className="outer card shadow pop">
-                <img className="img1 img-fluid" src={js} alt="" />
+                <img className="img1 img-fluid" src={"data:image/"+course.contentType+";base64,"+course.thumbnail?.toString("base64")} alt="" />
                 <h4 className="">{course.title}</h4>
                 {/* <h5 className="mt-3"><GetInstructorName id={course.user}/></h5> */}
                 {/*I have made one method for the above code. We have to modify that*/}
                 <h5 className="mt-3">
-                  {course.userData[0]?.fname} {course.userData[0]?.lname}
+                  {course.userData?.fname} {course.userData?.lname}
                 </h5>
               </div>
             </Link>
@@ -197,12 +197,12 @@ const Owldemo1 = () => {
           {courseList.map((course) => (
             <Link className="Link" to="/course-detail">
               <div className="outer card shadow pop">
-                <img className="img img-fluid" src={js} alt="" />
+                <img className="img img-fluid" src={"data:image/"+course.contentType+";base64,"+course.thumbnail?.toString("base64")} alt="" />
                 <h4 className="">{course.title}</h4>
                 {/* <h5 className="mt-3"><GetInstructorName id={course.user}/></h5> */}
                 {/*I have made one method for the above code. We have to modify that*/}
                 <h5 className="mt-3">
-                  {course.userData[0]?.fname} {course.userData[0]?.lname}
+                  {course.userData?.fname} {course.userData?.lname}
                 </h5>
               </div>
             </Link>

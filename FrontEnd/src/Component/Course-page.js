@@ -27,9 +27,36 @@ import {useEffect} from "react";
 const Course=()=>{
     const params = useParams();
     const [courseDetail,setCourseDetail] = useState({})
-    const [enrolledCourses,setEnrolledCourses] = useState([]);
+    const [enrolledCourses,setEnrolledCourses] = useState(false);
 
-    useEffect(()=>{ 
+    var token = localStorage.getItem("token"); 
+ 
+    useEffect(()=>{
+        if(token==""){
+            window.location.href='/login'
+        }
+    
+        fetch('http://localhost:4000/enroll',{
+            method:"GET",
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+        })
+        .then(res=>res.json())
+        .then(res=>{
+            console.log(res)
+            for(var i = 0 ; i< res.length ; i++){
+                if(res[i].course == params.id){
+                    setEnrolledCourses(true)
+                    return;
+                }
+            }
+        
+            setEnrolledCourses(false);
+        })
+
+
+
       fetch(`http://localhost:4000/courses/${params.id}`)
      .then((result)=>
      {
@@ -38,12 +65,16 @@ const Course=()=>{
         //  console.log("result",resp) 
          setCourseDetail(resp[0]) 
        })
-     })  
+     })
    },[])
 
    
  const enrollCourse = (event) =>{
     event.preventDefault();
+    console.log(enrolledCourses)
+    if(enrolledCourses===true){
+        window.location.href=`/course-content/${courseDetail._id}`
+    }
     fetch(`http://localhost:4000/enroll/${courseDetail?._id}`,{
         method:"POST",
         headers:{
@@ -57,11 +88,18 @@ const Course=()=>{
       result.json()
       .then((resp)=>{
         console.log("enroll",resp)
+        if(resp.error){
+            alert(resp.error )
+            return;
+        }
         window.location.href=`/course-content/${courseDetail._id}`
       })
     })
   }
  
+
+
+
    return(
        <div>
            <Header/>
@@ -73,7 +111,7 @@ const Course=()=>{
                <center><h1 className="display-6 text-light">Course Details</h1></center>  <hr/>
                    {/* <h1 className="text-white display-2 title learn"> */}
                    <div className="flex-main">
-                   <img src={"data:image/"+courseDetail.contentType+";base64,"+courseDetail.thumbnail?.toString("base64")} className="thumbnail"/>
+                   <img src={"data:image/"+courseDetail?.contentType+";base64,"+courseDetail?.thumbnail?.toString("base64")} className="thumbnail"/>
                    
                    <h4 className="text-white display-2 title learn">{courseDetail.title}
                     </h4>
@@ -85,7 +123,8 @@ const Course=()=>{
                    <strong>{courseDetail.description}</strong>
                    </p><br></br></div> 
                    <Link to={`course-content/${courseDetail._id}`}>
-                   <button onClick={(e)=>enrollCourse(e)} className="btn btn-light btn-lg text-success enroll">Enroll Now</button><br/>
+
+                       <button onClick={enrollCourse} className="btn btn-light btn-lg text-success enroll">{enrolledCourses === false ? "Enroll now " : "content"}</button><br/>
                     </Link>
                </div>
                </div>
