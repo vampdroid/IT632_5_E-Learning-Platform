@@ -7,7 +7,6 @@ import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootst
 import { useEffect } from 'react';
 import {useState} from "react";
 import React from 'react';
-import {Form} from "react-bootstrap";
 
 function Add_course() {
 
@@ -18,6 +17,12 @@ function Add_course() {
     description:"",
     thumbnail:"",
     category:"62624057a95105869d739ae0"
+  }
+  const initialStateErrstate ={
+    title:false,
+    description:false,
+    thumbnail:false,
+    category:false
   }
   useEffect(()=>{
 
@@ -51,7 +56,7 @@ function Add_course() {
     });
   };
   const[course,setCourse] = useState(initialState);
-
+  const [courseErr, setCourseErr] = useState(initialStateErrstate);
   async function Add_course(event)
   {
 
@@ -90,6 +95,57 @@ function Add_course() {
   const categoriesOptions =  categories!=null?categories.map(category =>{
     return <option value={category._id} key={category._id} >{category.name}</option>
   }):null;
+
+
+  function validateTitle(event) {
+    const {name , value } = event.target
+    console.log(name,value)
+    if (value.length!=0 && value.length<= 50 ) 
+    {
+        setCourseErr({
+          ...courseErr,
+          [name]: false,
+        });
+        setCourse({
+          ...course,
+          [name]: value,
+        })
+    } else {
+        setCourseErr({
+          ...courseErr,
+          [name]: true,
+        });
+        setCourse({
+          ...course,
+          [name]: value,
+        });
+    }
+}
+// function validateDesc(event)
+// {
+//   const {name , value } = event.target
+//     console.log(name,value)
+//     if (value.length!=0 && value.length<= 50 ) 
+//     {
+//         setCourseErr({
+//           ...course,
+//           [name]: false,
+//         });
+//         setCourse({
+//           ...course,
+//           [name]: value,
+//         })
+//     } else {
+//         setCourseErr({
+//           ...course,
+//           [name]: true,
+//         });
+//         setCourse({
+//           ...course,
+//           [name]: value,
+//         });
+//     }
+// }
   return (
     <>
     <Header/>
@@ -104,9 +160,14 @@ function Add_course() {
               {/* <label for="validationCustom01" className="form-label">First name</label> */}
 
               <input name='title' placeholder='Enter Course Title' value={course.title}
-                      type="text" className="form-control" onChange={handleChange}
-                     id="validationCustom01" required/>
+                      type="text" className={`form-control input100 ${ courseErr.title ? "is-invalid" : "is-valid"}`} 
+                     id="validationCustom01" onChange={validateTitle} required />
             </div>
+            {
+                            courseErr.title ?
+                                <span className="invalid-feedback">Enter valid Title</span>
+                                : null
+                        }
             {/*<div className="col-md-12">*/}
             {/*  /!* <label for="validationCustomUsername" className="form-label">Email</label> *!/*/}
             {/*  <div className="input-group has-validation">*/}
@@ -135,9 +196,14 @@ function Add_course() {
               {/* <label for="validationCustomUsername" className="form-label">Email</label> */}
               <div className="input-group has-validation">
                 <input name='description' placeholder='Enter Course Description' value={course.description}
-                       onChange={handleChange}  type="text-area" className="form-control"
-                       id="validationCustomUsername" aria-describedby="inputGroupPrepend" required/><br/>
+                         type="text-area" className={`form-control input100 ${ courseErr.description ? "is-invalid" : "is-valid"}`}
+                       id="validationCustomUsername" onChange={validateTitle} aria-describedby="inputGroupPrepend" required/><br/>
               </div>
+              {
+                            courseErr.desc ?
+                                <span className="invalid-feedback">Enter valid Description</span>
+                                : null
+                        }
             </div>
             <div className="col-md-12">
               {/* <label for="validationCustom03" className="form-label">City</label> */}
