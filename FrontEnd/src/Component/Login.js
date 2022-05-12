@@ -24,7 +24,16 @@ function Login() {
         // }
         // else{
             //let values = {email, passwd};
-        
+            if(email=="")
+            {
+                alert("Enter Valid Email");
+                return
+            }
+            if(password=="")
+            {
+                alert("Enter Valid Password");
+                return
+            }
             const result = await fetch('http://localhost:4000/user/login', {
                 method: 'POST',
                 headers: {
@@ -80,8 +89,11 @@ function Login() {
     }
 
     function validatePasswd(event) {
+        
         let passwdEvent = event.target.value;
-        if (passwdEvent.length <= 5) {
+        
+        if (passwdEvent.length <= 5 ) 
+        {
             setPasswdErr(true);
             setPasswd(null)
         } else {
@@ -94,7 +106,7 @@ function Login() {
 
     return (
         <LayoutGuest>
-            <form className="login100-form validate-form">
+            <form className="login100-form validate-form" name="form">
                 <div className="text-center">
                     <img src={logo}  style={{width:"100px",height:"100px"}}  alt="logo"/>
                     <span className="login100-form-title pb-1"> E learning platform </span>
@@ -102,7 +114,7 @@ function Login() {
                 </div>
                 <div className="col-12">
                     <div className="input-group">
-                        <input type="email" onChange={(event) => validateEmail(event)}
+                        <input type="email" onclick="Validate()" onChange={(event) => validateEmail(event)}
                                className={`form-control input100 ${ emailErr ? "is-invalid" : ""}`} placeholder="Enter Email address"/>
 
                         {
@@ -114,11 +126,11 @@ function Login() {
                 </div>
                 <div className="col-12">
                     <div className="input-group">
-                        <input type="password" onChange={(event) => validatePasswd(event)}
+                        <input type="password"  pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' onChange={(event) => validatePasswd(event)}
                                className={`form-control input100 ${ passwdErr ? "is-invalid" : ""}`} placeholder="Enter password"/>
                         {
                             passwdErr ?
-                                <span className="invalid-feedback">Enter valid Password</span>
+                                <span className="invalid-feedback">Enter Password of more than 8 characters</span>
                                 : null
                         }
                     </div>
@@ -140,7 +152,6 @@ function Login() {
             </form>
         </LayoutGuest>
     );
-}
-
-
+                    }
+                
 export default Login;
