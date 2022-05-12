@@ -4,6 +4,9 @@ import js from '../Assets/js.png'
 import './Showcase.css';
 import Header from "../Header";
 const Show=()=>{
+
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user)
     return(
       <>
       {/*<Header/>*/}
@@ -30,7 +33,7 @@ const Show=()=>{
         </div>
       </Link>
     </li>
-    <li className="list-group-item ">
+    {user.role === "ins"?(<li className="list-group-item ">
       <Link to='/InsCourse'>
         <div className="d-flex justify-content-between align-items-center">
           <span>
@@ -39,7 +42,8 @@ const Show=()=>{
           </span>
         </div>
       </Link>
-    </li>
+    </li>):null }
+
     <li className="list-group-item ">
       <Link to='/Password-edit'>
         <div className="d-flex justify-content-between align-items-center">

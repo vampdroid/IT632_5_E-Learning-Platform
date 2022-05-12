@@ -67,8 +67,10 @@ router.post('/', async (req, res) => {
     console.log(req.body)
     const salt = 10;
     const passwordHash = await bcrypt.hash(req.body.password, salt);
+    let newUser=null;
 
-    let newUser = await User.create({
+    try{
+     newUser = await User.create({
         fname: req.body.fname,
         lname: req.body.lname,
         email: req.body.email,
@@ -77,7 +79,11 @@ router.post('/', async (req, res) => {
         city: req.body.city
     })
     if (!newUser) {
-        return res.json({ status: 'error', error: 'email exists', trace: err })
+        return res.status(400).json({ status: 'error', error: 'email exists', trace: err })
+    }   
+    }
+    catch(err){
+        return res.status(400).json({ status: 'error', error: 'email exists', trace: err })
     }
 
     const token = await UserVerify.findOne({ userid: newUser._id });
@@ -407,6 +413,7 @@ router.route('/admin/login').post(async (req, res) => {
 
 router
     .get('/instructor', (req, res, next) => {
+        console.log(req.body)
         if (req.body.instructorID)
             req.body._id = mongoose.Types.ObjectId(req.body.instructorID);
         Instructor
@@ -443,9 +450,11 @@ router
             .catch(err => next(err));
     })
     .get('/instructor/:instructorID', (req, res, next) => {
-
-        if (req.params.instructorID)
-            req.body._id = mongoose.Types.ObjectId(req.params.instructorID);
+        //
+        // if (req.params.instructorID)
+        //     req.body._id = mongoose.Types.ObjectId(req.params.instructorID);
+        if(req.params.instructorID)
+            req.body.user = mongoose.Types.ObjectId(req.params.instructorID);
 
         Instructor
             .aggregate([
@@ -482,8 +491,8 @@ router
     .post('/instructor', verifyJWT, (req, res, next) => {
         Instructor.findOne({ user: req.user._id })
             .then(instructor => {
-                // console.log(instructor);
-                if (instructor.status == true) {
+                console.log(instructor);
+                if (instructor!=null && instructor.status == true) {
                     res.status(200)
                         .json({ error: "you are already instructor" })
                     return;
@@ -657,6 +666,8 @@ router
             .catch(err=>next(err));
     })
     .get('/:userId',(req,res,next)=>{
+
+        req.body._id = mongoose.Types.ObjectId(req.params.userId)
         User
             .aggregate([{
                 $match: {

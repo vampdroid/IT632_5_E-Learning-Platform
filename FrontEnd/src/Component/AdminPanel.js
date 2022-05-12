@@ -6,8 +6,6 @@ import './Showcase/Showcase.css';
 
 const AdminPanel=()=>{
 
-
-
     return(
 
 <div className="mb-4 px-4 p-lg-0">

@@ -7,10 +7,10 @@
   "scripts": {
     "start": "node ./bin/www",
     "nodemonStart": "nodemon ./bin/www",
-    "test": "jest"
+    "test": "jest  --forceExit --testTimeout=25000"
   },
   "jest": {
-    "testEnviroment": "node"
+    "testEnvironment": "node"
   },
   "author": "",
   "license": "ISC",

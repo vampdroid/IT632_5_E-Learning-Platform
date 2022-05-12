@@ -12,6 +12,7 @@ import Header from "./Header";
 import {useState} from "react";
 import {useEffect} from "react";
 import { ToggleButton } from "react-bootstrap";
+import Certificate from "./certificate";
 
     // console.log(courseDetail,courseDetail.Contents);
 
@@ -26,6 +27,7 @@ import { ToggleButton } from "react-bootstrap";
     //     })
     // },[])
 const Course=()=>{
+    const user = JSON.parse(localStorage.getItem("user"))
     const params = useParams();
     const [courseDetail,setCourseDetail] = useState({})
     const [enrolledCourses,setEnrolledCourses] = useState([]);
@@ -118,8 +120,8 @@ const Course=()=>{
                    {!(enrolledCourses && enrolledCourses.length>0 && enrolledCourses.find((course)=>
                        course?.course === courseDetail?._id
                    )) ? <><button onClick={(e)=>enrollCourse(e)} className="btn btn-light btn-lg text-success enroll">Enroll Now</button><br/></> : <><button onClick={(e)=>unenrollCourse(e)} className="btn btn-light btn-lg text-success enroll">Unenroll</button><br/><Link to={`/course-content/${courseDetail._id}`}>
-                    <button className="btn btn-light btn-lg text-success enroll">View Course</button>
-                    </Link></> }
+                       <button className="btn btn-light btn-lg text-success enroll">View Course</button>
+                   </Link></> }
                    
                     
                </div>

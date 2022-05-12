@@ -4,6 +4,7 @@ const express = require('express')
 
 router.use(express.json());
 const VerifyJwt = require('../middleware/VerifyToken')
+const mongoose = require("mongoose");
 
 router
     .get('/filter',(req,res,next)=>{
@@ -24,10 +25,21 @@ router
             .catch(err=>next(err))
     })
     .get('/',VerifyJwt,(req,res,next)=>{
-        console.log(req.user);
-        Enrollment.find({
-            user: req.user._id,
-        })
+        const id = mongoose.Types.ObjectId(req.user._id)
+
+        Enrollment .aggregate([{
+            $match:{
+                user:id
+            }
+        },
+            {
+                $lookup:{
+                    from: 'courses',
+                    localField: 'course',
+                    foreignField: '_id',
+                    as: 'Course'
+                }
+            }])
             .then(enrollments => {
                 if(!enrollments){
                     res.status(400)

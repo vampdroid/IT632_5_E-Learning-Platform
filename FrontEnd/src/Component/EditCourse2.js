@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import List_Content from "./List_Content";
 import { useParams } from "react-router-dom";
 import FormRange from "react-bootstrap/esm/FormRange";
+import Header from "./Header";
 
 const EditCourse2 = () => {
   const initialState = {
@@ -138,8 +139,8 @@ const EditCourse2 = () => {
     })
       .then((res) =>  res.json())
       .then((data) => {
-      
-      if(data[0].userData._id == user._id){
+
+      if(data[0].userData._id != user._id){
         alert('you are not instructor of this course');
         window.location.href='/'
       }
@@ -150,7 +151,11 @@ const EditCourse2 = () => {
         setCourseContent(CourseContent)
         console.log("C",CourseContent)
         setCourseDetails(CourseContent[0])
-        setIdx(0)
+        if(CourseContent?.length==0){
+          setIdx(-1);
+        }
+        else
+          setIdx(0)
 
         console.log(courseDetails)
         // for (let i in data[0].Contents) {
@@ -170,8 +175,9 @@ const EditCourse2 = () => {
   }, []);
   console.log("____________",courseDetails)
   return (
+      <>
+        <Header/>
     <div>
-
       <div className="main1">
 
          <div className="col1" id="d">
@@ -263,6 +269,7 @@ const EditCourse2 = () => {
         </div>
       </div>
     </div>
+        </>
   );
 };
 

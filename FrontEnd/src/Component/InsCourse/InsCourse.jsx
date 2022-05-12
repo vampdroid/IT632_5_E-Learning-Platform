@@ -11,30 +11,19 @@ import Layout from "../Layout";
 import Header from "../Header";
 const InsCour = () => {
   const [instructorCourses, setIntructorCourses] = useState([]);
+
+  const user = JSON.parse(localStorage.getItem('user'))
   useEffect(async () => {
-    var myarr = [];
-    await fetch("http://localhost:4000/courses/")
+    await fetch(`http://localhost:4000/user/instructor/${user._id}`)
       .then((data) => {
         console.log(data);
         return data.json();
       })
       .then((data) => {
-        console.log(data);
-        data &&
-          data.map((course, idx) => {
-            if (
-              // course?.user === JSON.stringify(localStorage.getItem("user"))?._id
-              course?.user === "6263e529985b42c016c0ad6a"
-            ) {
-              myarr.push(course);
-            }
-          });
-        console.log(myarr);
-        setIntructorCourses([...myarr]);
+        setIntructorCourses(data[0]);
       });
   }, []);
 
-  console.log(instructorCourses);
   return (
     <>
       <Header />
@@ -51,21 +40,23 @@ const InsCour = () => {
 };
 
 let InCour = ({ instructorCourses }) => {
+
+  console.log(instructorCourses)
   return (
     <>
       <div className="col-lg- col-12">
         <h5 className="mb-0 head">Courses instructed by you: </h5>
         <div className="rounded shadow p-4 booklist1">
-          {instructorCourses &&
-            instructorCourses.length > 0 &&
-            instructorCourses.map((course, index) => {
+          {instructorCourses.courses &&
+              instructorCourses.courses.length > 0 &&
+              instructorCourses.courses.map((course, index) => {
               return (
                 <div key={index} className="col-md-4 col-12 mt-4 pt-2">
                   <div className="card border-0 work-container work-classic inscourse">
                     <div className="card-body p-0 ">
                       <a href="portfolio-detail-one.html">
                         <img
-                          src={course?.thumbnail}
+                          src={"data:image/"+course.contentType+";base64,"+course.thumbnail?.toString("base64")}
                           className="img-fluid rounded work-image"
                           alt=""
                         />
@@ -79,7 +70,7 @@ let InCour = ({ instructorCourses }) => {
                             {course?.title}
                           </a>
                         </h5>
-                        <Link to="/edit-Course/:id" className="Link">
+                        <Link to={`/edit-Course/${course?._id}`} className="Link">
                           <FontAwesomeIcon width={"5em"} icon={faEdit} />
                         </Link>
                       </div>

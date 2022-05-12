@@ -19,10 +19,9 @@ import NavbarToggle from "react-bootstrap/NavbarToggle";
 
 function Header(){
     const token = localStorage.getItem('token');
-
+    const user = JSON.parse(localStorage.getItem('user'));
     const [categories , setCategory] = useState(null);
     useEffect(()=>{
-
         fetch('http://localhost:4000/category')
             .then(res => res.json())
             .then(res=>{
@@ -45,9 +44,8 @@ function Header(){
             return (
                 <>
                     <NavLink className="dropdown-item" to="/profile">Your Profile</NavLink>
-                {/* <NavLink className="dropdown-item" to="/Profile-edit">Update Profile</NavLink>
-                    <NavLink className="dropdown-item" to="/Password-edit">update password</NavLink> */}
-                    <button className="dropdown-item" onClick={()=>logout()} >Logout</button>                </>
+                    <button className="dropdown-item" onClick={()=>logout()} >Logout</button>
+                </>
             )
         }
         else {
@@ -56,25 +54,10 @@ function Header(){
         }
     }
 
-    const courseDropDown =()=>{
-        if(token){
-           return <NavDropdown title="Course" id="collasible-nav-dropdown">
-             
-            <NavLink className="dropdown-item" to="/courses">Courses</NavLink>
-            <NavLink className="dropdown-item" to="/Courses">Courses</NavLink>
-            
-            <NavDropdown.Divider />
-                <NavLink className="dropdown-item" to="/course-detail">CourseDetail</NavLink>
-                <NavLink className="dropdown-item" to="/add-course">AddCourse</NavLink>
-                <NavLink className="dropdown-item" to="/edit-course">editCourse</NavLink>
-                <NavLink className="dropdown-item" to="/course-content">CourseContent</NavLink>
-            </NavDropdown>
-        }
-    }
 
 
     const adminDropDown = ()=>{
-        if(token){
+        if(token && user.role==="admin"){
         return  <NavDropdown title="Admin" id="collasible-nav-dropdown">
                     <NavLink className="dropdown-item" to="/dashboard">Dashboard</NavLink>
                 <NavDropdown.Divider />
@@ -122,14 +105,17 @@ function Header(){
                         <NavItem>
                             <NavLink className="nav-link" to="/">Home</NavLink>
                         </NavItem>
-                        {courseDropDown()}
-                        {adminDropDown()}
                         <NavItem>
-                            <NavLink className="nav-link" to='/aboutus'>Aboutus</NavLink>
+                            <NavLink className="nav-link" to="/courses">Courses</NavLink>
                         </NavItem>
+                        {adminDropDown()}
                         <NavDropdown title="Categories" id="collasible-nav-dropdown">
                             {categoriesList}
                         </NavDropdown>
+                        <NavItem>
+                            <NavLink className="nav-link" to='/aboutus'>Aboutus</NavLink>
+                        </NavItem>
+
                     </Nav>
                     <Form className="d-flex" action='http://localhost:3000/courses'>
                         <FormControl

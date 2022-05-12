@@ -45,17 +45,17 @@ const Profcour = () => {
                   enrolledCourses.map((mycourse, index) => {
                     return (
                       <div className=" col-md-4 col-12 mt-4 ms-2 mb-3">
-                        <Link to="/course-detail" className="Link">
+                        <Link to={`/course-detail/${mycourse.course}`} className="Link">
                           <div className="card border-0 work-container work-classic inscourse">
                             <div className="card-body p-0">
                               <img
-                                src={js}
+                                src={"data:image/"+mycourse?.Course[0].contentType+";base64,"+mycourse?.Course[0].thumbnail?.toString("base64")}
                                 // src={mycourse?.thumbnail}
                                 className="img-fluid rounded work-image"
                                 alt=""
                               />
                               <div className="content pt-3 incourse">
-                                <h5 className="mb-0">{mycourse?.course}</h5>
+                                <h5 className="mb-0">{mycourse?.Course[0].title}</h5>
                               </div>
                             </div>
                           </div>
