@@ -30,6 +30,8 @@ const Show=()=>{
         </div>
       </Link>
     </li>
+    {
+      localStorage.getItem("user").role=="ins" ? 
     <li className="list-group-item ">
       <Link to='/InsCourse'>
         <div className="d-flex justify-content-between align-items-center">
@@ -40,6 +42,7 @@ const Show=()=>{
         </div>
       </Link>
     </li>
+    : <></>}
     <li className="list-group-item ">
       <Link to='/Password-edit'>
         <div className="d-flex justify-content-between align-items-center">

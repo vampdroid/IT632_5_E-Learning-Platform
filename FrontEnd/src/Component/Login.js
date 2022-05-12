@@ -53,7 +53,7 @@ function Login() {
                 console.log(data)
                 if(data?.user){
                     localStorage.setItem("user",JSON.stringify(data?.user));
-                window.location.href = '/aboutus'
+                window.location.href = '/'
                 }
                 
                 window.location.href = '/'

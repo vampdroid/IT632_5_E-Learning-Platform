@@ -53,22 +53,22 @@ const AdminTable=()=>{
     <table className="table">
       <thead>
                    <tr>
-                   <th scope="col">Id.</th>
+                   <th scope="col">Email ID</th>
                     <th scope="col">First</th>
                     <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    {/* <th scope="col">Handle</th> */}
                     </tr>
       </thead>
       <tbody>
     {detail.map((entry)=>
       <tr>
-        <td scope="col">{entry._id}</td>
+        <td scope="col">{entry.email}</td>
         <td scope="col">{entry.fname}</td>
         <td scope="col">{entry.lname}</td>
         <td scope="col">
-        <Link to={`/profile/${entry._id}`}><button>View</button></Link>
+        {/* <Link to={`/profile/${entry._id}`}><button>View</button></Link> */}
        {/* Forgot to add status in userschema*/}
-        {/* <button>Disable</button> */}
+        <button>Disable</button>
         </td> 
         </tr>
         )}
