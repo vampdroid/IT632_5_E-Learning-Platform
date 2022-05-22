@@ -72,10 +72,10 @@ const AdminTable=()=>{
           <div className="right">
 
 <div className="Orders">
-  <h2>All Orders</h2><br/>
+  <h2>All {params?.table}</h2><br/>
 <label>Rows per page: </label>  
 <select  className="form-select-2" aria-label="Default select example">
-    <option selected>Select Rows</option>
+    <option selected>Select Rdows</option>
     <option value={1}>One</option>
     <option value={2}>Two</option>
     <option value={3}>Three</option>

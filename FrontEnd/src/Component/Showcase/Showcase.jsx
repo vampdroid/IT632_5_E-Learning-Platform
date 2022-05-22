@@ -13,7 +13,7 @@ const Show=()=>{
       <div>
 <div className="mb-4 px-4 p-lg-0">
    <h5 className="mb-0 head">Account </h5>
-   <img src={js} width="50rem" className="mt-1 mb-1 border pp" alt="profile pic" />
+   <img src={user.profile_picture?"data:image/"+user.contentType+";base64,"+user.profile_picture?.toString("base64"):js} width="50rem" className="mt-1 mb-1 border pp" alt="profile pic" />
   <ul className="list-group list-group-clean">
     <li className="list-group-item ">
       <Link to='/Profile-edit'>

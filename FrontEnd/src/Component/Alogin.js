@@ -15,7 +15,7 @@ function Alogin() {
   const [password, setPasswd] = useState("");
   const [passwdErr, setPasswdErr] = useState(false);
 
-  async function submitForm(event) {
+    function submitForm(event) {
       event.preventDefault();
       // if(emailErr || passwdErr || email== null || passwd == null  ){
       //     alert("Invalid data");
@@ -23,7 +23,7 @@ function Alogin() {
       // else{
           //let values = {email, passwd};
       
-          const result = await fetch('http://localhost:4000/user/login', {
+        fetch('http://localhost:4000/user/admin/login', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
@@ -33,18 +33,19 @@ function Alogin() {
                   password,
               }),
           })
-
-          const data = await result.json();
-          if(data.token){
-              localStorage.setItem("token",data.token);
-              alert("Login sucessfull")
-              window.location.href = '/'
-          }
-          else{
-              alert("Login Failure")
-          }
-          console.log("result",data);
-      //}
+          .then(res=>res.json())
+          .then(data=>{
+            if(data.token){
+                localStorage.setItem("token",data.token);
+                // localStorage.setItem("user",data.user);
+                alert("Login sucessfull")
+                window.location.href = '/admin-table/student'
+            }
+            else{
+                alert("Login Failure")
+            }
+          })
+      }
       
 
       // const data = await result.json();
@@ -56,7 +57,7 @@ function Alogin() {
       //     alert("registration Failure")
       // }
       // console.log("result",data);
-  }
+
 
   function validateEmail(event) {
       let emailEvent = event.target.value;
@@ -93,17 +94,17 @@ function Alogin() {
   <div className="col-md-12">
     {/* <label for="validationCustom01" className="form-label">First name</label> */}
 
-    <input placeholder='Enter Email Id' type="text" className="form-control" id="validationCustom01"  required/>
+    <input placeholder='Enter Email Id' type="text" className="form-control" id="validationCustom01" name="email" value={email} onChange={validateEmail} required/>
   </div>
   <div className="col-md-12">
     {/* <label for="validationCustom01" className="form-label">First name</label> */}
 
-    <input placeholder='Enter Password' type="password" className="form-control" id="validationCustom01"  required/>
+    <input placeholder='Enter Password' type="password" className="form-control" id="validationCustom01" name='password' value={password} onChange={validatePasswd}  required/>
   </div>
   
    <Link to='/admin-table/student'>
   <div className="col-md-12">
-    <center><button className="btn1 btn2" type="submit" >Login</button></center>
+    <center><button className="btn1 btn2" onClick={submitForm} type="submit" >Login</button></center>
   </div>
   </Link>
   

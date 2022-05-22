@@ -23,6 +23,7 @@ router
         if(req.body.category)
             req.body.category=  mongoose.Types.ObjectId(req.body.category)
 
+        console.log(req.body)
         Course
             .aggregate([{
                 $match:req.body
@@ -51,8 +52,7 @@ router
                         foreignField: 'course',
                         as: 'Contents'
                     }
-                },
-                {
+                },{
                     "$unwind": "$userData"
                 }
             ])
@@ -183,7 +183,7 @@ router
 
         Course
             .aggregate([{
-                $match:req.body
+                    $match:req.body
             },
                 
                 {

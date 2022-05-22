@@ -35,25 +35,30 @@ let Edit = (match) => {
     city: "",
   });
 
+  console.log("v" ,values)
   const clickSubmit = async (e) => {
     e.preventDefault();
-    console.log(values);
+    console.log("get",values.date);
     const uploadData = new FormData();
     // for (const key in values) {
     //   if (key === "profile_picture") {
     //     uploadData.append(key, "");
     //   } else uploadData.append(key, values[key]);
     // }
-    uploadData.append("fname", values.fname);
-    uploadData.append("lname", values.lname);
-    uploadData.append("bio", values.bio);
-    uploadData.append("city", values.city);
+     uploadData.append("fname", values.fname);
+     uploadData.append("lname", values.lname);
+    if(values.bio!=null)
+     uploadData.append("bio", values.bio);
+    if(values.city!=undefined)
+      uploadData.append("city", values.city);
+    if(values.dob)
     uploadData.append(
       "dob",
       new Date(document.getElementById("account-date").value)
     );
-
-    uploadData.append("profile_picture", values.photo);
+    if(values.photo!=undefined)
+      uploadData.append("profile_picture", values.photo);
+    // console.log(values.dob)
     await fetch(
       `http://localhost:4000/user/${
         JSON.parse(localStorage.getItem("user"))?._id
@@ -69,12 +74,11 @@ let Edit = (match) => {
       .then((res) => res.json())
       .then((resp) => {
         console.log(resp);
-        if (resp.ok) {
+        if (resp.acknowledged == true && resp.success == "user updated") {
           localStorage.setItem("user", JSON.stringify(values));
           for (const [key, value] of uploadData) {
-            console.log(key, value);
+            // console.log(key, value);
           }
-
           alert("Update done");
         }
       });
@@ -83,9 +87,19 @@ let Edit = (match) => {
       console.log(key, value);
     }
   };
-  const init = () => {
+  const init = async () => {
     //console.log(JSON.parse(localStorage.getItem("user")));
-    setValues(JSON.parse(localStorage.getItem("user")));
+    // setValues(JSON.parse(localStorage.getItem("user")));
+   await fetch(`http://localhost:4000/user/${JSON.parse(localStorage.getItem("user"))._id}/profile`)
+        .then(res=>res.json())
+        .then(res=>{
+          console.log(res);
+          if(res && res[0]){
+            setValues(res[0]);
+            console.log("fd",res[0])
+            localStorage.setItem("user",JSON.stringify(res[0]));
+          }
+        })
     // setValues(...values,dob=)
   };
   //console.log("k" + values);
@@ -97,7 +111,7 @@ let Edit = (match) => {
     const value = name === "photo" ? event.target.files[0] : event.target.value;
 
     setValues({ ...values, [name]: value });
-    // console.log(values)
+    console.log("ipdate",values.date)
   };
 
   return (
@@ -143,10 +157,10 @@ let Edit = (match) => {
               </label>
               <input
                 className="form-control form-control-simple"
-                onChange={handleChange("date")}
+                onChange={handleChange("dob")}
                 type="date"
                 id="account-date"
-                defaultValue={values.date}
+                defaultValue={values?.dob?.slice(0,10)}
               />
             </div>
           </div>

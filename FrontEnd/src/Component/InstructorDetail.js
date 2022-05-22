@@ -37,8 +37,8 @@ function InstructorDetail() {
     fetch(`http://localhost:4000/user/instructor`,{
       method:"POST",
       headers:{
-        'Content-Type': 'application/json',
-        authorization:`Bearer ${token}`
+        'content-type': 'application/json',
+        'authorization':`Bearer ${token}`
       },
       body:JSON.stringify(insDetails)
     })

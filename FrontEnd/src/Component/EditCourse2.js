@@ -85,7 +85,11 @@ const EditCourse2 = () => {
     .then(res=>res.json())
     .then(res=>{
       console.log(res);
-      alert("course updated")
+      if(res.success)
+        alert(res.success)
+      else{
+        alert(res.error)
+      }
     })
 
     CourseContent[idx]=courseDetails;
@@ -113,11 +117,16 @@ const EditCourse2 = () => {
     .then(res=>res.json())
     .then(res=>{
       console.log(res);
-      courseDetails.course=res.course;
-      CourseContent[CourseContent.length]=courseDetails;
-      setCourseContent(CourseContent)
-      console.log(CourseContent);
-      alert("course Uploaded")
+      if(res.course) {
+        courseDetails.course = res.course;
+        CourseContent[CourseContent.length] = courseDetails;
+        setCourseContent(CourseContent)
+        console.log(CourseContent);
+        alert("content Uploaded")
+      }
+      else{
+        alert("content Not uploaded");
+      }
     })
    
   };
@@ -227,7 +236,7 @@ const EditCourse2 = () => {
           </button>}
           </div>
           <div className="descArea">
-            <label htmlFor="file-input" className="fileinput">
+            <label htmlFor="video" className="fileinput">
               <input
                 type="file"
                 id="video"

@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken')
-const User = require('../models/user.model')
+const User = require('../models/user.model');
+const { use } = require('../routes');
 
 module.exports = (req,res,next)=>{
 
-    // console.log(req.headers.authorization)
+    console.log(req.headers.authorization)
     const header = req.headers.authorization.split(' ')[1];
     jwt.verify(header,process.env.SECRET,(error,result)=>{
 

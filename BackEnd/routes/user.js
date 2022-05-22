@@ -132,7 +132,7 @@ router.post('/', async (req, res) => {
     //     res.json({status: 'error', error: 'email exists', trace: err})
     // }
 })
-.put('/:userid',(req,res,next)=>{
+.put('/:userId',(req,res,next)=>{
     console.log(req.body)
     console.log(req.files)
     if(req.files?.profile_picture!=undefined) {
@@ -150,9 +150,9 @@ router.post('/', async (req, res) => {
         if (req.body.password != undefined)
             delete req.body['password']
 
-        console.log(req.body);
+        console.log(req.body,req.params.userId);
 
-        User.updateOne(req.params.userId,req.body)
+        User.updateOne({_id:req.params.userId},req.body)
             .then((response)=>{
                 console.log("data"+response);
                 if(response.modifiedCount==0 && response.matchedCount ==0) {
@@ -184,7 +184,7 @@ router.route('/login').post(async (req, res) => {
 
         const userLogin = await User.findOne({
             email: req.body.email,
-        });
+        },"-profile_picture");
         console.log(userLogin.email);
 
         if (userLogin) {
@@ -381,12 +381,12 @@ router.route('/forgotPassword').post(async (req, res) => {
 
 router.route('/admin/login').post(async (req, res) => {
     try {
-
+console.log(req.body)
         const userLogin = await User.findOne({
             email: req.body.email,
-            role: 'admin'
-        });
-        console.log(userLogin.email);
+            role: "admin"
+        },"-profile_picture");
+        console.log(userLogin);
 
         if (userLogin) {
             console.log(userLogin.email);
@@ -739,5 +739,41 @@ router
             })
             .catch(err => next(err));
     })
+
+    .get('/:userId/profile', (req, res, next) => {
+    User
+        .aggregate([{
+            $match: {
+                _id: mongoose.Types.ObjectId(req.params.userId)
+            },
+        },
+            {
+                $lookup: {
+                    from: 'enrollments',
+                    localField: '_id',
+                    foreignField: 'user',
+                    as: 'enrolled'
+                }
+            },
+            {
+                "$addFields": {
+                    "enrollments": {
+                        "$size": "$enrolled"
+                    }
+                }
+            },])
+        .then(user => {
+            if (!user) {
+                res.status(404).json({
+                    error: "user not found"
+                })
+            } else {
+                res.status(200)
+                    .json(user);
+            }
+        })
+        .catch(err => next(err));
+})
+
 
 module.exports = router;

@@ -47,14 +47,14 @@ let InCour = ({ instructorCourses }) => {
       <div className="col-lg- col-12">
         <h5 className="mb-0 head">Courses instructed by you: </h5>
         <div className="rounded shadow p-4 booklist1">
-          {instructorCourses.courses &&
+          {instructorCourses &&instructorCourses.courses &&
               instructorCourses.courses.length > 0 &&
               instructorCourses.courses.map((course, index) => {
               return (
                 <div key={index} className="col-md-4 col-12 mt-4 pt-2">
                   <div className="card border-0 work-container work-classic inscourse">
                     <div className="card-body p-0 ">
-                      <a href="portfolio-detail-one.html">
+                      <a href={`course-content/${course?._id}`}>
                         <img
                           src={"data:image/"+course.contentType+";base64,"+course.thumbnail?.toString("base64")}
                           className="img-fluid rounded work-image"

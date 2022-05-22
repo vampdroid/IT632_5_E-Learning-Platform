@@ -10,7 +10,7 @@ module.exports = (req,res,next)=>{
     mongodb.MongoClient.connect(process.env.DB_URL_MONGO)
         .then(client => {
             console.log(req.files.content);
-            var name = req.files.content.name.slice(0, -4) + req.params.courseId;
+            var name = req.files.content.name.slice(0, -4) +Date.now()+ req.params.courseId;
             console.log(name);
             name = name.replaceAll(' ',"");
             
